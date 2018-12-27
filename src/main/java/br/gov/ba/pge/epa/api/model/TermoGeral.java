@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import br.gov.ba.pge.epa.api.model.infra.BaseEntity;
+
 @Entity
 @Table(name = "tb_tge_termo_geral")
 public class TermoGeral extends BaseEntity<Long> {

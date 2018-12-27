@@ -1,4 +1,4 @@
-package br.gov.ba.pge.epa.api.model;
+package br.gov.ba.pge.epa.api.model.infra;
 
 public class BaseEntity<T> {
 

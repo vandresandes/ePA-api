@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import br.gov.ba.pge.epa.api.model.infra.BaseEntity;
+
 @Entity
 @Table(name = "categoria")
 public class Checklist extends BaseEntity<Long> {
