@@ -23,6 +23,12 @@ public class Nucleo extends BaseEntity<Long> {
 	@Column(name = "nuc_no_nome")
 	private String nome;
 
+	public Nucleo() {}
+
+	public Nucleo(String nome) {
+		this.nome = nome;
+	}
+	
 	@Override
 	public Long getId() {
 		return id;

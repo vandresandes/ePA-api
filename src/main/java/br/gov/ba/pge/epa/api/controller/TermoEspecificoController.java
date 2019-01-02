@@ -1,11 +1,19 @@
 package br.gov.ba.pge.epa.api.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Sort;
@@ -31,6 +39,8 @@ public class TermoEspecificoController {
 	private TermoEspecificoRepository repository;
 	@Autowired
 	private ApplicationEventPublisher publisher;
+	@Autowired
+	private EntityManager entityManager;
 
 	@GetMapping
 	public List<TermoEspecifico> findAll() {
@@ -53,5 +63,30 @@ public class TermoEspecificoController {
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
 		repository.deleteById(id);
+	}
+
+	@GetMapping({ "/buscar", "/buscar/{nome}" })
+	public List<TermoEspecifico> buscar(@PathVariable Optional<String> nome) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<TermoEspecifico> cq = cb.createQuery(TermoEspecifico.class);
+		Root<TermoEspecifico> root = cq.from(TermoEspecifico.class);
+
+		Predicate[] predicates = extractPredicates(new TermoEspecifico(nome.isPresent() ? nome.get() : null), cb, root);
+		cq.select(cq.getSelection()).where(predicates);
+
+		TypedQuery<TermoEspecifico> query = entityManager.createQuery(cq);
+//	    query.setFirstResult(0);
+//	    query.setMaxResults(0);
+		return query.getResultList();
+	}
+
+	private Predicate[] extractPredicates(TermoEspecifico filtro, CriteriaBuilder cb, Root<?> root) {
+		List<Predicate> predicates = new ArrayList<>();
+		if (filtro != null) {
+			if (StringUtils.isNotBlank(filtro.getNome())) {
+				predicates.add(cb.like(cb.lower(root.get("nome")), "%" + filtro.getNome().toLowerCase() + "%"));
+			}
+		}
+		return predicates.toArray(new Predicate[] {});
 	}
 }

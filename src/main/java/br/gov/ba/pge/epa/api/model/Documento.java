@@ -30,6 +30,12 @@ public class Documento extends BaseEntity<Long> {
 	@NotNull
 	@Column(name = "doc_tp_tipo")
 	private EnumTipoDocumento tipo;
+	
+	public Documento() {}
+	
+	public Documento(String nome) {
+		this.nome = nome;
+	}
 
 	@Override
 	public Long getId() {

@@ -22,6 +22,12 @@ public class TermoGeral extends BaseEntity<Long> {
 	@NotNull
 	@Column(name = "tge_no_nome")
 	private String nome;
+	
+	public TermoGeral() {}
+	
+	public TermoGeral(String nome) {
+		this.nome = nome;
+	}
 
 	@Override
 	public Long getId() {

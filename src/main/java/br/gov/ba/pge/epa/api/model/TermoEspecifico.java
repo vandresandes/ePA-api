@@ -22,6 +22,12 @@ public class TermoEspecifico extends BaseEntity<Long> {
 	@NotNull
 	@Column(name = "tes_no_nome")
 	private String nome;
+	
+	public TermoEspecifico() {}
+	
+	public TermoEspecifico(String nome) {
+		this.nome = nome;
+	}
 
 	@Override
 	public Long getId() {

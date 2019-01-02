@@ -22,6 +22,12 @@ public class TipoProcesso extends BaseEntity<Long> {
 	@NotNull
 	@Column(name = "tpp_no_nome")
 	private String nome;
+	
+	public TipoProcesso() {}
+	
+	public TipoProcesso(String nome) {
+		this.nome = nome;
+	}
 
 	@Override
 	public Long getId() {
