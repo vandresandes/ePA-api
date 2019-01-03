@@ -19,6 +19,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,6 +32,7 @@ import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.TipoProcesso;
 import br.gov.ba.pge.epa.api.repository.TipoProcessoRepository;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/tipoprocesso")
 public class TipoProcessoController {
@@ -73,6 +75,7 @@ public class TipoProcessoController {
 
 		Predicate[] predicates = extractPredicates(new TipoProcesso(nome.isPresent() ? nome.get() : null), cb, root);
 		cq.select(cq.getSelection()).where(predicates);
+		cq.orderBy(cb.asc(root.get("nome")));
 
 		TypedQuery<TipoProcesso> query = entityManager.createQuery(cq);
 //	    query.setFirstResult(0);

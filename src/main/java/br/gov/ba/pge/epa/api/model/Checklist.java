@@ -13,11 +13,11 @@ import javax.validation.constraints.NotNull;
 import br.gov.ba.pge.epa.api.model.infra.BaseEntity;
 
 @Entity
-@Table(name = "categoria")
+@Table(name = "tb_che_checklist")
 public class Checklist extends BaseEntity<Long> {
 
 	@Id
-	@Column(name = "pae_id_parecer_elegibilidade")
+	@Column(name = "che_id_checklist")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 

@@ -75,6 +75,7 @@ public class NucleoController {
 
 		Predicate[] predicates = extractPredicates(new Nucleo(nome.isPresent() ? nome.get() : null), cb, root);
 		cq.select(cq.getSelection()).where(predicates);
+		cq.orderBy(cb.asc(root.get("nome")));
 
 		TypedQuery<Nucleo> query = entityManager.createQuery(cq);
 //	    query.setFirstResult(0);
