@@ -15,6 +15,7 @@ import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
@@ -74,67 +76,58 @@ public class ChecklistController {
 		repository.deleteById(id);
 	}
 
-	@GetMapping({ "/buscar", "/buscar/{nome}" })
-	public List<Checklist> buscar(@PathVariable Optional<String> nome) {
+	@GetMapping({ "/buscar" })
+	public List<Checklist> buscar(
+			@RequestParam("nucleo") String nucleo, 
+			@RequestParam("tipoProcesso") String tipoProcesso,
+			@RequestParam("termoGeral") String termoGeral,
+			@RequestParam("termoEspecifico") String termoEspecifico,
+			@RequestParam("documento") String documento,
+			@RequestParam("status") String status) {
+		
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Checklist> cq = cb.createQuery(Checklist.class);
 		Root<Checklist> root = cq.from(Checklist.class);
 		
-		Predicate[] predicates = extractPredicates(new Checklist(), cb, root);
+		Predicate[] predicates = extractPredicates(cb, root, nucleo, tipoProcesso, termoGeral, termoEspecifico, documento, status);
 		cq.select(cq.getSelection()).where(predicates);
 
 		TypedQuery<Checklist> query = entityManager.createQuery(cq);
-//	    query.setFirstResult(0);
-//	    query.setMaxResults(0);
 		return query.getResultList();
 	}
 
-	private Predicate[] extractPredicates(Checklist filtro, CriteriaBuilder cb, Root<?> root) {
+	private Predicate[] extractPredicates(CriteriaBuilder cb, Root<?> root, 
+			String nucleo, 
+			String tipoProcesso, 
+			String termoGeral, 
+			String termoEspecifico, 
+			String documento, 
+			String status) {
+
 		List<Predicate> predicates = new ArrayList<>();
-		if (filtro != null) {
-			if (filtro.getStatus() != null) {
-				predicates.add(cb.equal(root.get("status"), filtro.getStatus()));
-			}
-			if (filtro.getDocumento() != null) {
-				if (filtro.getDocumento().getId() != null) {
-					predicates.add(cb.equal(root.get("documento"), filtro.getDocumento()));
-				} else if (StringUtils.isNotBlank(filtro.getDocumento().getNome())) {
-					Join<Checklist, Documento> documento = root.join("destinatarioOrgao", JoinType.LEFT);
-					predicates.add(cb.like(cb.lower(documento.get("nome")), "%" + filtro.getDocumento().getNome().toLowerCase() + "%"));
-				}
-			}
-			if (filtro.getNucleo() != null) {
-				if (filtro.getNucleo().getId() != null) {
-					predicates.add(cb.equal(root.get("nucleo"), filtro.getNucleo()));
-				} else if (StringUtils.isNotBlank(filtro.getNucleo().getNome())) {
-					Join<Checklist, Nucleo> nucleo = root.join("destinatarioOrgao", JoinType.LEFT);
-					predicates.add(cb.like(cb.lower(nucleo.get("nome")), "%" + filtro.getNucleo().getNome().toLowerCase() + "%"));
-				}
-			}
-			if (filtro.getTermoEspecifico() != null) {
-				if (filtro.getTermoEspecifico().getId() != null) {
-					predicates.add(cb.equal(root.get("termoEspecifico"), filtro.getTermoEspecifico()));
-				} else if (StringUtils.isNotBlank(filtro.getTermoEspecifico().getNome())) {
-					Join<Checklist, TermoEspecifico> termoEspecifico = root.join("destinatarioOrgao", JoinType.LEFT);
-					predicates.add(cb.like(cb.lower(termoEspecifico.get("nome")), "%" + filtro.getTermoEspecifico().getNome().toLowerCase() + "%"));
-				}
-			}
-			if (filtro.getTermoGeral() != null) {
-				if (filtro.getTermoGeral().getId() != null) {
-					predicates.add(cb.equal(root.get("termoGeral"), filtro.getTermoGeral()));
-				} else if (StringUtils.isNotBlank(filtro.getTermoGeral().getNome())) {
-					Join<Checklist, TermoGeral> termoGeral = root.join("destinatarioOrgao", JoinType.LEFT);
-					predicates.add(cb.like(cb.lower(termoGeral.get("nome")), "%" + filtro.getTermoGeral().getNome().toLowerCase() + "%"));
-				}
-			}
-			if (filtro.getTipoProcesso() != null) {
-				if (filtro.getTipoProcesso().getId() != null) {
-					predicates.add(cb.equal(root.get("tipoProcesso"), filtro.getTipoProcesso()));
-				} else if (StringUtils.isNotBlank(filtro.getTipoProcesso().getNome())) {
-					Join<Checklist, TipoProcesso> tipoProcesso = root.join("destinatarioOrgao", JoinType.LEFT);
-					predicates.add(cb.like(cb.lower(tipoProcesso.get("nome")), "%" + filtro.getTipoProcesso().getNome().toLowerCase() + "%"));
-				}
-			}
+		
+		if (StringUtils.isNotBlank(nucleo)) {
+			Join<Checklist, Nucleo> joinNucleo = root.join("nucleo", JoinType.LEFT);
+			predicates.add(cb.like(cb.lower(joinNucleo.get("nome")), "%" + nucleo.toLowerCase() + "%"));
+		}
+		if (StringUtils.isNotBlank(tipoProcesso)) {
+			Join<Checklist, TipoProcesso> joinTipoProcesso = root.join("tipoProcesso", JoinType.LEFT);
+			predicates.add(cb.like(cb.lower(joinTipoProcesso.get("nome")), "%" + tipoProcesso.toLowerCase() + "%"));
+		}
+		if (StringUtils.isNotBlank(termoGeral)) {
+			Join<Checklist, TermoGeral> joinTermoGeral = root.join("termoGeral", JoinType.LEFT);
+			predicates.add(cb.like(cb.lower(joinTermoGeral.get("nome")), "%" + termoGeral.toLowerCase() + "%"));
+		}
+		if (StringUtils.isNotBlank(termoEspecifico)) {
+			Join<Checklist, TermoEspecifico> joinTermoEspecifico = root.join("termoEspecifico", JoinType.LEFT);
+			predicates.add(cb.like(cb.lower(joinTermoEspecifico.get("nome")), "%" + termoEspecifico.toLowerCase() + "%"));
+		}
+		if (StringUtils.isNotBlank(documento)) {
+			Join<Checklist, Documento> joinDocumento = root.join("documento", JoinType.LEFT);
+			predicates.add(cb.like(cb.lower(joinDocumento.get("nome")), "%" + documento.toLowerCase() + "%"));
+		}
+		if (StringUtils.isNotBlank(status)) {
+			predicates.add(cb.equal(root.get("status"), BooleanUtils.toBoolean(status)));
 		}
 		return predicates.toArray(new Predicate[] {});
 	}

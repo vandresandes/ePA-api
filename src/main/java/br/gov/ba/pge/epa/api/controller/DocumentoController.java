@@ -78,8 +78,20 @@ public class DocumentoController {
 		cq.orderBy(cb.asc(root.get("nome")));
 
 		TypedQuery<Documento> query = entityManager.createQuery(cq);
-//	    query.setFirstResult(0);
-//	    query.setMaxResults(0);
+		return query.getResultList();
+	}
+	
+	@GetMapping({ "/buscar/nomes", "/buscar/nomes/{nome}" })
+	public List<String> buscarNomes(@PathVariable Optional<String> nome) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<String> cq = cb.createQuery(String.class);
+		Root<Documento> root = cq.from(Documento.class);
+
+		Predicate[] predicates = extractPredicates(new Documento(nome.isPresent() ? nome.get() : null), cb, root);
+		cq.select(root.get("nome")).where(predicates);
+		cq.orderBy(cb.asc(root.get("nome")));
+
+		TypedQuery<String> query = entityManager.createQuery(cq);
 		return query.getResultList();
 	}
 

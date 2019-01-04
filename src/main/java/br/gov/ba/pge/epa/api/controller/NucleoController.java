@@ -49,6 +49,19 @@ public class NucleoController {
 		return repository.findAll(Sort.by("nome"));
 	}
 
+	@GetMapping("/nomes")
+	public List<String> findAllNomes() {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<String> cq = cb.createQuery(String.class);
+		Root<Nucleo> root = cq.from(Nucleo.class);
+
+		cq.select(root.get("nome"));
+		cq.orderBy(cb.asc(root.get("nome")));
+
+		TypedQuery<String> query = entityManager.createQuery(cq);
+		return query.getResultList();
+	}
+
 	@PostMapping
 	public ResponseEntity<Nucleo> save(@Valid @RequestBody Nucleo entity, HttpServletResponse response) {
 		Nucleo savedEntity = repository.save(entity);
@@ -78,8 +91,20 @@ public class NucleoController {
 		cq.orderBy(cb.asc(root.get("nome")));
 
 		TypedQuery<Nucleo> query = entityManager.createQuery(cq);
-//	    query.setFirstResult(0);
-//	    query.setMaxResults(0);
+		return query.getResultList();
+	}
+
+	@GetMapping({ "/buscar/nomes", "/buscar/nomes/{nome}" })
+	public List<String> buscarNomes(@PathVariable Optional<String> nome) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<String> cq = cb.createQuery(String.class);
+		Root<Nucleo> root = cq.from(Nucleo.class);
+
+		Predicate[] predicates = extractPredicates(new Nucleo(nome.isPresent() ? nome.get() : null), cb, root);
+		cq.select(root.get("nome")).where(predicates);
+		cq.orderBy(cb.asc(root.get("nome")));
+
+		TypedQuery<String> query = entityManager.createQuery(cq);
 		return query.getResultList();
 	}
 
