@@ -40,6 +40,7 @@ import br.gov.ba.pge.epa.api.model.TermoEspecifico;
 import br.gov.ba.pge.epa.api.model.TermoGeral;
 import br.gov.ba.pge.epa.api.model.TipoProcesso;
 import br.gov.ba.pge.epa.api.repository.ChecklistRepository;
+import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -106,27 +107,27 @@ public class ChecklistController {
 
 		List<Predicate> predicates = new ArrayList<>();
 		
-		if (StringUtils.isNotBlank(nucleo)) {
+		if (EPAUtil.isNotBlank(nucleo)) {
 			Join<Checklist, Nucleo> joinNucleo = root.join("nucleo", JoinType.LEFT);
 			predicates.add(cb.like(cb.lower(joinNucleo.get("nome")), "%" + nucleo.toLowerCase() + "%"));
 		}
-		if (StringUtils.isNotBlank(tipoProcesso)) {
+		if (EPAUtil.isNotBlank(tipoProcesso)) {
 			Join<Checklist, TipoProcesso> joinTipoProcesso = root.join("tipoProcesso", JoinType.LEFT);
 			predicates.add(cb.like(cb.lower(joinTipoProcesso.get("nome")), "%" + tipoProcesso.toLowerCase() + "%"));
 		}
-		if (StringUtils.isNotBlank(termoGeral)) {
+		if (EPAUtil.isNotBlank(termoGeral)) {
 			Join<Checklist, TermoGeral> joinTermoGeral = root.join("termoGeral", JoinType.LEFT);
 			predicates.add(cb.like(cb.lower(joinTermoGeral.get("nome")), "%" + termoGeral.toLowerCase() + "%"));
 		}
-		if (StringUtils.isNotBlank(termoEspecifico)) {
+		if (EPAUtil.isNotBlank(termoEspecifico)) {
 			Join<Checklist, TermoEspecifico> joinTermoEspecifico = root.join("termoEspecifico", JoinType.LEFT);
 			predicates.add(cb.like(cb.lower(joinTermoEspecifico.get("nome")), "%" + termoEspecifico.toLowerCase() + "%"));
 		}
-		if (StringUtils.isNotBlank(documento)) {
+		if (EPAUtil.isNotBlank(documento)) {
 			Join<Checklist, Documento> joinDocumento = root.join("documento", JoinType.LEFT);
 			predicates.add(cb.like(cb.lower(joinDocumento.get("nome")), "%" + documento.toLowerCase() + "%"));
 		}
-		if (StringUtils.isNotBlank(status)) {
+		if (EPAUtil.isNotBlank(status)) {
 			predicates.add(cb.equal(root.get("status"), BooleanUtils.toBoolean(status)));
 		}
 		return predicates.toArray(new Predicate[] {});
