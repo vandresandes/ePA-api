@@ -1,27 +1,28 @@
 
+
 CREATE TABLE tb_nuc_nucleo (
 	nuc_id_nucleo BIGINT IDENTITY(1,1) NOT NULL,
-	nuc_no_nome VARCHAR(100) UNIQUE NOT NULL
+	nuc_no_nome VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE tb_tpp_tipo_processo (
 	tpp_id_tipo_processo BIGINT IDENTITY(1,1) NOT NULL,
-	tpp_no_nome VARCHAR(100) UNIQUE NOT NULL
+	tpp_no_nome VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE tb_tge_termo_geral (
 	tge_id_termo_geral BIGINT IDENTITY(1,1) NOT NULL,
-	tge_no_nome VARCHAR(100) UNIQUE NOT NULL
+	tge_no_nome VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE tb_tes_termo_especifico (
 	tes_id_termo_especifico BIGINT IDENTITY(1,1) NOT NULL,
-	tes_no_nome VARCHAR(100) UNIQUE NOT NULL
+	tes_no_nome VARCHAR(200) NOT NULL
 );
 
 CREATE TABLE tb_doc_documento (
 	doc_id_documento BIGINT IDENTITY(1,1) NOT NULL,
-	doc_no_nome VARCHAR(100) UNIQUE NOT NULL,
+	doc_no_nome VARCHAR(100) NOT NULL,
 	doc_tp_tipo VARCHAR(20) NOT NULL
 );
 
