@@ -96,11 +96,12 @@ public class ChecklistController {
 
 			@Override
 			public Predicate toPredicate(Root<Checklist> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-				return null;
+				Predicate[] predicates = extractPredicates(criteriaBuilder, root, nucleo, tipoProcesso, termoGeral, termoEspecifico, documento, status);
+				return criteriaBuilder.and(predicates);
 			}
 		}; 
 
-	    PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "nome");
+	    PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "id");
 	    Page<Checklist> resultados = repository.findAll(specification, pageable);
 	    return resultados;
 	}
