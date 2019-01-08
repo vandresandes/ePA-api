@@ -1,3 +1,15 @@
+ALTER TABLE tb_che_checklist DROP CONSTRAINT FK__tb_che_checklist_che_fk_tpp_id_tipo_processo;
+ALTER TABLE tb_che_checklist DROP CONSTRAINT FK__tb_che_checklist_che_fk_tge_id_termo_geral;
+ALTER TABLE tb_che_checklist DROP CONSTRAINT FK__tb_che_checklist_che_fk_tes_id_termo_especifico;
+ALTER TABLE tb_che_checklist DROP CONSTRAINT FK__tb_che_checklist_che_fk_nuc_id_nucleo;
+ALTER TABLE tb_che_checklist DROP CONSTRAINT FK__tb_che_checklist_che_fk_doc_id_documento;
+
+DROP TABLE tb_nuc_nucleo;
+DROP TABLE tb_tpp_tipo_processo;
+DROP TABLE tb_tge_termo_geral;
+DROP TABLE tb_tes_termo_especifico;
+DROP TABLE tb_doc_documento;
+DROP TABLE tb_che_checklist;
 
 
 CREATE TABLE tb_nuc_nucleo (
@@ -22,7 +34,7 @@ CREATE TABLE tb_tes_termo_especifico (
 
 CREATE TABLE tb_doc_documento (
 	doc_id_documento BIGINT IDENTITY(1,1) NOT NULL,
-	doc_no_nome VARCHAR(100) NOT NULL,
+	doc_no_nome VARCHAR(500) NOT NULL,
 	doc_tp_tipo VARCHAR(20) NOT NULL
 );
 
