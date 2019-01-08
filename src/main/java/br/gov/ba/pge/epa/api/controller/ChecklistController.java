@@ -18,7 +18,11 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -74,6 +78,31 @@ public class ChecklistController {
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
 		repository.deleteById(id);
+	}
+
+	@GetMapping({"/buscarpaginado"})
+	public Page<Checklist> buscarPaginado(
+			@RequestParam("nucleo") String nucleo, 
+			@RequestParam("tipoProcesso") String tipoProcesso,
+			@RequestParam("termoGeral") String termoGeral,
+			@RequestParam("termoEspecifico") String termoEspecifico,
+			@RequestParam("documento") String documento,
+			@RequestParam("status") String status,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
+		
+		Specification<Checklist> specification = new Specification<Checklist>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Predicate toPredicate(Root<Checklist> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+				return null;
+			}
+		}; 
+
+	    PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "nome");
+	    Page<Checklist> resultados = repository.findAll(specification, pageable);
+	    return resultados;
 	}
 
 	@GetMapping({ "/buscar" })

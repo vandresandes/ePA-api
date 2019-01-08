@@ -3,7 +3,8 @@ package br.gov.ba.pge.epa.api.model.enums;
 public enum EnumTipoDocumento {
 
 	DOCUMENTO("DOCUMENTO", "Documento"), 
-	INFORMACAO("INFORMACAO", "Informação");
+	INFORMACAO("INFORMACAO", "Informação"),
+	EM_ANALISE("EM_ANALISE", "Em Análise");
 
 	String valor;
 	String descricao;

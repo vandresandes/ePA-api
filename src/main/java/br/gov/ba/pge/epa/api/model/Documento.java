@@ -27,7 +27,6 @@ public class Documento extends BaseEntity<Long> {
 	private String nome;
 
 	@Enumerated(EnumType.STRING)
-	@NotNull
 	@Column(name = "doc_tp_tipo")
 	private EnumTipoDocumento tipo;
 	

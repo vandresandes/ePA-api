@@ -15,7 +15,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -81,18 +85,50 @@ public class NucleoController {
 		repository.deleteById(id);
 	}
 
+	@GetMapping({"/buscarpaginado"})
+	public Page<Nucleo> buscarPaginado(
+			@RequestParam("nome") Optional<String> nome,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
+		
+		Specification<Nucleo> specification = new Specification<Nucleo>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Predicate toPredicate(Root<Nucleo> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+				if (nome.isPresent() && EPAUtil.isNotBlank(nome.get())) {
+					return criteriaBuilder.like(criteriaBuilder.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%");
+				}
+				return null;
+			}
+		}; 
+
+	    PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "nome");
+	    Page<Nucleo> resultados = repository.findAll(specification, pageable);
+	    return resultados;
+	}
+
 	@GetMapping({"/buscar"})
-	public List<Nucleo> buscar(@RequestParam("nome") Optional<String> nome) {
+	public List<Nucleo> buscar(
+			@RequestParam("nome") Optional<String> nome,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
 		
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Nucleo> cq = cb.createQuery(Nucleo.class);
 		Root<Nucleo> root = cq.from(Nucleo.class);
-
+		
 		Predicate[] predicates = extractPredicates(cb, root, nome);
 		cq.select(cq.getSelection()).where(predicates);
 		cq.orderBy(cb.asc(root.get("nome")));
 
 		TypedQuery<Nucleo> query = entityManager.createQuery(cq);
+		if (page.isPresent()) {
+			query.setFirstResult(page.get());
+		}
+		if (size.isPresent()) {
+			query.setMaxResults(size.get());
+		}
 		return query.getResultList();
 	}
 
@@ -113,8 +149,10 @@ public class NucleoController {
 	private Predicate[] extractPredicates(CriteriaBuilder cb, Root<?> root, Optional<String> nome) {
 		List<Predicate> predicates = new ArrayList<>();
 		if (nome.isPresent() && EPAUtil.isNotBlank(nome.get())) {
+			cb.and(cb.like(cb.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%"));
 			predicates.add(cb.like(cb.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[] {});
 	}
+	
 }

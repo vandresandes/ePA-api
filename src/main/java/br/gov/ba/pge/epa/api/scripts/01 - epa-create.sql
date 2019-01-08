@@ -35,7 +35,7 @@ CREATE TABLE tb_tes_termo_especifico (
 CREATE TABLE tb_doc_documento (
 	doc_id_documento BIGINT IDENTITY(1,1) NOT NULL,
 	doc_no_nome VARCHAR(500) NOT NULL,
-	doc_tp_tipo VARCHAR(20) NOT NULL
+	doc_tp_tipo VARCHAR(20)
 );
 
 CREATE TABLE tb_che_checklist (
