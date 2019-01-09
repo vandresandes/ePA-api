@@ -34,7 +34,7 @@ CREATE TABLE tb_tes_termo_especifico (
 
 CREATE TABLE tb_doc_documento (
 	doc_id_documento BIGINT IDENTITY(1,1) NOT NULL,
-	doc_no_nome VARCHAR(1000) UNIQUE NOT NULL,
+	doc_no_nome VARCHAR(2000) NOT NULL,
 	doc_tp_tipo VARCHAR(20)
 );
 
