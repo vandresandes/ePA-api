@@ -82,12 +82,12 @@ public class ChecklistController {
 
 	@GetMapping({"/buscarpaginado"})
 	public Page<Checklist> buscarPaginado(
-			@RequestParam("nucleo") String nucleo, 
-			@RequestParam("tipoProcesso") String tipoProcesso,
-			@RequestParam("termoGeral") String termoGeral,
-			@RequestParam("termoEspecifico") String termoEspecifico,
-			@RequestParam("documento") String documento,
-			@RequestParam("status") String status,
+			@RequestParam("nucleo") Optional<String> nucleo, 
+			@RequestParam("tipoProcesso") Optional<String> tipoProcesso,
+			@RequestParam("termoGeral") Optional<String> termoGeral,
+			@RequestParam("termoEspecifico") Optional<String> termoEspecifico,
+			@RequestParam("documento") Optional<String> documento,
+			@RequestParam("status") Optional<String> status,
 			@RequestParam("page") Optional<Integer> page,
 			@RequestParam("size") Optional<Integer> size) {
 		
@@ -108,12 +108,12 @@ public class ChecklistController {
 
 	@GetMapping({ "/buscar" })
 	public List<Checklist> buscar(
-			@RequestParam("nucleo") String nucleo, 
-			@RequestParam("tipoProcesso") String tipoProcesso,
-			@RequestParam("termoGeral") String termoGeral,
-			@RequestParam("termoEspecifico") String termoEspecifico,
-			@RequestParam("documento") String documento,
-			@RequestParam("status") String status) {
+			@RequestParam("nucleo") Optional<String> nucleo, 
+			@RequestParam("tipoProcesso") Optional<String> tipoProcesso,
+			@RequestParam("termoGeral") Optional<String> termoGeral,
+			@RequestParam("termoEspecifico") Optional<String> termoEspecifico,
+			@RequestParam("documento") Optional<String> documento,
+			@RequestParam("status") Optional<String> status) {
 		
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Checklist> cq = cb.createQuery(Checklist.class);
@@ -127,37 +127,37 @@ public class ChecklistController {
 	}
 
 	private Predicate[] extractPredicates(CriteriaBuilder cb, Root<?> root, 
-			String nucleo, 
-			String tipoProcesso, 
-			String termoGeral, 
-			String termoEspecifico, 
-			String documento, 
-			String status) {
+			Optional<String> nucleo, 
+			Optional<String> tipoProcesso, 
+			Optional<String> termoGeral, 
+			Optional<String> termoEspecifico, 
+			Optional<String> documento, 
+			Optional<String> status) {
 
 		List<Predicate> predicates = new ArrayList<>();
 		
-		if (EPAUtil.isNotBlank(nucleo)) {
+		if (nucleo.isPresent() && EPAUtil.isNotBlank(nucleo.get())) {
 			Join<Checklist, Nucleo> joinNucleo = root.join("nucleo", JoinType.LEFT);
-			predicates.add(cb.like(cb.lower(joinNucleo.get("nome")), "%" + nucleo.toLowerCase() + "%"));
+			predicates.add(cb.like(cb.lower(joinNucleo.get("nome")), "%" + nucleo.get().toLowerCase() + "%"));
 		}
-		if (EPAUtil.isNotBlank(tipoProcesso)) {
+		if (tipoProcesso.isPresent() && EPAUtil.isNotBlank(tipoProcesso.get())) {
 			Join<Checklist, TipoProcesso> joinTipoProcesso = root.join("tipoProcesso", JoinType.LEFT);
-			predicates.add(cb.like(cb.lower(joinTipoProcesso.get("nome")), "%" + tipoProcesso.toLowerCase() + "%"));
+			predicates.add(cb.like(cb.lower(joinTipoProcesso.get("nome")), "%" + tipoProcesso.get().toLowerCase() + "%"));
 		}
-		if (EPAUtil.isNotBlank(termoGeral)) {
+		if (termoGeral.isPresent() && EPAUtil.isNotBlank(termoGeral.get())) {
 			Join<Checklist, TermoGeral> joinTermoGeral = root.join("termoGeral", JoinType.LEFT);
-			predicates.add(cb.like(cb.lower(joinTermoGeral.get("nome")), "%" + termoGeral.toLowerCase() + "%"));
+			predicates.add(cb.like(cb.lower(joinTermoGeral.get("nome")), "%" + termoGeral.get().toLowerCase() + "%"));
 		}
-		if (EPAUtil.isNotBlank(termoEspecifico)) {
+		if (termoEspecifico.isPresent() && EPAUtil.isNotBlank(termoEspecifico.get())) {
 			Join<Checklist, TermoEspecifico> joinTermoEspecifico = root.join("termoEspecifico", JoinType.LEFT);
-			predicates.add(cb.like(cb.lower(joinTermoEspecifico.get("nome")), "%" + termoEspecifico.toLowerCase() + "%"));
+			predicates.add(cb.like(cb.lower(joinTermoEspecifico.get("nome")), "%" + termoEspecifico.get().toLowerCase() + "%"));
 		}
-		if (EPAUtil.isNotBlank(documento)) {
+		if (documento.isPresent() && EPAUtil.isNotBlank(documento.get())) {
 			Join<Checklist, Documento> joinDocumento = root.join("documento", JoinType.LEFT);
-			predicates.add(cb.like(cb.lower(joinDocumento.get("nome")), "%" + documento.toLowerCase() + "%"));
+			predicates.add(cb.like(cb.lower(joinDocumento.get("nome")), "%" + documento.get().toLowerCase() + "%"));
 		}
-		if (EPAUtil.isNotBlank(status)) {
-			predicates.add(cb.equal(root.get("status"), BooleanUtils.toBoolean(status)));
+		if (status.isPresent() && EPAUtil.isNotBlank(status.get())) {
+			predicates.add(cb.equal(root.get("status"), BooleanUtils.toBoolean(status.get())));
 		}
 		return predicates.toArray(new Predicate[] {});
 	}
