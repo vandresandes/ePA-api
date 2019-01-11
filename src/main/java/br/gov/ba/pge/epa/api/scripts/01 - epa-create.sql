@@ -1,15 +1,10 @@
-ALTER TABLE tb_che_checklist DROP CONSTRAINT FK__tb_che_checklist_che_fk_tpp_id_tipo_processo;
-ALTER TABLE tb_che_checklist DROP CONSTRAINT FK__tb_che_checklist_che_fk_tge_id_termo_geral;
-ALTER TABLE tb_che_checklist DROP CONSTRAINT FK__tb_che_checklist_che_fk_tes_id_termo_especifico;
-ALTER TABLE tb_che_checklist DROP CONSTRAINT FK__tb_che_checklist_che_fk_nuc_id_nucleo;
-ALTER TABLE tb_che_checklist DROP CONSTRAINT FK__tb_che_checklist_che_fk_doc_id_documento;
+DROP TABLE [dbo].[tb_che_checklist]
+DROP TABLE [dbo].[tb_nuc_nucleo]
+DROP TABLE [dbo].[tb_tpp_tipo_processo]
+DROP TABLE [dbo].[tb_tes_termo_especifico]
+DROP TABLE [dbo].[tb_tge_termo_geral]
+DROP TABLE [dbo].[tb_doc_documento]
 
-DROP TABLE tb_nuc_nucleo;
-DROP TABLE tb_tpp_tipo_processo;
-DROP TABLE tb_tge_termo_geral;
-DROP TABLE tb_tes_termo_especifico;
-DROP TABLE tb_doc_documento;
-DROP TABLE tb_che_checklist;
 
 
 CREATE TABLE tb_nuc_nucleo (

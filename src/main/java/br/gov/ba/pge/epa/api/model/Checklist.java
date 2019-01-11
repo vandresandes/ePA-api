@@ -1,5 +1,7 @@
 package br.gov.ba.pge.epa.api.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,11 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import br.gov.ba.pge.epa.api.model.infra.BaseEntity;
-
 @Entity
 @Table(name = "tb_che_checklist")
-public class Checklist extends BaseEntity<Long> {
+public class Checklist implements Serializable {
+
+	private static final long serialVersionUID = 4490335643403211530L;
 
 	@Id
 	@Column(name = "che_id_checklist")
@@ -50,7 +52,6 @@ public class Checklist extends BaseEntity<Long> {
 	@Column(name = "che_bo_status")
 	private Boolean status;
 
-	@Override
 	public Long getId() {
 		return id;
 	}

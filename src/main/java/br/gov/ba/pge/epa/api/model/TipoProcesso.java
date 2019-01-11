@@ -1,5 +1,7 @@
 package br.gov.ba.pge.epa.api.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,11 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import br.gov.ba.pge.epa.api.model.infra.BaseEntity;
-
 @Entity
 @Table(name = "tb_tpp_tipo_processo")
-public class TipoProcesso extends BaseEntity<Long> {
+public class TipoProcesso implements Serializable {
+
+	private static final long serialVersionUID = 5675517593523665765L;
 
 	@Id
 	@Column(name = "tpp_id_tipo_processo")
@@ -29,7 +31,6 @@ public class TipoProcesso extends BaseEntity<Long> {
 		this.nome = nome;
 	}
 
-	@Override
 	public Long getId() {
 		return id;
 	}

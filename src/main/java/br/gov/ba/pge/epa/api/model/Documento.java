@@ -1,5 +1,7 @@
 package br.gov.ba.pge.epa.api.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,11 +13,12 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import br.gov.ba.pge.epa.api.model.enums.EnumTipoDocumento;
-import br.gov.ba.pge.epa.api.model.infra.BaseEntity;
 
 @Entity
 @Table(name = "tb_doc_documento")
-public class Documento extends BaseEntity<Long> {
+public class Documento implements Serializable {
+
+	private static final long serialVersionUID = 5546552254086883202L;
 
 	@Id
 	@Column(name = "doc_id_documento")
@@ -36,7 +39,6 @@ public class Documento extends BaseEntity<Long> {
 		this.nome = nome;
 	}
 
-	@Override
 	public Long getId() {
 		return id;
 	}

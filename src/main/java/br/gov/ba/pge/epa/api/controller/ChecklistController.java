@@ -80,31 +80,6 @@ public class ChecklistController {
 		repository.deleteById(id);
 	}
 
-	@GetMapping({"/buscarpaginado"})
-	public Page<Checklist> buscarPaginado(
-			@RequestParam("nucleo") Optional<String> nucleo, 
-			@RequestParam("tipoProcesso") Optional<String> tipoProcesso,
-			@RequestParam("termoGeral") Optional<String> termoGeral,
-			@RequestParam("termoEspecifico") Optional<String> termoEspecifico,
-			@RequestParam("documento") Optional<String> documento,
-			@RequestParam("status") Optional<String> status,
-			@RequestParam("page") Optional<Integer> page,
-			@RequestParam("size") Optional<Integer> size) {
-		
-		Specification<Checklist> specification = new Specification<Checklist>() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Predicate toPredicate(Root<Checklist> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-				Predicate[] predicates = extractPredicates(criteriaBuilder, root, nucleo, tipoProcesso, termoGeral, termoEspecifico, documento, status);
-				return criteriaBuilder.and(predicates);
-			}
-		}; 
-
-	    PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "id");
-	    Page<Checklist> resultados = repository.findAll(specification, pageable);
-	    return resultados;
-	}
 
 	@GetMapping({ "/buscar" })
 	public List<Checklist> buscar(
@@ -159,7 +134,33 @@ public class ChecklistController {
 		if (status.isPresent() && EPAUtil.isNotBlank(status.get())) {
 			predicates.add(cb.equal(root.get("status"), BooleanUtils.toBoolean(status.get())));
 		}
-		return predicates.toArray(new Predicate[] {});
+        return predicates.toArray(new Predicate[predicates.size()]);
 	}
-
+	
+	@GetMapping({"/buscarpaginado"})
+	public Page<Checklist> buscarPaginado(
+			@RequestParam("nucleo") Optional<String> nucleo, 
+			@RequestParam("tipoProcesso") Optional<String> tipoProcesso,
+			@RequestParam("termoGeral") Optional<String> termoGeral,
+			@RequestParam("termoEspecifico") Optional<String> termoEspecifico,
+			@RequestParam("documento") Optional<String> documento,
+			@RequestParam("status") Optional<String> status,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
+		
+		Specification<Checklist> specification = new Specification<Checklist>() {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+			public Predicate toPredicate(Root<Checklist> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+				Predicate[] predicates = extractPredicates(criteriaBuilder, root, nucleo, tipoProcesso, termoGeral, termoEspecifico, documento, status);
+				query.distinct(true);
+				return criteriaBuilder.and(predicates);
+			}
+		};
+		PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "id");
+		Page<Checklist> resultados = repository.findAll(specification, pageable);
+		return resultados;
+	}
+	
 }
