@@ -1,8 +1,8 @@
 USE [epa]
 
-SET IDENTITY_INSERT tb_doc_documento ON
+SET IDENTITY_INSERT tb_documento ON
 
-INSERT INTO tb_doc_documento (doc_id_documento, doc_no_nome, doc_tp_tipo) VALUES
+INSERT INTO tb_documento (id, nome, tipo) VALUES
 
 (1,' Indicação do dispositivo legal aplicável (art. 65, §3º, inc. IV, Lei Estadual nº 9.433/2005);','EM_ANALISE'),
 (2,' Certidão de consulta ao SIMPAS quanto à existência de sanção (suspensão temporária ou declaração de inidoneidade para licitar e contratar com a Administração) em face da empresa contratada, cujos efeitos a torne proibida de celebrar contrato administrativo (art. 32 (Decreto estadual nº 13.967/2012).','EM_ANALISE'),
@@ -960,4 +960,4 @@ INSERT INTO tb_doc_documento (doc_id_documento, doc_no_nome, doc_tp_tipo) VALUES
 (954,'Verificação acerca da inexistência de sistema de registro de preços para o objeto licitado (art. 6º, §1º, Decreto estadual n. 12.366/2010) de forma a que se possa fazer a contratação desejada sem necessidade de deflagração de nova licitação.  ','EM_ANALISE')
 
 
-SET IDENTITY_INSERT tb_doc_documento OFF
+SET IDENTITY_INSERT tb_documento OFF

@@ -1,6 +1,6 @@
-SET IDENTITY_INSERT tb_tes_termo_especifico ON
+SET IDENTITY_INSERT tb_termo_especifico ON
 
-INSERT INTO tb_tes_termo_especifico (tes_id_termo_especifico, tes_no_nome) VALUES 
+INSERT INTO tb_termo_especifico (id, nome) VALUES 
 
 (1,'ABONO DE PERMANÊNCIA'),
 (2,'ADESÃO A ATA DE REGISTRO DE PREÇOS REQUERIDA PELO ESTADO DA BAHIA'),
@@ -439,4 +439,4 @@ INSERT INTO tb_tes_termo_especifico (tes_id_termo_especifico, tes_no_nome) VALUE
 (435,'TOMADA DE CONTAS ADMINISTRATIVA'),
 (436,'TOMADA DE CONTAS ESPECIAL')
 
-SET IDENTITY_INSERT tb_tes_termo_especifico OFF
+SET IDENTITY_INSERT tb_termo_especifico OFF

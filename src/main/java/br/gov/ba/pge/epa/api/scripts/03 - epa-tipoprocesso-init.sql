@@ -1,6 +1,6 @@
-SET IDENTITY_INSERT tb_tpp_tipo_processo ON
+SET IDENTITY_INSERT tb_tipo_processo ON
 
-INSERT INTO tb_tpp_tipo_processo (tpp_id_tipo_processo, tpp_no_nome) VALUES 
+INSERT INTO tb_tipo_processo (id, nome) VALUES 
 
 (1,'PROCESSO ADMINISTRATIVO DISCIPLINAR - PAD'),
 (2,'PROCESSO ADMINISTRATIVO ORIUNDO DA SEC'),
@@ -58,4 +58,4 @@ INSERT INTO tb_tpp_tipo_processo (tpp_id_tipo_processo, tpp_no_nome) VALUES
 (54,'PROCESSO SELETIVO DE RECRUTAMENTO DE PESSOAL')
 
 
-SET IDENTITY_INSERT tb_tpp_tipo_processo OFF
+SET IDENTITY_INSERT tb_tipo_processo OFF

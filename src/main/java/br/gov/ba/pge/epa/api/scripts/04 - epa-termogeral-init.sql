@@ -1,6 +1,6 @@
-SET IDENTITY_INSERT tb_tge_termo_geral ON
+SET IDENTITY_INSERT tb_termo_geral ON
 
-INSERT INTO tb_tge_termo_geral (tge_id_termo_geral, tge_no_nome) VALUES 
+INSERT INTO tb_termo_geral (id, nome) VALUES 
 
 (1,'ABONO DE PERMANÊNCIA'),
 (2,'ACORDO DE COOPERAÇÃO'),
@@ -177,4 +177,4 @@ INSERT INTO tb_tge_termo_geral (tge_id_termo_geral, tge_no_nome) VALUES
 (173,'TOMADA DE PREÇOS')
 
 
-SET IDENTITY_INSERT tb_tge_termo_geral OFF
+SET IDENTITY_INSERT tb_termo_geral OFF
