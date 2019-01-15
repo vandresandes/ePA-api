@@ -11,18 +11,18 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_tpp_tipo_processo")
+@Table(name = "tb_tipo_processo")
 public class TipoProcesso implements Serializable {
 
 	private static final long serialVersionUID = 5675517593523665765L;
 
 	@Id
-	@Column(name = "tpp_id_tipo_processo")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotNull
-	@Column(name = "tpp_no_nome")
+	@Column(name = "nome")
 	private String nome;
 	
 	public TipoProcesso() {}

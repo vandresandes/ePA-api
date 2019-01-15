@@ -15,22 +15,22 @@ import javax.validation.constraints.NotNull;
 import br.gov.ba.pge.epa.api.model.enums.EnumTipoDocumento;
 
 @Entity
-@Table(name = "tb_doc_documento")
+@Table(name = "tb_documento")
 public class Documento implements Serializable {
 
 	private static final long serialVersionUID = 5546552254086883202L;
 
 	@Id
-	@Column(name = "doc_id_documento")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotNull
-	@Column(name = "doc_no_nome")
+	@Column(name = "nome")
 	private String nome;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "doc_tp_tipo")
+	@Column(name = "tipo")
 	private EnumTipoDocumento tipo;
 	
 	public Documento() {}

@@ -11,18 +11,18 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_tge_termo_geral")
+@Table(name = "tb_termo_geral")
 public class TermoGeral implements Serializable {
 
 	private static final long serialVersionUID = -4738680175667060600L;
 
 	@Id
-	@Column(name = "tge_id_termo_geral")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotNull
-	@Column(name = "tge_no_nome")
+	@Column(name = "nome")
 	private String nome;
 	
 	public TermoGeral() {}

@@ -11,18 +11,18 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_nuc_nucleo")
+@Table(name = "tb_nucleo")
 public class Nucleo implements Serializable {
 
 	private static final long serialVersionUID = 4966971601865119020L;
 
 	@Id
-	@Column(name = "nuc_id_nucleo")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@NotNull
-	@Column(name = "nuc_no_nome")
+	@Column(name = "nome")
 	private String nome;
 
 	public Nucleo() {}

@@ -13,43 +13,43 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_che_checklist")
+@Table(name = "tb_checklist")
 public class Checklist implements Serializable {
 
 	private static final long serialVersionUID = 4490335643403211530L;
 
 	@Id
-	@Column(name = "che_id_checklist")
+	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "che_fk_nuc_id_nucleo")
+	@JoinColumn(name = "fk_id_nucleo")
 	@NotNull
 	private Nucleo nucleo;
 
 	@ManyToOne
-	@JoinColumn(name = "che_fk_tpp_id_tipo_processo")
+	@JoinColumn(name = "fk_id_tipo_processo")
 	@NotNull
 	private TipoProcesso tipoProcesso;
 
 	@ManyToOne
-	@JoinColumn(name = "che_fk_tge_id_termo_geral")
+	@JoinColumn(name = "fk_id_termo_geral")
 	@NotNull
 	private TermoGeral termoGeral;
 
 	@ManyToOne
-	@JoinColumn(name = "che_fk_tes_id_termo_especifico")
+	@JoinColumn(name = "fk_id_termo_especifico")
 	@NotNull
 	private TermoEspecifico termoEspecifico;
 
 	@ManyToOne
-	@JoinColumn(name = "che_fk_doc_id_documento")
+	@JoinColumn(name = "fk_id_documento")
 	@NotNull
 	private Documento documento;
 
 	@NotNull
-	@Column(name = "che_bo_status")
+	@Column(name = "bo_status")
 	private Boolean status;
 
 	public Long getId() {
