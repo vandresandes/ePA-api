@@ -2,11 +2,20 @@ package br.gov.ba.pge.epa.api.repository.filter;
 
 public class TipoProcessoFilter {
 
+	private String nome;
 	private Long idNucleo;
 	private Long idTermoGeral;
 	private Long idTermoEspecifico;
 	private Long idDocumento;
 	private Long idMateria;
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
 	public Long getIdNucleo() {
 		return idNucleo;

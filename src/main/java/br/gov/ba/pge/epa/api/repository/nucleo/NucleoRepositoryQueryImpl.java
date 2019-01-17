@@ -7,10 +7,6 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,19 +35,6 @@ public class NucleoRepositoryQueryImpl implements NucleoRepositoryQuery {
 			});
 		}
 		
-		return query.getResultList();
-	}
-
-	@Override
-	public List<String> findAllNomes() {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<String> cq = cb.createQuery(String.class);
-		Root<Nucleo> root = cq.from(Nucleo.class);
-
-		cq.select(root.get("nome"));
-		cq.orderBy(cb.asc(root.get("nome")));
-
-		TypedQuery<String> query = entityManager.createQuery(cq);
 		return query.getResultList();
 	}
 

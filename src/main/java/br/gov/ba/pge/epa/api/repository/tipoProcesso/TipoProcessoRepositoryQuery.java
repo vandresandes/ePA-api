@@ -9,5 +9,5 @@ public interface TipoProcessoRepositoryQuery {
 
 	public List<TipoProcesso> filtrar(TipoProcessoFilter filter);
 	
-	public List<String> findAllNomes();
+	public List<String> buscarNomes(TipoProcessoFilter filter);
 }

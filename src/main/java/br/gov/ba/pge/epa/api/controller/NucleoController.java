@@ -45,16 +45,16 @@ public class NucleoController {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
-	@GetMapping
-	public List<Nucleo> findAll() {
-		return repository.findAll(Sort.by("nome"));
-	}
-
 	@PostMapping
 	public ResponseEntity<Nucleo> save(@Valid @RequestBody Nucleo entity, HttpServletResponse response) {
 		Nucleo savedEntity = repository.save(entity);
 		publisher.publishEvent(new RecursoCriadoEvent(this, response, savedEntity.getId()));
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedEntity);
+	}
+
+	@DeleteMapping("/{id}")
+	public void deleteById(@PathVariable Long id) {
+		repository.deleteById(id);
 	}
 
 	@GetMapping("/{id}")
@@ -63,19 +63,19 @@ public class NucleoController {
 		return optional.isPresent() ? ResponseEntity.ok(optional.get()) : ResponseEntity.notFound().build();
 	}
 
-	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable Long id) {
-		repository.deleteById(id);
-	}
-
-	@GetMapping({ "/filtrar/nomes" })
-	public List<String> buscarNomes(NucleoFilter filter) {
-		return repository.buscarNomes(filter);
+	@GetMapping
+	public List<Nucleo> findAll() {
+		return repository.findAll(Sort.by("nome"));
 	}
 
 	@GetMapping("/filtrar")
 	public List<Nucleo> filtrar(NucleoFilter filter) {
 		return repository.filtrar(filter);
+	}
+
+	@GetMapping({ "/filtrar/nomes" })
+	public List<String> buscarNomes(NucleoFilter filter) {
+		return repository.buscarNomes(filter);
 	}
 
 	@GetMapping({"/buscarpaginado"})

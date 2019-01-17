@@ -1,13 +1,8 @@
 package br.gov.ba.pge.epa.api.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -49,18 +44,6 @@ public class TipoProcessoController {
 	private TipoProcessoRepository repository;
 	@Autowired
 	private ApplicationEventPublisher publisher;
-	@Autowired
-	private EntityManager entityManager;
-
-	@GetMapping
-	public List<TipoProcesso> findAll() {
-		return repository.findAll(Sort.by("nome"));
-	}
-
-	@GetMapping("/nomes")
-	public List<String> findAllNomes() {
-		return repository.findAllNomes();
-	}
 
 	@PostMapping
 	public ResponseEntity<TipoProcesso> save(@Valid @RequestBody TipoProcesso entity, HttpServletResponse response) {
@@ -69,15 +52,30 @@ public class TipoProcessoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedEntity);
 	}
 
+	@DeleteMapping("/{id}")
+	public void deleteById(@PathVariable Long id) {
+		repository.deleteById(id);
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<TipoProcesso> findById(@PathVariable Long id) {
 		Optional<TipoProcesso> optional = repository.findById(id);
 		return optional.isPresent() ? ResponseEntity.ok(optional.get()) : ResponseEntity.notFound().build();
 	}
 
-	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable Long id) {
-		repository.deleteById(id);
+	@GetMapping
+	public List<TipoProcesso> findAll() {
+		return repository.findAll(Sort.by("nome"));
+	}
+
+	@GetMapping("/filtrar")
+	public List<TipoProcesso> filtrar(TipoProcessoFilter filter) {
+		return repository.filtrar(filter);
+	}
+
+	@GetMapping({ "/filtrar/nomes" })
+	public List<String> buscarNomes(TipoProcessoFilter filter) {
+		return repository.buscarNomes(filter);
 	}
 
 	@GetMapping({ "/buscarpaginado" })
@@ -91,8 +89,7 @@ public class TipoProcessoController {
 			public Predicate toPredicate(Root<TipoProcesso> root, CriteriaQuery<?> query,
 					CriteriaBuilder criteriaBuilder) {
 				if (nome.isPresent() && EPAUtil.isNotBlank(nome.get())) {
-					return criteriaBuilder.like(criteriaBuilder.lower(root.get("nome")),
-							"%" + nome.get().toLowerCase() + "%");
+					return criteriaBuilder.like(criteriaBuilder.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%");
 				}
 				return null;
 			}
@@ -103,60 +100,4 @@ public class TipoProcessoController {
 		return resultados;
 	}
 
-	@GetMapping({ "/buscar" })
-	public List<TipoProcesso> buscar(@RequestParam("nome") Optional<String> nome) {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<TipoProcesso> cq = cb.createQuery(TipoProcesso.class);
-		Root<TipoProcesso> root = cq.from(TipoProcesso.class);
-
-		Predicate[] predicates = extractPredicates(cb, root, nome);
-		cq.select(cq.getSelection()).where(predicates);
-		cq.orderBy(cb.asc(root.get("nome")));
-
-		TypedQuery<TipoProcesso> query = entityManager.createQuery(cq);
-		return query.getResultList();
-	}
-
-	@GetMapping({ "/buscar/nomes", "/buscar/nomes/{nome}" })
-	public List<String> buscarNomes(@PathVariable Optional<String> nome) {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<String> cq = cb.createQuery(String.class);
-		Root<TipoProcesso> root = cq.from(TipoProcesso.class);
-
-		Predicate[] predicates = extractPredicates(cb, root, nome);
-		cq.select(root.get("nome")).where(predicates);
-		cq.orderBy(cb.asc(root.get("nome")));
-
-		TypedQuery<String> query = entityManager.createQuery(cq);
-		return query.getResultList();
-	}
-
-	private Predicate[] extractPredicates(CriteriaBuilder cb, Root<?> root, Optional<String> nome) {
-		List<Predicate> predicates = new ArrayList<>();
-		if (nome.isPresent() && EPAUtil.isNotBlank(nome.get())) {
-			predicates.add(cb.like(cb.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%"));
-		}
-		return predicates.toArray(new Predicate[] {});
-	}
-
-	@SuppressWarnings("unchecked")
-	@GetMapping("/materia/{idMateria}")
-	public List<TipoProcesso> buscarPorIdMateria(@PathVariable Long idMateria) {
-		try {
-			Query query = entityManager.createQuery(
-					"SELECT DISTINCT tp FROM TipoProcesso tp " 
-					+ "INNER JOIN Checklist AS c on c.tipoProcesso = tp.id "
-					+ "INNER JOIN Nucleo AS n on n.id = c.nucleo "
-					+ "INNER JOIN Materia AS m on m.id = n.materia " + "WHERE m.id = ?1");
-				query.setParameter(1, idMateria);
-			return query.getResultList();
-		} catch (NoResultException e) {
-			return new ArrayList<TipoProcesso>();
-		}
-	}
-
-	@GetMapping("/filtrar")
-	public List<TipoProcesso> filtrar(TipoProcessoFilter filter) {
-		return repository.filtrar(filter);
-	}
 }

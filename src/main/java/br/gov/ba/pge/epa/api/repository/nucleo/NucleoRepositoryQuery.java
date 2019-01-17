@@ -9,7 +9,5 @@ public interface NucleoRepositoryQuery {
 
 	public List<Nucleo> filtrar(NucleoFilter filter);
 
-	public List<String> findAllNomes();
-	
 	public List<String> buscarNomes(NucleoFilter filter);
 }
