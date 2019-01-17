@@ -8,4 +8,6 @@ import br.gov.ba.pge.epa.api.repository.filter.TipoProcessoFilter;
 public interface TipoProcessoRepositoryQuery {
 
 	public List<TipoProcesso> filtrar(TipoProcessoFilter filter);
+	
+	public List<String> findAllNomes();
 }

@@ -8,4 +8,6 @@ import br.gov.ba.pge.epa.api.repository.filter.TermoGeralFilter;
 public interface TermoGeralRepositoryQuery {
 
 	public List<TermoGeral> filtrar(TermoGeralFilter filter);
+	
+	public List<String> findAllNomes();
 }

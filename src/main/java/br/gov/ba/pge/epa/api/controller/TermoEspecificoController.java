@@ -56,6 +56,11 @@ public class TermoEspecificoController {
 	public List<TermoEspecifico> findAll() {
 		return repository.findAll(Sort.by("nome"));
 	}
+	
+	@GetMapping("/nomes")
+	public List<String> findAllNomes() {
+		return repository.findAllNomes();
+	}
 
 	@PostMapping
 	public ResponseEntity<TermoEspecifico> save(@Valid @RequestBody TermoEspecifico entity, HttpServletResponse response) {

@@ -1,11 +1,8 @@
 package br.gov.ba.pge.epa.api.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -47,25 +44,10 @@ public class NucleoController {
 	private NucleoRepository repository;
 	@Autowired
 	private ApplicationEventPublisher publisher;
-	@Autowired
-	private EntityManager entityManager;
 
 	@GetMapping
 	public List<Nucleo> findAll() {
 		return repository.findAll(Sort.by("nome"));
-	}
-
-	@GetMapping("/nomes")
-	public List<String> findAllNomes() {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<String> cq = cb.createQuery(String.class);
-		Root<Nucleo> root = cq.from(Nucleo.class);
-
-		cq.select(root.get("nome"));
-		cq.orderBy(cb.asc(root.get("nome")));
-
-		TypedQuery<String> query = entityManager.createQuery(cq);
-		return query.getResultList();
 	}
 
 	@PostMapping
@@ -84,6 +66,16 @@ public class NucleoController {
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
 		repository.deleteById(id);
+	}
+
+	@GetMapping({ "/filtrar/nomes" })
+	public List<String> buscarNomes(NucleoFilter filter) {
+		return repository.buscarNomes(filter);
+	}
+
+	@GetMapping("/filtrar")
+	public List<Nucleo> filtrar(NucleoFilter filter) {
+		return repository.filtrar(filter);
 	}
 
 	@GetMapping({"/buscarpaginado"})
@@ -109,71 +101,4 @@ public class NucleoController {
 	    return resultados;
 	}
 
-	@GetMapping({"/buscar"})
-	public List<Nucleo> buscar(
-			@RequestParam("nome") Optional<String> nome,
-			@RequestParam("page") Optional<Integer> page,
-			@RequestParam("size") Optional<Integer> size) {
-		
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Nucleo> cq = cb.createQuery(Nucleo.class);
-		Root<Nucleo> root = cq.from(Nucleo.class);
-		
-		Predicate[] predicates = extractPredicates(cb, root, nome);
-		cq.select(cq.getSelection()).where(predicates);
-		cq.orderBy(cb.asc(root.get("nome")));
-
-		TypedQuery<Nucleo> query = entityManager.createQuery(cq);
-		if (page.isPresent()) {
-			query.setFirstResult(page.get());
-		}
-		if (size.isPresent()) {
-			query.setMaxResults(size.get());
-		}
-		return query.getResultList();
-	}
-
-	@GetMapping({ "/buscar/nomes", "/buscar/nomes/{nome}" })
-	public List<String> buscarNomes(@PathVariable Optional<String> nome) {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<String> cq = cb.createQuery(String.class);
-		Root<Nucleo> root = cq.from(Nucleo.class);
-
-		Predicate[] predicates = extractPredicates(cb, root, nome);
-		cq.select(root.get("nome")).where(predicates);
-		cq.orderBy(cb.asc(root.get("nome")));
-
-		TypedQuery<String> query = entityManager.createQuery(cq);
-		return query.getResultList();
-	}
-
-	private Predicate[] extractPredicates(CriteriaBuilder cb, Root<?> root, Optional<String> nome) {
-		List<Predicate> predicates = new ArrayList<>();
-		if (nome.isPresent() && EPAUtil.isNotBlank(nome.get())) {
-			cb.and(cb.like(cb.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%"));
-			predicates.add(cb.like(cb.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%"));
-		}
-		return predicates.toArray(new Predicate[] {});
-	}
-	
-	@GetMapping("/materia/{id}")
-	public List<Nucleo> findByIdMateria(@PathVariable Long id) {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Nucleo> cq = cb.createQuery(Nucleo.class);
-		Root<Nucleo> root = cq.from(Nucleo.class);
-
-		Predicate predicate = cb.equal(root.get("materia"), id);
-		cq.select(root.get("nome")).where(predicate);
-		cq.orderBy(cb.asc(root.get("nome")));
-
-		TypedQuery<Nucleo> query = entityManager.createQuery(cq);
-		List<Nucleo> resultado = query.getResultList();
-		return resultado;
-	}
-
-	@GetMapping("/filtrar")
-	public List<Nucleo> filtrar(NucleoFilter filter) {
-		return repository.filtrar(filter);
-	}
-	
 }

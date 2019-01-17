@@ -54,6 +54,11 @@ public class DocumentoController {
 	public List<Documento> findAll() {
 		return repository.findAll(Sort.by("nome"));
 	}
+	
+	@GetMapping("/nomes")
+	public List<String> findAllNomes() {
+		return repository.findAllNomes();
+	}
 
 	@PostMapping
 	public ResponseEntity<Documento> save(@Valid @RequestBody Documento entity, HttpServletResponse response) {
@@ -109,7 +114,7 @@ public class DocumentoController {
 		TypedQuery<Documento> query = entityManager.createQuery(cq);
 		return query.getResultList();
 	}
-	
+
 	@GetMapping({ "/buscar/nomes", "/buscar/nomes/{nome}" })
 	public List<String> buscarNomes(@PathVariable Optional<String> nome) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();

@@ -54,6 +54,11 @@ public class TermoGeralController {
 	public List<TermoGeral> findAll() {
 		return repository.findAll(Sort.by("nome"));
 	}
+	
+	@GetMapping("/nomes")
+	public List<String> findAllNomes() {
+		return repository.findAllNomes();
+	}
 
 	@PostMapping
 	public ResponseEntity<TermoGeral> save(@Valid @RequestBody TermoGeral entity, HttpServletResponse response) {

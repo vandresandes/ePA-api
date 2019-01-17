@@ -8,4 +8,6 @@ import br.gov.ba.pge.epa.api.repository.filter.DocumentoFilter;
 public interface DocumentoRepositoryQuery {
 
 	public List<Documento> filtrar(DocumentoFilter filter);
+	
+	public List<String> findAllNomes();
 }

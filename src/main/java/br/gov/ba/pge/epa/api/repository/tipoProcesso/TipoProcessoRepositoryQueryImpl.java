@@ -7,6 +7,10 @@ import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -75,6 +79,19 @@ public class TipoProcessoRepositoryQueryImpl implements TipoProcessoRepositoryQu
 			sql.append(EPAUtil.adicionarSeparador(clausulasWhere, " AND "));
 		}
 		return sql.toString();
+	}
+
+	@Override
+	public List<String> findAllNomes() {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<String> cq = cb.createQuery(String.class);
+		Root<TipoProcesso> root = cq.from(TipoProcesso.class);
+
+		cq.select(root.get("nome"));
+		cq.orderBy(cb.asc(root.get("nome")));
+
+		TypedQuery<String> query = entityManager.createQuery(cq);
+		return query.getResultList();
 	}
 
 }

@@ -57,6 +57,11 @@ public class TipoProcessoController {
 		return repository.findAll(Sort.by("nome"));
 	}
 
+	@GetMapping("/nomes")
+	public List<String> findAllNomes() {
+		return repository.findAllNomes();
+	}
+
 	@PostMapping
 	public ResponseEntity<TipoProcesso> save(@Valid @RequestBody TipoProcesso entity, HttpServletResponse response) {
 		TipoProcesso savedEntity = repository.save(entity);
