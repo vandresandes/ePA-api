@@ -9,5 +9,5 @@ public interface TermoGeralRepositoryQuery {
 
 	public List<TermoGeral> filtrar(TermoGeralFilter filter);
 	
-	public List<String> findAllNomes();
+	public List<String> buscarNomes(TermoGeralFilter filter);
 }
