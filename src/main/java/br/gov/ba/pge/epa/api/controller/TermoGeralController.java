@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.TermoGeral;
 import br.gov.ba.pge.epa.api.repository.TermoGeralRepository;
+import br.gov.ba.pge.epa.api.repository.filter.TermoGeralFilter;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -130,4 +131,10 @@ public class TermoGeralController {
 		}
 		return predicates.toArray(new Predicate[] {});
 	}
+
+	@GetMapping("/filtrar")
+	public List<TermoGeral> filtrar(TermoGeralFilter filter) {
+		return repository.filtrar(filter);
+	}
+
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.TipoProcesso;
 import br.gov.ba.pge.epa.api.repository.TipoProcessoRepository;
+import br.gov.ba.pge.epa.api.repository.filter.TipoProcessoFilter;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -47,7 +50,7 @@ public class TipoProcessoController {
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	@Autowired
-    private EntityManager entityManager;
+	private EntityManager entityManager;
 
 	@GetMapping
 	public List<TipoProcesso> findAll() {
@@ -72,30 +75,30 @@ public class TipoProcessoController {
 		repository.deleteById(id);
 	}
 
-	@GetMapping({"/buscarpaginado"})
-	public Page<TipoProcesso> buscarPaginado(
-			@RequestParam("nome") Optional<String> nome,
-			@RequestParam("page") Optional<Integer> page,
-			@RequestParam("size") Optional<Integer> size) {
-		
+	@GetMapping({ "/buscarpaginado" })
+	public Page<TipoProcesso> buscarPaginado(@RequestParam("nome") Optional<String> nome,
+			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
+
 		Specification<TipoProcesso> specification = new Specification<TipoProcesso>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public Predicate toPredicate(Root<TipoProcesso> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+			public Predicate toPredicate(Root<TipoProcesso> root, CriteriaQuery<?> query,
+					CriteriaBuilder criteriaBuilder) {
 				if (nome.isPresent() && EPAUtil.isNotBlank(nome.get())) {
-					return criteriaBuilder.like(criteriaBuilder.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%");
+					return criteriaBuilder.like(criteriaBuilder.lower(root.get("nome")),
+							"%" + nome.get().toLowerCase() + "%");
 				}
 				return null;
 			}
-		}; 
+		};
 
-	    PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "nome");
-	    Page<TipoProcesso> resultados = repository.findAll(specification, pageable);
-	    return resultados;
+		PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "nome");
+		Page<TipoProcesso> resultados = repository.findAll(specification, pageable);
+		return resultados;
 	}
 
-	@GetMapping({"/buscar"})
+	@GetMapping({ "/buscar" })
 	public List<TipoProcesso> buscar(@RequestParam("nome") Optional<String> nome) {
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<TipoProcesso> cq = cb.createQuery(TipoProcesso.class);
@@ -129,5 +132,26 @@ public class TipoProcessoController {
 			predicates.add(cb.like(cb.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[] {});
+	}
+
+	@SuppressWarnings("unchecked")
+	@GetMapping("/materia/{idMateria}")
+	public List<TipoProcesso> buscarPorIdMateria(@PathVariable Long idMateria) {
+		try {
+			Query query = entityManager.createQuery(
+					"SELECT DISTINCT tp FROM TipoProcesso tp " 
+					+ "INNER JOIN Checklist AS c on c.tipoProcesso = tp.id "
+					+ "INNER JOIN Nucleo AS n on n.id = c.nucleo "
+					+ "INNER JOIN Materia AS m on m.id = n.materia " + "WHERE m.id = ?1");
+				query.setParameter(1, idMateria);
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return new ArrayList<TipoProcesso>();
+		}
+	}
+
+	@GetMapping("/filtrar")
+	public List<TipoProcesso> filtrar(TipoProcessoFilter filter) {
+		return repository.filtrar(filter);
 	}
 }

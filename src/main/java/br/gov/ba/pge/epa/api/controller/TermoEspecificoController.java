@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.TermoEspecifico;
 import br.gov.ba.pge.epa.api.repository.TermoEspecificoRepository;
+import br.gov.ba.pge.epa.api.repository.filter.TermoEspecificoFilter;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -129,5 +132,29 @@ public class TermoEspecificoController {
 			predicates.add(cb.like(cb.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[] {});
+	}
+	
+	@SuppressWarnings("unchecked")
+	@GetMapping("/buscarPorIdNucleoTipoProcesso/{idTipoProcesso}")
+	public List<TermoEspecifico> buscarPorIdNucleoTipoProcesso(
+			@RequestParam("idNucleo") Optional<Integer> idNucleo, 
+			@RequestParam("idTipoProcesso") Optional<Integer> idTipoProcesso) {
+		try {
+			Query query = entityManager.createQuery("SELECT DISTINCT te FROM TermoEspecifico te "
+					+ "INNER JOIN Checklist AS c on c.termoEspecifico = te.id "
+					+ "INNER JOIN Nucleo AS n on n.id = c.nucleo "
+					+ "INNER JOIN TipoProcesso AS tp on tp.id = c.tipoProcesso "
+					+ "WHERE n.id = ?idNucleo AND tp.id = ?idTipoProcesso");
+			query.setParameter("idNucleo", idNucleo);
+			query.setParameter("idTipoProcesso", idTipoProcesso);
+			return query.getResultList();
+		} catch (NoResultException e) {
+			return new ArrayList<TermoEspecifico>();
+		}
+	}
+
+	@GetMapping("/filtrar")
+	public List<TermoEspecifico> filtrar(TermoEspecificoFilter filter) {
+		return repository.filtrar(filter);
 	}
 }

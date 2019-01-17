@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.Nucleo;
 import br.gov.ba.pge.epa.api.repository.NucleoRepository;
+import br.gov.ba.pge.epa.api.repository.filter.NucleoFilter;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -153,6 +154,26 @@ public class NucleoController {
 			predicates.add(cb.like(cb.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[] {});
+	}
+	
+	@GetMapping("/materia/{id}")
+	public List<Nucleo> findByIdMateria(@PathVariable Long id) {
+		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+		CriteriaQuery<Nucleo> cq = cb.createQuery(Nucleo.class);
+		Root<Nucleo> root = cq.from(Nucleo.class);
+
+		Predicate predicate = cb.equal(root.get("materia"), id);
+		cq.select(root.get("nome")).where(predicate);
+		cq.orderBy(cb.asc(root.get("nome")));
+
+		TypedQuery<Nucleo> query = entityManager.createQuery(cq);
+		List<Nucleo> resultado = query.getResultList();
+		return resultado;
+	}
+
+	@GetMapping("/filtrar")
+	public List<Nucleo> filtrar(NucleoFilter filter) {
+		return repository.filtrar(filter);
 	}
 	
 }

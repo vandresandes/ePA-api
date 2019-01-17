@@ -35,6 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.Documento;
 import br.gov.ba.pge.epa.api.repository.DocumentoRepository;
+import br.gov.ba.pge.epa.api.repository.filter.DocumentoFilter;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -129,5 +130,10 @@ public class DocumentoController {
 			predicates.add(cb.like(cb.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%"));
 		}
 		return predicates.toArray(new Predicate[] {});
+	}
+
+	@GetMapping("/filtrar")
+	public List<Documento> filtrar(DocumentoFilter filter) {
+		return repository.filtrar(filter);
 	}
 }
