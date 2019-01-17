@@ -39,7 +39,7 @@ public class TermoEspecificoRepositoryQueryImpl implements TermoEspecificoReposi
 
 	private String montarQueryFiltrar(List<String> clausulasWhere, Map<String, Object> parametros, TermoEspecificoFilter filter) {
 		final StringBuffer sql = new StringBuffer();
-		sql.append("SELECT DISTINCT te FROM TermoGeral te ");
+		sql.append("SELECT DISTINCT te FROM TermoEspecifico te ");
 		sql.append("INNER JOIN Checklist AS c on c.termoEspecifico = te.id ");
 		sql.append("INNER JOIN Nucleo AS n on n.id = c.nucleo ");
 		sql.append("INNER JOIN TipoProcesso AS tp on tp.id = c.tipoProcesso ");
