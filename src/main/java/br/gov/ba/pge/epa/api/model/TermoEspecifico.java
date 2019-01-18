@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "tb_termo_especifico")
 public class TermoEspecifico implements Serializable {
 
-	private static final long serialVersionUID = 6306726478402128628L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "id")
@@ -24,9 +24,10 @@ public class TermoEspecifico implements Serializable {
 	@NotNull
 	@Column(name = "nome")
 	private String nome;
-	
-	public TermoEspecifico() {}
-	
+
+	public TermoEspecifico() {
+	}
+
 	public TermoEspecifico(String nome) {
 		this.nome = nome;
 	}

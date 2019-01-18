@@ -1,5 +1,3 @@
-USE [epa]
-
 SET IDENTITY_INSERT tb_checklist ON
 
 INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_status) VALUES
@@ -9445,6 +9443,5 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (9403,9,32,2,325,253,1),
 (9404,9,32,2,325,701,1),
 (9405,9,32,2,325,322,1)
-
 
 SET IDENTITY_INSERT tb_checklist OFF

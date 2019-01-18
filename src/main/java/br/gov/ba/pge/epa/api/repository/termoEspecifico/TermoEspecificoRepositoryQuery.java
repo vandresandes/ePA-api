@@ -9,5 +9,5 @@ public interface TermoEspecificoRepositoryQuery {
 
 	public List<TermoEspecifico> filtrar(TermoEspecificoFilter filter);
 	
-	public List<String> findAllNomes();
+	public List<String> buscarNomes(TermoEspecificoFilter filter);
 }

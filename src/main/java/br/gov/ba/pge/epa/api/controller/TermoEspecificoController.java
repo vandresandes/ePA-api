@@ -1,13 +1,8 @@
 package br.gov.ba.pge.epa.api.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -49,18 +44,6 @@ public class TermoEspecificoController {
 	private TermoEspecificoRepository repository;
 	@Autowired
 	private ApplicationEventPublisher publisher;
-	@Autowired
-	private EntityManager entityManager;
-
-	@GetMapping
-	public List<TermoEspecifico> findAll() {
-		return repository.findAll(Sort.by("nome"));
-	}
-	
-	@GetMapping("/nomes")
-	public List<String> findAllNomes() {
-		return repository.findAllNomes();
-	}
 
 	@PostMapping
 	public ResponseEntity<TermoEspecifico> save(@Valid @RequestBody TermoEspecifico entity, HttpServletResponse response) {
@@ -69,17 +52,32 @@ public class TermoEspecificoController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedEntity);
 	}
 
+	@DeleteMapping("/{id}")
+	public void deleteById(@PathVariable Long id) {
+		repository.deleteById(id);
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<TermoEspecifico> findById(@PathVariable Long id) {
 		Optional<TermoEspecifico> optional = repository.findById(id);
 		return optional.isPresent() ? ResponseEntity.ok(optional.get()) : ResponseEntity.notFound().build();
 	}
 
-	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable Long id) {
-		repository.deleteById(id);
+	@GetMapping
+	public List<TermoEspecifico> findAll() {
+		return repository.findAll(Sort.by("nome"));
 	}
-	
+
+	@GetMapping("/filtrar")
+	public List<TermoEspecifico> filtrar(TermoEspecificoFilter filter) {
+		return repository.filtrar(filter);
+	}
+
+	@GetMapping({ "/filtrar/nomes" })
+	public List<String> buscarNomes(TermoEspecificoFilter filter) {
+		return repository.buscarNomes(filter);
+	}
+
 	@GetMapping({"/buscarpaginado"})
 	public Page<TermoEspecifico> buscarPaginado(
 			@RequestParam("nome") Optional<String> nome,
@@ -103,63 +101,4 @@ public class TermoEspecificoController {
 	    return resultados;
 	}
 
-	@GetMapping({"/buscar"})
-	public List<TermoEspecifico> buscar(@RequestParam("nome") Optional<String> nome) {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<TermoEspecifico> cq = cb.createQuery(TermoEspecifico.class);
-		Root<TermoEspecifico> root = cq.from(TermoEspecifico.class);
-
-		Predicate[] predicates = extractPredicates(cb, root, nome);
-		cq.select(cq.getSelection()).where(predicates);
-		cq.orderBy(cb.asc(root.get("nome")));
-
-		TypedQuery<TermoEspecifico> query = entityManager.createQuery(cq);
-		return query.getResultList();
-	}
-	
-	@GetMapping({ "/buscar/nomes", "/buscar/nomes/{nome}" })
-	public List<String> buscarNomes(@PathVariable Optional<String> nome) {
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<String> cq = cb.createQuery(String.class);
-		Root<TermoEspecifico> root = cq.from(TermoEspecifico.class);
-
-		Predicate[] predicates = extractPredicates(cb, root, nome);
-		cq.select(root.get("nome")).where(predicates);
-		cq.orderBy(cb.asc(root.get("nome")));
-
-		TypedQuery<String> query = entityManager.createQuery(cq);
-		return query.getResultList();
-	}
-
-	private Predicate[] extractPredicates(CriteriaBuilder cb, Root<?> root, Optional<String> nome) {
-		List<Predicate> predicates = new ArrayList<>();
-		if (nome.isPresent() && EPAUtil.isNotBlank(nome.get())) {
-			predicates.add(cb.like(cb.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%"));
-		}
-		return predicates.toArray(new Predicate[] {});
-	}
-	
-	@SuppressWarnings("unchecked")
-	@GetMapping("/buscarPorIdNucleoTipoProcesso/{idTipoProcesso}")
-	public List<TermoEspecifico> buscarPorIdNucleoTipoProcesso(
-			@RequestParam("idNucleo") Optional<Integer> idNucleo, 
-			@RequestParam("idTipoProcesso") Optional<Integer> idTipoProcesso) {
-		try {
-			Query query = entityManager.createQuery("SELECT DISTINCT te FROM TermoEspecifico te "
-					+ "INNER JOIN Checklist AS c on c.termoEspecifico = te.id "
-					+ "INNER JOIN Nucleo AS n on n.id = c.nucleo "
-					+ "INNER JOIN TipoProcesso AS tp on tp.id = c.tipoProcesso "
-					+ "WHERE n.id = ?idNucleo AND tp.id = ?idTipoProcesso");
-			query.setParameter("idNucleo", idNucleo);
-			query.setParameter("idTipoProcesso", idTipoProcesso);
-			return query.getResultList();
-		} catch (NoResultException e) {
-			return new ArrayList<TermoEspecifico>();
-		}
-	}
-
-	@GetMapping("/filtrar")
-	public List<TermoEspecifico> filtrar(TermoEspecificoFilter filter) {
-		return repository.filtrar(filter);
-	}
 }

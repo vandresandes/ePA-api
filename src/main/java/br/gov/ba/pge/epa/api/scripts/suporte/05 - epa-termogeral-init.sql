@@ -176,5 +176,4 @@ INSERT INTO tb_termo_geral (id, nome) VALUES
 (172,'TOMADA DE CONTAS'),
 (173,'TOMADA DE PREÇOS')
 
-
 SET IDENTITY_INSERT tb_termo_geral OFF

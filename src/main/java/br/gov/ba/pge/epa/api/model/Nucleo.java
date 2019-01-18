@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "tb_nucleo")
 public class Nucleo implements Serializable {
 
-	private static final long serialVersionUID = 4966971601865119020L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "id")

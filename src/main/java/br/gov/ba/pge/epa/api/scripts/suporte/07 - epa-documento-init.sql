@@ -1,5 +1,3 @@
-USE [epa]
-
 SET IDENTITY_INSERT tb_documento ON
 
 INSERT INTO tb_documento (id, nome, tipo) VALUES
@@ -958,6 +956,5 @@ INSERT INTO tb_documento (id, nome, tipo) VALUES
 (952,'Prova da titularidade do domínio (escritura) ou da legitimidade de posse (contrato de locação, por exemplo) que permita a locação.','EM_ANALISE'),
 (953,'Redução a termo das necessidades de localização e instalação que condicionem a escolha da Administração;','EM_ANALISE'),
 (954,'Verificação acerca da inexistência de sistema de registro de preços para o objeto licitado (art. 6º, §1º, Decreto estadual n. 12.366/2010) de forma a que se possa fazer a contratação desejada sem necessidade de deflagração de nova licitação.  ','EM_ANALISE')
-
 
 SET IDENTITY_INSERT tb_documento OFF

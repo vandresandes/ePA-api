@@ -1,4 +1,4 @@
-package br.gov.ba.pge.epa.api.repository.materia;
+package br.gov.ba.pge.epa.api.repository.checklist;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,22 +10,22 @@ import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.gov.ba.pge.epa.api.model.Materia;
-import br.gov.ba.pge.epa.api.repository.filter.MateriaFilter;
+import br.gov.ba.pge.epa.api.model.Checklist;
+import br.gov.ba.pge.epa.api.repository.filter.ChecklistFilter;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
-public class MateriaRepositoryQueryImpl implements MateriaRepositoryQuery {
+public class ChecklistRepositoryQueryImpl implements ChecklistRepositoryQuery {
 
 	@Autowired
 	private EntityManager entityManager;
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Materia> filtrar(MateriaFilter filter) {
+	public List<Checklist> filtrar(ChecklistFilter filter) {
 		List<String> clausulasWhere = new ArrayList<>();
 		Map<String, Object> parametros = new HashMap<>();
 		String sql = montarQueryFiltrar(clausulasWhere, parametros, filter);
-		
+
 		Query query = entityManager.createQuery(sql);
 
 		if (!parametros.isEmpty()) {
@@ -33,19 +33,19 @@ public class MateriaRepositoryQueryImpl implements MateriaRepositoryQuery {
 				query.setParameter(entrySet.getKey(), entrySet.getValue());
 			});
 		}
-		
+
 		return query.getResultList();
 	}
 
-	private String montarQueryFiltrar(List<String> clausulasWhere, Map<String, Object> parametros, MateriaFilter filter) {
+	private String montarQueryFiltrar(List<String> clausulasWhere, Map<String, Object> parametros, ChecklistFilter filter) {
 		final StringBuffer sql = new StringBuffer();
-		sql.append("SELECT DISTINCT m FROM Materia m ");
-		sql.append("INNER JOIN Nucleo AS n on n.materia = m.id ");
-		sql.append("INNER JOIN Checklist AS c on c.nucleo = n.id ");
+		sql.append("SELECT DISTINCT c FROM Checklist c ");
+		sql.append("INNER JOIN Nucleo AS n on n.id = c.nucleo ");
 		sql.append("INNER JOIN TipoProcesso AS tp on tp.id = c.tipoProcesso ");
 		sql.append("INNER JOIN TermoGeral AS tg on tg.id = c.termoGeral ");
 		sql.append("INNER JOIN TermoEspecifico AS te on te.id = c.termoEspecifico ");
 		sql.append("INNER JOIN Documento AS doc on doc.id = c.documento ");
+		sql.append("INNER JOIN Materia AS m on m.id = n.materia ");
 
 		if (filter != null) {
 			if (filter.getIdNucleo() != null) {
@@ -68,13 +68,17 @@ public class MateriaRepositoryQueryImpl implements MateriaRepositoryQuery {
 				clausulasWhere.add("doc.id = :idDocumento");
 				parametros.put("idDocumento", filter.getIdDocumento());
 			}
+			if (filter.getIdMateria() != null) {
+				clausulasWhere.add("m.id = :idMateria");
+				parametros.put("idMateria", filter.getIdMateria());
+			}
 		}
-		
+
 		if (!clausulasWhere.isEmpty()) {
 			sql.append(" WHERE ");
 			sql.append(EPAUtil.adicionarSeparador(clausulasWhere, " AND "));
 		}
-		sql.append(" ORDER BY m.nome ASC ");
+		sql.append(" ORDER BY c.status DESC ");
 		
 		return sql.toString();
 	}

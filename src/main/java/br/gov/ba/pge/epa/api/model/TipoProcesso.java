@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "tb_tipo_processo")
 public class TipoProcesso implements Serializable {
 
-	private static final long serialVersionUID = 5675517593523665765L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "id")
@@ -24,13 +24,14 @@ public class TipoProcesso implements Serializable {
 	@NotNull
 	@Column(name = "nome")
 	private String nome;
-	
-	public TipoProcesso() {}
-	
+
+	public TipoProcesso() {
+	}
+
 	public TipoProcesso(String nome) {
 		this.nome = nome;
 	}
-	
+
 	public TipoProcesso(Long id, String nome) {
 		this.id = id;
 		this.nome = nome;

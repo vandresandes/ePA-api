@@ -97,6 +97,8 @@ public class NucleoRepositoryQueryImpl implements NucleoRepositoryQuery {
 			sql.append(" WHERE ");
 			sql.append(EPAUtil.adicionarSeparador(clausulasWhere, " AND "));
 		}
+		sql.append(" ORDER BY n.nome ASC ");
+		
 		return sql.toString();
 	}
 
@@ -141,6 +143,8 @@ public class NucleoRepositoryQueryImpl implements NucleoRepositoryQuery {
 			sql.append(" WHERE ");
 			sql.append(EPAUtil.adicionarSeparador(clausulasWhere, " AND "));
 		}
+		sql.append(" ORDER BY n.nome ASC ");
+		
 		return sql.toString();
 	}
 

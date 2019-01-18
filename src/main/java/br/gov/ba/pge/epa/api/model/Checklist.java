@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "tb_checklist")
 public class Checklist implements Serializable {
 
-	private static final long serialVersionUID = 4490335643403211530L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "id")

@@ -9,5 +9,5 @@ public interface DocumentoRepositoryQuery {
 
 	public List<Documento> filtrar(DocumentoFilter filter);
 	
-	public List<String> findAllNomes();
+	public List<String> buscarNomes(DocumentoFilter filter);
 }

@@ -18,7 +18,7 @@ import br.gov.ba.pge.epa.api.model.enums.EnumTipoDocumento;
 @Table(name = "tb_documento")
 public class Documento implements Serializable {
 
-	private static final long serialVersionUID = 5546552254086883202L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "id")

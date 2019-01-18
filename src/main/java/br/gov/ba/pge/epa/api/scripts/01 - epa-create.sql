@@ -56,6 +56,21 @@ CREATE TABLE tb_materia (
 	nome VARCHAR(100) NOT NULL
 );
 
+CREATE TABLE tb_prioridade_tramitacao (
+	id BIGINT IDENTITY(1,1) NOT NULL,
+	nome VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE tb_sigilo_segredo_justica (
+	id BIGINT IDENTITY(1,1) NOT NULL,
+	nome VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE tb_motivo_sigilo_segredo_justica (
+	id BIGINT IDENTITY(1,1) NOT NULL,
+	nome VARCHAR(200) NOT NULL
+);
+
 -- CONSTRAINTS - PRIMARY KEYS
 ALTER TABLE tb_nucleo
     ADD CONSTRAINT PK__tb_nucleo PRIMARY KEY (id);
@@ -73,9 +88,14 @@ ALTER TABLE tb_origem
     ADD CONSTRAINT PK__tb_origem PRIMARY KEY (id);
 ALTER TABLE tb_materia
     ADD CONSTRAINT PK__tb_materia PRIMARY KEY (id);
+ALTER TABLE tb_prioridade_tramitacao
+    ADD CONSTRAINT PK__tb_prioridade_tramitacao PRIMARY KEY (id);
+ALTER TABLE tb_sigilo_segredo_justica
+    ADD CONSTRAINT PK__tb_sigilo_segredo_justica PRIMARY KEY (id);
+ALTER TABLE tb_motivo_sigilo_segredo_justica
+    ADD CONSTRAINT PK__tb_motivo_sigilo_segredo_justica PRIMARY KEY (id);
 
 -- CONSTRAINTS - FOREIGN KEYS
--- tb_che_checklist
 ALTER TABLE tb_checklist
     ADD CONSTRAINT FK__tb_checklist_fk_id_nucleo FOREIGN KEY (fk_id_nucleo) REFERENCES tb_nucleo(id);
 ALTER TABLE tb_checklist

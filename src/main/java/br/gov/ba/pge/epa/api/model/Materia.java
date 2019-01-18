@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "tb_materia")
 public class Materia implements Serializable {
 
-	private static final long serialVersionUID = 522456354986148607L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name = "id")

@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "tb_origem")
-public class Origem implements Serializable {
+@Table(name = "tb_prioridade_tramitacao")
+public class PrioridadeTramitacao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -24,10 +24,6 @@ public class Origem implements Serializable {
 	@NotNull
 	@Column(name = "nome")
 	private String nome;
-
-	@NotNull
-	@Column(name = "descricao")
-	private String descricao;
 
 	public Long getId() {
 		return id;
@@ -43,14 +39,6 @@ public class Origem implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
 	}
 
 }

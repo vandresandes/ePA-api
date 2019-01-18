@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -43,6 +41,7 @@ import br.gov.ba.pge.epa.api.model.TermoEspecifico;
 import br.gov.ba.pge.epa.api.model.TermoGeral;
 import br.gov.ba.pge.epa.api.model.TipoProcesso;
 import br.gov.ba.pge.epa.api.repository.ChecklistRepository;
+import br.gov.ba.pge.epa.api.repository.filter.ChecklistFilter;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -54,13 +53,6 @@ public class ChecklistController {
 	private ChecklistRepository repository;
 	@Autowired
 	private ApplicationEventPublisher publisher;
-	@Autowired
-	private EntityManager entityManager;
-
-	@GetMapping
-	public List<Checklist> findAll() {
-		return repository.findAll(Sort.by("id"));
-	}
 
 	@PostMapping
 	public ResponseEntity<Checklist> save(@Valid @RequestBody Checklist entity, HttpServletResponse response) {
@@ -69,48 +61,63 @@ public class ChecklistController {
 		return ResponseEntity.status(HttpStatus.CREATED).body(savedEntity);
 	}
 
+	@DeleteMapping("/{id}")
+	public void deleteById(@PathVariable Long id) {
+		repository.deleteById(id);
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Checklist> findById(@PathVariable Long id) {
 		Optional<Checklist> optional = repository.findById(id);
 		return optional.isPresent() ? ResponseEntity.ok(optional.get()) : ResponseEntity.notFound().build();
 	}
 
-	@DeleteMapping("/{id}")
-	public void deleteById(@PathVariable Long id) {
-		repository.deleteById(id);
+	@GetMapping
+	public List<Checklist> findAll() {
+		return repository.findAll(Sort.by("id"));
 	}
 
+	@GetMapping("/filtrar")
+	public List<Checklist> filtrar(ChecklistFilter filter) {
+		return repository.filtrar(filter);
+	}
 
-	@GetMapping({ "/buscar" })
-	public List<Checklist> buscar(
-			@RequestParam("nucleo") Optional<String> nucleo, 
+	@GetMapping({ "/buscarpaginado" })
+	public Page<Checklist> buscarPaginado(
+			@RequestParam("nucleo") Optional<String> nucleo,
 			@RequestParam("tipoProcesso") Optional<String> tipoProcesso,
 			@RequestParam("termoGeral") Optional<String> termoGeral,
 			@RequestParam("termoEspecifico") Optional<String> termoEspecifico,
-			@RequestParam("documento") Optional<String> documento,
-			@RequestParam("status") Optional<String> status) {
-		
-		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-		CriteriaQuery<Checklist> cq = cb.createQuery(Checklist.class);
-		Root<Checklist> root = cq.from(Checklist.class);
-		
-		Predicate[] predicates = extractPredicates(cb, root, nucleo, tipoProcesso, termoGeral, termoEspecifico, documento, status);
-		cq.select(cq.getSelection()).where(predicates);
+			@RequestParam("documento") Optional<String> documento, 
+			@RequestParam("status") Optional<String> status,
+			@RequestParam("page") Optional<Integer> page, 
+			@RequestParam("size") Optional<Integer> size) {
 
-		TypedQuery<Checklist> query = entityManager.createQuery(cq);
-		return query.getResultList();
+		Specification<Checklist> specification = new Specification<Checklist>() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Predicate toPredicate(Root<Checklist> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
+				Predicate[] predicates = extractPredicates(criteriaBuilder, root, nucleo, tipoProcesso, termoGeral, termoEspecifico, documento, status);
+				query.distinct(true);
+				return criteriaBuilder.and(predicates);
+			}
+		};
+		PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "id");
+		Page<Checklist> resultados = repository.findAll(specification, pageable);
+		return resultados;
 	}
 
 	private Predicate[] extractPredicates(CriteriaBuilder cb, Root<?> root, 
-			Optional<String> nucleo, 
+			Optional<String> nucleo,
 			Optional<String> tipoProcesso, 
 			Optional<String> termoGeral, 
-			Optional<String> termoEspecifico, 
+			Optional<String> termoEspecifico,
 			Optional<String> documento, 
 			Optional<String> status) {
 
 		List<Predicate> predicates = new ArrayList<>();
-		
+
 		if (nucleo.isPresent() && EPAUtil.isNotBlank(nucleo.get())) {
 			Join<Checklist, Nucleo> joinNucleo = root.join("nucleo", JoinType.LEFT);
 			predicates.add(cb.like(cb.lower(joinNucleo.get("nome")), "%" + nucleo.get().toLowerCase() + "%"));
@@ -134,33 +141,7 @@ public class ChecklistController {
 		if (status.isPresent() && EPAUtil.isNotBlank(status.get())) {
 			predicates.add(cb.equal(root.get("status"), BooleanUtils.toBoolean(status.get())));
 		}
-        return predicates.toArray(new Predicate[predicates.size()]);
+		return predicates.toArray(new Predicate[predicates.size()]);
 	}
-	
-	@GetMapping({"/buscarpaginado"})
-	public Page<Checklist> buscarPaginado(
-			@RequestParam("nucleo") Optional<String> nucleo, 
-			@RequestParam("tipoProcesso") Optional<String> tipoProcesso,
-			@RequestParam("termoGeral") Optional<String> termoGeral,
-			@RequestParam("termoEspecifico") Optional<String> termoEspecifico,
-			@RequestParam("documento") Optional<String> documento,
-			@RequestParam("status") Optional<String> status,
-			@RequestParam("page") Optional<Integer> page,
-			@RequestParam("size") Optional<Integer> size) {
-		
-		Specification<Checklist> specification = new Specification<Checklist>() {
-			private static final long serialVersionUID = 1L;
-			
-			@Override
-			public Predicate toPredicate(Root<Checklist> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-				Predicate[] predicates = extractPredicates(criteriaBuilder, root, nucleo, tipoProcesso, termoGeral, termoEspecifico, documento, status);
-				query.distinct(true);
-				return criteriaBuilder.and(predicates);
-			}
-		};
-		PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "id");
-		Page<Checklist> resultados = repository.findAll(specification, pageable);
-		return resultados;
-	}
-	
+
 }

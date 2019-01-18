@@ -1,21 +1,13 @@
 package br.gov.ba.pge.epa.api.repository.filter;
 
-public class TermoEspecificoFilter {
+public class ChecklistFilter {
 
-	private String nome;
 	private Long idNucleo;
 	private Long idTipoProcesso;
 	private Long idTermoGeral;
+	private Long idTermoEspecifico;
 	private Long idDocumento;
 	private Long idMateria;
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
 
 	public Long getIdNucleo() {
 		return idNucleo;
@@ -39,6 +31,14 @@ public class TermoEspecificoFilter {
 
 	public void setIdTermoGeral(Long idTermoGeral) {
 		this.idTermoGeral = idTermoGeral;
+	}
+
+	public Long getIdTermoEspecifico() {
+		return idTermoEspecifico;
+	}
+
+	public void setIdTermoEspecifico(Long idTermoEspecifico) {
+		this.idTermoEspecifico = idTermoEspecifico;
 	}
 
 	public Long getIdDocumento() {
