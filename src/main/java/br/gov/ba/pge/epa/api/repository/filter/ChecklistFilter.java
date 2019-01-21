@@ -9,6 +9,15 @@ public class ChecklistFilter {
 	private Long idDocumento;
 	private Long idMateria;
 
+	private String nomeNucleo;
+	private String nomeTipoProcesso;
+	private String nomeTermoGeral;
+	private String nomeTermoEspecifico;
+	private String nomeDocumento;
+	private String nomeMateria;
+
+	private String status;
+
 	public Long getIdNucleo() {
 		return idNucleo;
 	}
@@ -55,6 +64,62 @@ public class ChecklistFilter {
 
 	public void setIdMateria(Long idMateria) {
 		this.idMateria = idMateria;
+	}
+
+	public String getNomeNucleo() {
+		return nomeNucleo;
+	}
+
+	public void setNomeNucleo(String nomeNucleo) {
+		this.nomeNucleo = nomeNucleo;
+	}
+
+	public String getNomeTipoProcesso() {
+		return nomeTipoProcesso;
+	}
+
+	public void setNomeTipoProcesso(String nomeTipoProcesso) {
+		this.nomeTipoProcesso = nomeTipoProcesso;
+	}
+
+	public String getNomeTermoGeral() {
+		return nomeTermoGeral;
+	}
+
+	public void setNomeTermoGeral(String nomeTermoGeral) {
+		this.nomeTermoGeral = nomeTermoGeral;
+	}
+
+	public String getNomeTermoEspecifico() {
+		return nomeTermoEspecifico;
+	}
+
+	public void setNomeTermoEspecifico(String nomeTermoEspecifico) {
+		this.nomeTermoEspecifico = nomeTermoEspecifico;
+	}
+
+	public String getNomeDocumento() {
+		return nomeDocumento;
+	}
+
+	public void setNomeDocumento(String nomeDocumento) {
+		this.nomeDocumento = nomeDocumento;
+	}
+
+	public String getNomeMateria() {
+		return nomeMateria;
+	}
+
+	public void setNomeMateria(String nomeMateria) {
+		this.nomeMateria = nomeMateria;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
