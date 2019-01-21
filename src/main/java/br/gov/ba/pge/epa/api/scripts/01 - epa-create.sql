@@ -6,6 +6,9 @@ DROP TABLE [dbo].[tb_termo_geral]
 DROP TABLE [dbo].[tb_documento]
 DROP TABLE [dbo].[tb_origem]
 DROP TABLE [dbo].[tb_materia]
+DROP TABLE [dbo].[tb_prioridade_tramitacao]
+DROP TABLE [dbo].[tb_sigilo_segredo_justica]
+DROP TABLE [dbo].[tb_motivo_sigilo_segredo_justica]
 
 
 CREATE TABLE tb_nucleo (
