@@ -76,44 +76,7 @@ public class TipoProcessoRepositoryQueryImpl implements TipoProcessoRepositoryQu
 			filtrarPorIdTermoEspecifico(clausulasWhere, parametros, filter.getIdTermoEspecifico());
 			filtrarPorIdDocumento(clausulasWhere, parametros, filter.getIdDocumento());
 			filtrarPorIdMateria(clausulasWhere, parametros, filter.getIdMateria());
-			
-			if (filter.getIdMateria() != null && filter.getIdOrigem() != null && filter.getIdNucleo() == null) {
-				if (EnumMateria.LICITACOES_E_CONTRATOS.getValor().equals(filter.getIdMateria())) {
-					EnumOrigem origem = EnumOrigem.buscarPeloValor(filter.getIdOrigem());
-					Long idNucleo = null;
-					
-					switch (origem) {
-					case SESAB:
-						idNucleo = EnumNucleo.NSESAB.getValor();
-						break;
-					case SEC:
-						idNucleo = EnumNucleo.NSAS.getValor();
-						break;
-					case SEPROMI:
-						idNucleo = EnumNucleo.NSAS.getValor();
-						break;
-					case SJDHDS:
-						idNucleo = EnumNucleo.NSAS.getValor();
-						break;
-					case PMBA:
-						idNucleo = EnumNucleo.NSSP.getValor();
-						break;
-					case PCBA:
-						idNucleo = EnumNucleo.NSSP.getValor();
-						break;
-					case SSP:
-						idNucleo = EnumNucleo.NSSP.getValor();
-						break;
-					case CBMBA:
-						idNucleo = EnumNucleo.NSSP.getValor();
-						break;
-					default:
-						idNucleo = EnumNucleo.NLC.getValor();
-						break;
-					}
-					filtrarPorIdNucleo(clausulasWhere, parametros, idNucleo);
-				} 
-			}
+			filtrarPorIdOrigem(clausulasWhere, parametros, filter);
 		}
 		
 		if (!clausulasWhere.isEmpty()) {
@@ -194,5 +157,45 @@ public class TipoProcessoRepositoryQueryImpl implements TipoProcessoRepositoryQu
 			parametros.put("idMateria", idMateria);
 		}
 	}
-	
+
+	private void filtrarPorIdOrigem(List<String> clausulasWhere, Map<String, Object> parametros, TipoProcessoFilter filter) {
+		if (filter.getIdMateria() != null && filter.getIdOrigem() != null && filter.getIdNucleo() == null) {
+			if (EnumMateria.LICITACOES_E_CONTRATOS.getValor().equals(filter.getIdMateria())) {
+				EnumOrigem origem = EnumOrigem.buscarPeloValor(filter.getIdOrigem());
+				Long idNucleo = null;
+				
+				switch (origem) {
+				case SESAB:
+					idNucleo = EnumNucleo.NSESAB.getValor();
+					break;
+				case SEC:
+					idNucleo = EnumNucleo.NSAS.getValor();
+					break;
+				case SEPROMI:
+					idNucleo = EnumNucleo.NSAS.getValor();
+					break;
+				case SJDHDS:
+					idNucleo = EnumNucleo.NSAS.getValor();
+					break;
+				case PMBA:
+					idNucleo = EnumNucleo.NSSP.getValor();
+					break;
+				case PCBA:
+					idNucleo = EnumNucleo.NSSP.getValor();
+					break;
+				case SSP:
+					idNucleo = EnumNucleo.NSSP.getValor();
+					break;
+				case CBMBA:
+					idNucleo = EnumNucleo.NSSP.getValor();
+					break;
+				default:
+					idNucleo = EnumNucleo.NLC.getValor();
+					break;
+				}
+				filtrarPorIdNucleo(clausulasWhere, parametros, idNucleo);
+			}
+		}
+	}
+
 }
