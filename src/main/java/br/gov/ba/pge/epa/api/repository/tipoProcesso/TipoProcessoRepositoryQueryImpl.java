@@ -12,6 +12,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.gov.ba.pge.epa.api.model.TipoProcesso;
+import br.gov.ba.pge.epa.api.model.enums.EnumMateria;
+import br.gov.ba.pge.epa.api.model.enums.EnumNucleo;
+import br.gov.ba.pge.epa.api.model.enums.EnumOrigem;
 import br.gov.ba.pge.epa.api.repository.filter.TipoProcessoFilter;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
@@ -67,29 +70,49 @@ public class TipoProcessoRepositoryQueryImpl implements TipoProcessoRepositoryQu
 		sql.append("INNER JOIN Materia AS m on m.id = n.materia ");
 
 		if (filter != null) {
-			if (StringUtils.isNotBlank(filter.getNome())) {
-				clausulasWhere.add("UPPER(tp.nome) LIKE :nome");
-				parametros.put("nome", "%" + filter.getNome().toUpperCase() + "%");
-			}
-			if (filter.getIdNucleo() != null) {
-				clausulasWhere.add("n.id = :idNucleo");
-				parametros.put("idNucleo", filter.getIdNucleo());
-			}
-			if (filter.getIdTermoGeral() != null) {
-				clausulasWhere.add("tg.id = :idTermoGeral");
-				parametros.put("idTermoGeral", filter.getIdTermoGeral());
-			}
-			if (filter.getIdTermoEspecifico() != null) {
-				clausulasWhere.add("te.id = :idTermoEspecifico");
-				parametros.put("idTermoEspecifico", filter.getIdTermoEspecifico());
-			}
-			if (filter.getIdDocumento() != null) {
-				clausulasWhere.add("doc.id = :idDocumento");
-				parametros.put("idDocumento", filter.getIdDocumento());
-			}
-			if (filter.getIdMateria() != null) {
-				clausulasWhere.add("m.id = :idMateria");
-				parametros.put("idMateria", filter.getIdMateria());
+			filtrarPorNome(clausulasWhere, parametros, filter.getNome());
+			filtrarPorIdNucleo(clausulasWhere, parametros, filter.getIdNucleo());
+			filtrarPorIdTermoGeral(clausulasWhere, parametros, filter.getIdTermoGeral());
+			filtrarPorIdTermoEspecifico(clausulasWhere, parametros, filter.getIdTermoEspecifico());
+			filtrarPorIdDocumento(clausulasWhere, parametros, filter.getIdDocumento());
+			filtrarPorIdMateria(clausulasWhere, parametros, filter.getIdMateria());
+			
+			if (filter.getIdMateria() != null && filter.getIdOrigem() != null && filter.getIdNucleo() == null) {
+				if (EnumMateria.LICITACOES_E_CONTRATOS.getValor().equals(filter.getIdMateria())) {
+					EnumOrigem origem = EnumOrigem.buscarPeloValor(filter.getIdOrigem());
+					Long idNucleo = null;
+					
+					switch (origem) {
+					case SESAB:
+						idNucleo = EnumNucleo.NSESAB.getValor();
+						break;
+					case SEC:
+						idNucleo = EnumNucleo.NSAS.getValor();
+						break;
+					case SEPROMI:
+						idNucleo = EnumNucleo.NSAS.getValor();
+						break;
+					case SJDHDS:
+						idNucleo = EnumNucleo.NSAS.getValor();
+						break;
+					case PMBA:
+						idNucleo = EnumNucleo.NSSP.getValor();
+						break;
+					case PCBA:
+						idNucleo = EnumNucleo.NSSP.getValor();
+						break;
+					case SSP:
+						idNucleo = EnumNucleo.NSSP.getValor();
+						break;
+					case CBMBA:
+						idNucleo = EnumNucleo.NSSP.getValor();
+						break;
+					default:
+						idNucleo = EnumNucleo.NLC.getValor();
+						break;
+					}
+					filtrarPorIdNucleo(clausulasWhere, parametros, idNucleo);
+				} 
 			}
 		}
 		
@@ -113,30 +136,12 @@ public class TipoProcessoRepositoryQueryImpl implements TipoProcessoRepositoryQu
 		sql.append("INNER JOIN Materia AS m on m.id = n.materia ");
 
 		if (filter != null) {
-			if (StringUtils.isNotBlank(filter.getNome())) {
-				clausulasWhere.add("UPPER(tp.nome) LIKE :nome");
-				parametros.put("nome", "%" + filter.getNome().toUpperCase() + "%");
-			}
-			if (filter.getIdNucleo() != null) {
-				clausulasWhere.add("n.id = :idNucleo");
-				parametros.put("idNucleo", filter.getIdNucleo());
-			}
-			if (filter.getIdTermoGeral() != null) {
-				clausulasWhere.add("tg.id = :idTermoGeral");
-				parametros.put("idTermoGeral", filter.getIdTermoGeral());
-			}
-			if (filter.getIdTermoEspecifico() != null) {
-				clausulasWhere.add("te.id = :idTermoEspecifico");
-				parametros.put("idTermoEspecifico", filter.getIdTermoEspecifico());
-			}
-			if (filter.getIdDocumento() != null) {
-				clausulasWhere.add("doc.id = :idDocumento");
-				parametros.put("idDocumento", filter.getIdDocumento());
-			}
-			if (filter.getIdMateria() != null) {
-				clausulasWhere.add("m.id = :idMateria");
-				parametros.put("idMateria", filter.getIdMateria());
-			}
+			filtrarPorNome(clausulasWhere, parametros, filter.getNome());
+			filtrarPorIdNucleo(clausulasWhere, parametros, filter.getIdNucleo());
+			filtrarPorIdTermoGeral(clausulasWhere, parametros, filter.getIdTermoGeral());
+			filtrarPorIdTermoEspecifico(clausulasWhere, parametros, filter.getIdTermoEspecifico());
+			filtrarPorIdDocumento(clausulasWhere, parametros, filter.getIdDocumento());
+			filtrarPorIdMateria(clausulasWhere, parametros, filter.getIdMateria());
 		}
 		
 		if (!clausulasWhere.isEmpty()) {
@@ -148,4 +153,46 @@ public class TipoProcessoRepositoryQueryImpl implements TipoProcessoRepositoryQu
 		return sql.toString();
 	}
 
+	private void filtrarPorNome(List<String> clausulasWhere, Map<String, Object> parametros, String nome) {
+		if (StringUtils.isNotBlank(nome)) {
+			clausulasWhere.add("UPPER(tp.nome) LIKE :nome");
+			parametros.put("nome", nome);
+		}
+	}
+
+	private void filtrarPorIdNucleo(List<String> clausulasWhere, Map<String, Object> parametros, Long idNucleo) {
+		if (idNucleo != null) {
+			clausulasWhere.add("n.id = :idNucleo");
+			parametros.put("idNucleo", idNucleo);
+		}
+	}
+
+	private void filtrarPorIdTermoGeral(List<String> clausulasWhere, Map<String, Object> parametros, Long idTermoGeral) {
+		if (idTermoGeral != null) {
+			clausulasWhere.add("tg.id = :idTermoGeral");
+			parametros.put("idTermoGeral", idTermoGeral);
+		}
+	}
+
+	private void filtrarPorIdTermoEspecifico(List<String> clausulasWhere, Map<String, Object> parametros, Long idTermoEspecifico) {
+		if (idTermoEspecifico != null) {
+			clausulasWhere.add("te.id = :idTermoEspecifico");
+			parametros.put("idTermoEspecifico", idTermoEspecifico);
+		}
+	}
+
+	private void filtrarPorIdDocumento(List<String> clausulasWhere, Map<String, Object> parametros, Long idDocumento) {
+		if (idDocumento != null) {
+			clausulasWhere.add("doc.id = :idDocumento");
+			parametros.put("idDocumento", idDocumento);
+		}
+	}
+
+	private void filtrarPorIdMateria(List<String> clausulasWhere, Map<String, Object> parametros, Long idMateria) {
+		if (idMateria != null) {
+			clausulasWhere.add("m.id = :idMateria");
+			parametros.put("idMateria", idMateria);
+		}
+	}
+	
 }

@@ -8,6 +8,7 @@ public class TipoProcessoFilter {
 	private Long idTermoEspecifico;
 	private Long idDocumento;
 	private Long idMateria;
+	private Long idOrigem;
 
 	public String getNome() {
 		return nome;
@@ -55,6 +56,14 @@ public class TipoProcessoFilter {
 
 	public void setIdMateria(Long idMateria) {
 		this.idMateria = idMateria;
+	}
+
+	public Long getIdOrigem() {
+		return idOrigem;
+	}
+
+	public void setIdOrigem(Long idOrigem) {
+		this.idOrigem = idOrigem;
 	}
 
 }
