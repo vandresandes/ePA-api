@@ -3,10 +3,6 @@ package br.gov.ba.pge.epa.api.controller;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -29,11 +25,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.gov.ba.pge.epa.api.controller.specification.TipoProcessoSpecification;
 import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.TipoProcesso;
 import br.gov.ba.pge.epa.api.repository.TipoProcessoRepository;
 import br.gov.ba.pge.epa.api.repository.filter.TipoProcessoFilter;
-import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -78,26 +74,17 @@ public class TipoProcessoController {
 		return repository.buscarNomes(filter);
 	}
 
-	@GetMapping({ "/buscarpaginado" })
-	public Page<TipoProcesso> buscarPaginado(@RequestParam("nome") Optional<String> nome,
-			@RequestParam("page") Optional<Integer> page, @RequestParam("size") Optional<Integer> size) {
-
-		Specification<TipoProcesso> specification = new Specification<TipoProcesso>() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Predicate toPredicate(Root<TipoProcesso> root, CriteriaQuery<?> query,
-					CriteriaBuilder criteriaBuilder) {
-				if (nome.isPresent() && EPAUtil.isNotBlank(nome.get())) {
-					return criteriaBuilder.like(criteriaBuilder.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%");
-				}
-				return null;
-			}
-		};
-
-		PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "nome");
-		Page<TipoProcesso> resultados = repository.findAll(specification, pageable);
-		return resultados;
+	@GetMapping({"/buscarpaginado"})
+	public Page<TipoProcesso> buscarPaginado(
+			TipoProcessoFilter filter,
+			@RequestParam("page") Optional<Integer> page,
+			@RequestParam("size") Optional<Integer> size) {
+		
+		Specification<TipoProcesso> specification = TipoProcessoSpecification.buscar(filter);
+		
+	    PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "nome");
+	    Page<TipoProcesso> resultados = repository.findAll(specification, pageable);
+	    return resultados;
 	}
 
 }

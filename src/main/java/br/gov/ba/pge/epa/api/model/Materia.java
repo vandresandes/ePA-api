@@ -25,6 +25,11 @@ public class Materia implements Serializable {
 	@Column(name = "nome")
 	private String nome;
 
+//	@ManyToOne
+//	@JoinColumn(name = "fk_id_origem")
+//	@NotNull
+//	private Origem origem;
+
 	public Long getId() {
 		return id;
 	}
@@ -40,5 +45,13 @@ public class Materia implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+//	public Origem getOrigem() {
+//		return origem;
+//	}
+//
+//	public void setOrigem(Origem origem) {
+//		this.origem = origem;
+//	}
 
 }

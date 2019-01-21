@@ -3,10 +3,6 @@ package br.gov.ba.pge.epa.api.controller;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -29,11 +25,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.gov.ba.pge.epa.api.controller.specification.TermoEspecificoSpecification;
 import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.TermoEspecifico;
 import br.gov.ba.pge.epa.api.repository.TermoEspecificoRepository;
 import br.gov.ba.pge.epa.api.repository.filter.TermoEspecificoFilter;
-import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -80,22 +76,12 @@ public class TermoEspecificoController {
 
 	@GetMapping({"/buscarpaginado"})
 	public Page<TermoEspecifico> buscarPaginado(
-			@RequestParam("nome") Optional<String> nome,
+			TermoEspecificoFilter filter,
 			@RequestParam("page") Optional<Integer> page,
 			@RequestParam("size") Optional<Integer> size) {
 		
-		Specification<TermoEspecifico> specification = new Specification<TermoEspecifico>() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Predicate toPredicate(Root<TermoEspecifico> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-				if (nome.isPresent() && EPAUtil.isNotBlank(nome.get())) {
-					return criteriaBuilder.like(criteriaBuilder.lower(root.get("nome")), "%" + nome.get().toLowerCase() + "%");
-				}
-				return null;
-			}
-		}; 
-
+		Specification<TermoEspecifico> specification = TermoEspecificoSpecification.buscar(filter);
+		
 	    PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "nome");
 	    Page<TermoEspecifico> resultados = repository.findAll(specification, pageable);
 	    return resultados;
