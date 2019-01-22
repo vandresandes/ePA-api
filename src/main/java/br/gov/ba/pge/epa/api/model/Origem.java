@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
+
 @Entity
 @Table(name = "tb_origem")
 public class Origem implements Serializable {
@@ -51,6 +53,10 @@ public class Origem implements Serializable {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	public String getNomeDescricao() {
+		return StringUtils.isNotBlank(nome) && StringUtils.isNotBlank(descricao) ? nome.concat(" - ").concat(descricao) : null;
 	}
 
 }
