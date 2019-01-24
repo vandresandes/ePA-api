@@ -78,7 +78,7 @@ public class ChecklistRepositoryQueryImpl implements ChecklistRepositoryQuery {
 			sql.append(" WHERE ");
 			sql.append(EPAUtil.adicionarSeparador(clausulasWhere, " AND "));
 		}
-		sql.append(" ORDER BY c.status DESC ");
+		sql.append(" ORDER BY c.obrigatorio DESC ");
 		
 		return sql.toString();
 	}

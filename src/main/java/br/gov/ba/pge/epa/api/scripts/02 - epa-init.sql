@@ -1710,7 +1710,7 @@ SET IDENTITY_INSERT tb_documento OFF
 
 SET IDENTITY_INSERT tb_checklist ON
 
-INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_status) VALUES
+INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio) VALUES
 
 (1,1,8,32,28,223,1),
 (2,1,8,32,28,607,1),
@@ -2714,7 +2714,7 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (1000,3,32,129,367,156,1)
 
 
-INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_status) VALUES
+INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio) VALUES
 
 (1001,3,32,40,371,39,1),
 (1002,3,32,40,371,903,1),
@@ -3718,7 +3718,7 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (2000,2,29,44,426,530,1)
 
 
-INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_status) VALUES
+INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio) VALUES
 
 (2001,2,29,44,426,264,0),
 (2002,2,29,44,426,946,1),
@@ -4722,7 +4722,7 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (3000,2,29,99,316,878,1)
 
 
-INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_status) VALUES
+INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio) VALUES
 
 (3001,2,29,99,316,386,1),
 (3002,2,29,99,316,832,1),
@@ -5726,7 +5726,7 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (4000,8,29,50,269,148,1)
 
 
-INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_status) VALUES
+INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio) VALUES
 
 (4001,8,29,50,269,163,1),
 (4002,8,29,50,269,135,1),
@@ -6730,7 +6730,7 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (5000,8,32,129,367,159,1)
 
 
-INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_status) VALUES
+INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio) VALUES
 
 (5001,8,32,129,367,156,1),
 (5002,8,32,129,435,734,1),
@@ -7734,7 +7734,7 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (6000,7,29,50,272,809,1)
 
 
-INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_status) VALUES
+INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio) VALUES
 
 (6001,7,29,50,272,148,1),
 (6002,7,29,50,272,163,1),
@@ -8738,7 +8738,7 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (7000,7,29,173,433,932,1)
 
 
-INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_status) VALUES
+INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio) VALUES
 
 (7001,7,29,173,433,653,0),
 (7002,7,29,173,433,18,1),
@@ -9742,7 +9742,7 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (8000,9,29,50,270,546,1)
 
 
-INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_status) VALUES
+INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio) VALUES
 
 (8001,9,29,50,270,697,1),
 (8002,9,29,50,270,802,1),
@@ -10746,7 +10746,7 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (9000,9,32,129,435,158,1)
 
 
-INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_status) VALUES
+INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio) VALUES
 
 (9001,9,32,129,435,677,1),
 (9002,9,32,129,435,161,1),

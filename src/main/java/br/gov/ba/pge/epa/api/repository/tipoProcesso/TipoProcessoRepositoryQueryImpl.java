@@ -119,7 +119,7 @@ public class TipoProcessoRepositoryQueryImpl implements TipoProcessoRepositoryQu
 	private void filtrarPorNome(List<String> clausulasWhere, Map<String, Object> parametros, String nome) {
 		if (StringUtils.isNotBlank(nome)) {
 			clausulasWhere.add("UPPER(tp.nome) LIKE :nome");
-			parametros.put("nome", nome);
+			parametros.put("nome", "%" + nome.toUpperCase() + "%");
 		}
 	}
 

@@ -45,7 +45,8 @@ CREATE TABLE tb_checklist (
 	fk_id_termo_geral BIGINT NOT NULL,
 	fk_id_termo_especifico BIGINT NOT NULL,
 	fk_id_documento BIGINT NOT NULL,
-	bo_status BIT NOT NULL
+	bo_obrigatorio BIT NOT NULL,
+	prioridade VARCHAR(10)
 );
 
 CREATE TABLE tb_origem (

@@ -3,6 +3,7 @@ package br.gov.ba.pge.epa.api.repository.filter;
 public class NucleoFilter {
 
 	private String nome;
+	private String nomeMateria;
 	private Long idTipoProcesso;
 	private Long idTermoGeral;
 	private Long idTermoEspecifico;
@@ -15,6 +16,14 @@ public class NucleoFilter {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+
+	public String getNomeMateria() {
+		return nomeMateria;
+	}
+
+	public void setNomeMateria(String nomeMateria) {
+		this.nomeMateria = nomeMateria;
 	}
 
 	public Long getIdTipoProcesso() {
