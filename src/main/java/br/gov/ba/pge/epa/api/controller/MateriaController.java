@@ -38,4 +38,10 @@ public class MateriaController {
 	public List<Materia> filtrar(MateriaFilter filter) {
 		return repository.filtrar(filter);
 	}
+
+	@GetMapping({ "/filtrar/nomes" })
+	public List<String> buscarNomes(MateriaFilter filter) {
+		return repository.buscarNomes(filter);
+	}
+
 }
