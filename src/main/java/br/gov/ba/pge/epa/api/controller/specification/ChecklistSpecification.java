@@ -37,26 +37,26 @@ public class ChecklistSpecification extends BaseSpecification<Checklist> {
 		if (filter != null) {
 			if (StringUtils.isNotBlank(filter.getNomeNucleo())) {
 				Join<Checklist, Nucleo> joinNucleo = root.join("nucleo", JoinType.INNER);
-				predicates.add(cb.like(cb.lower(joinNucleo.get("nome")), "%" + filter.getNomeNucleo().toLowerCase() + "%"));
+				predicates.add(cb.like(cb.lower(joinNucleo.get("nome")), containsLowerCase(filter.getNomeNucleo())));
 			}
 			if (StringUtils.isNotBlank(filter.getNomeTipoProcesso())) {
 				Join<Checklist, TipoProcesso> joinTipoProcesso = root.join("tipoProcesso", JoinType.INNER);
-				predicates.add(cb.like(cb.lower(joinTipoProcesso.get("nome")), "%" + filter.getNomeTipoProcesso().toLowerCase() + "%"));
+				predicates.add(cb.like(cb.lower(joinTipoProcesso.get("nome")), containsLowerCase(filter.getNomeTipoProcesso())));
 			}
 			if (StringUtils.isNotBlank(filter.getNomeTermoGeral())) {
 				Join<Checklist, TermoGeral> joinTermoGeral = root.join("termoGeral", JoinType.INNER);
-				predicates.add(cb.like(cb.lower(joinTermoGeral.get("nome")), "%" + filter.getNomeTermoGeral().toLowerCase() + "%"));
+				predicates.add(cb.like(cb.lower(joinTermoGeral.get("nome")), containsLowerCase(filter.getNomeTermoGeral())));
 			}
 			if (StringUtils.isNotBlank(filter.getNomeTermoEspecifico())) {
 				Join<Checklist, TermoEspecifico> joinTermoEspecifico = root.join("termoEspecifico", JoinType.INNER);
-				predicates.add(cb.like(cb.lower(joinTermoEspecifico.get("nome")), "%" + filter.getNomeTermoEspecifico().toLowerCase() + "%"));
+				predicates.add(cb.like(cb.lower(joinTermoEspecifico.get("nome")), containsLowerCase(filter.getNomeTermoEspecifico())));
 			}
 			if (StringUtils.isNotBlank(filter.getNomeDocumento())) {
 				Join<Checklist, Documento> joinDocumento = root.join("documento", JoinType.INNER);
-				predicates.add(cb.like(cb.lower(joinDocumento.get("nome")), "%" + filter.getNomeDocumento().toLowerCase() + "%"));
+				predicates.add(cb.like(cb.lower(joinDocumento.get("nome")), containsLowerCase(filter.getNomeDocumento())));
 			}
-			if (StringUtils.isNotBlank(filter.getObrigatorio())) {
-				predicates.add(cb.equal(root.get("obrigatorio"), BooleanUtils.toBoolean(filter.getObrigatorio())));
+			if (StringUtils.isNotBlank(filter.getComplexidade())) {
+				predicates.add(cb.equal(root.get("complexidade"), BooleanUtils.toBoolean(filter.getComplexidade())));
 			}
 			if (StringUtils.isNotBlank(filter.getPrioridade())) {
 				predicates.add(cb.equal(root.get("prioridade"), filter.getPrioridade()));

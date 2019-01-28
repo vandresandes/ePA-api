@@ -57,9 +57,9 @@ public class Checklist implements Serializable {
 	private Boolean obrigatorio;
 
 	@Enumerated(EnumType.STRING)
-	@Column(name = "prioridade")
+	@Column(name = "complexidade")
 	@NotNull
-	private EnumPrioridade prioridade;
+	private EnumPrioridade complexidade;
 
 	public Long getId() {
 		return id;
@@ -117,12 +117,12 @@ public class Checklist implements Serializable {
 		this.obrigatorio = obrigatorio;
 	}
 
-	public EnumPrioridade getPrioridade() {
-		return prioridade;
+	public EnumPrioridade getComplexidade() {
+		return complexidade;
 	}
 
-	public void setPrioridade(EnumPrioridade prioridade) {
-		this.prioridade = prioridade;
+	public void setComplexidade(EnumPrioridade complexidade) {
+		this.complexidade = complexidade;
 	}
 
 }

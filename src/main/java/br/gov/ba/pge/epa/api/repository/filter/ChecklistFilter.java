@@ -16,7 +16,7 @@ public class ChecklistFilter {
 	private String nomeDocumento;
 	private String nomeMateria;
 
-	private String obrigatorio;
+	private String complexidade;
 	private String prioridade;
 
 	public Long getIdNucleo() {
@@ -115,12 +115,12 @@ public class ChecklistFilter {
 		this.nomeMateria = nomeMateria;
 	}
 
-	public String getObrigatorio() {
-		return obrigatorio;
+	public String getComplexidade() {
+		return complexidade;
 	}
 
-	public void setObrigatorio(String obrigatorio) {
-		this.obrigatorio = obrigatorio;
+	public void setComplexidade(String complexidade) {
+		this.complexidade = complexidade;
 	}
 
 	public String getPrioridade() {
