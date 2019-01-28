@@ -1,3 +1,6 @@
+USE [epa]
+GO
+
 DROP TABLE [dbo].[tb_checklist]
 DROP TABLE [dbo].[tb_nucleo]
 DROP TABLE [dbo].[tb_tipo_processo]
@@ -46,7 +49,7 @@ CREATE TABLE tb_checklist (
 	fk_id_termo_especifico BIGINT NOT NULL,
 	fk_id_documento BIGINT NOT NULL,
 	bo_obrigatorio BIT NOT NULL,
-	prioridade VARCHAR(10)
+	complexidade VARCHAR(10)
 );
 
 CREATE TABLE tb_origem (
