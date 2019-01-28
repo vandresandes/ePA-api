@@ -9,9 +9,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.ba.pge.epa.api.controller.specification.ChecklistSpecification;
@@ -57,7 +55,7 @@ public class ChecklistController {
 		return optional.isPresent() ? ResponseEntity.ok(optional.get()) : ResponseEntity.notFound().build();
 	}
 
-	@GetMapping
+	@GetMapping("/all")
 	public List<Checklist> findAll() {
 		return repository.findAll(Sort.by("id"));
 	}
@@ -67,15 +65,9 @@ public class ChecklistController {
 		return repository.filtrar(filter);
 	}
 
-	@GetMapping({ "/buscarpaginado" })
-	public Page<Checklist> buscarPaginado(
-			ChecklistFilter filter, 
-			@RequestParam("page") Optional<Integer> page, 
-			@RequestParam("size") Optional<Integer> size) {
-		
+	@GetMapping
+	public Page<Checklist> buscarPaginado(ChecklistFilter filter, Pageable pageable) {
 		Specification<Checklist> specification = ChecklistSpecification.filtrar(filter);
-
-		PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "id");
 		Page<Checklist> resultados = repository.findAll(specification, pageable);
 		return resultados;
 	}

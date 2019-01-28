@@ -9,9 +9,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.ba.pge.epa.api.controller.specification.TipoProcessoSpecification;
@@ -57,7 +55,7 @@ public class TipoProcessoController {
 		return optional.isPresent() ? ResponseEntity.ok(optional.get()) : ResponseEntity.notFound().build();
 	}
 
-	@GetMapping
+	@GetMapping("/all")
 	public List<TipoProcesso> findAll() {
 		return repository.findAll(Sort.by("nome"));
 	}
@@ -67,22 +65,15 @@ public class TipoProcessoController {
 		return repository.filtrar(filter);
 	}
 
-	@GetMapping({ "/filtrar/nomes" })
+	@GetMapping({ "/nomes" })
 	public List<String> buscarNomes(TipoProcessoFilter filter) {
 		return repository.buscarNomes(filter);
 	}
 
-	@GetMapping({"/buscarpaginado"})
-	public Page<TipoProcesso> buscarPaginado(
-			TipoProcessoFilter filter,
-			@RequestParam("page") Optional<Integer> page,
-			@RequestParam("size") Optional<Integer> size) {
-		
+	@GetMapping
+	public Page<TipoProcesso> buscarPaginado(TipoProcessoFilter filter, Pageable pageable) {
 		Specification<TipoProcesso> specification = TipoProcessoSpecification.buscar(filter);
-		
-	    PageRequest pageable = PageRequest.of(page.get(), size.get(), Direction.ASC, "nome");
-	    Page<TipoProcesso> resultados = repository.findAll(specification, pageable);
-	    return resultados;
+	    return repository.findAll(specification, pageable);
 	}
 
 }
