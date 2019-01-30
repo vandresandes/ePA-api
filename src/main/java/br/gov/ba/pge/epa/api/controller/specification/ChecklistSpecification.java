@@ -55,11 +55,14 @@ public class ChecklistSpecification extends BaseSpecification<Checklist> {
 				Join<Checklist, Documento> joinDocumento = root.join("documento", JoinType.INNER);
 				predicates.add(cb.like(cb.lower(joinDocumento.get("nome")), containsLowerCase(filter.getNomeDocumento())));
 			}
-			if (StringUtils.isNotBlank(filter.getComplexidade())) {
-				predicates.add(cb.equal(root.get("complexidade"), BooleanUtils.toBoolean(filter.getComplexidade())));
+			if (StringUtils.isNotBlank(filter.getObrigatorio())) {
+				predicates.add(cb.equal(root.get("obrigatorio"), BooleanUtils.toBoolean(filter.getObrigatorio())));
 			}
-			if (StringUtils.isNotBlank(filter.getPrioridade())) {
-				predicates.add(cb.equal(root.get("prioridade"), filter.getPrioridade()));
+			if (StringUtils.isNotBlank(filter.getCondicao())) {
+				predicates.add(cb.like(cb.lower(root.get("condicao")), containsLowerCase(filter.getCondicao())));
+			}
+			if (StringUtils.isNotBlank(filter.getComplexidade())) {
+				predicates.add(cb.equal(root.get("complexidade"), filter.getComplexidade()));
 			}
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);
