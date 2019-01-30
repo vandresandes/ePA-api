@@ -46,7 +46,7 @@ public class NucleoController {
 
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
-		repository.deleteById(id);
+		// repository.deleteById(id);
 	}
 
 	@GetMapping("/{id}")
