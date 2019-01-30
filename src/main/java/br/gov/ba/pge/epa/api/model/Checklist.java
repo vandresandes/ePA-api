@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
 import br.gov.ba.pge.epa.api.model.enums.EnumPrioridade;
@@ -56,9 +57,12 @@ public class Checklist implements Serializable {
 	@Column(name = "bo_obrigatorio")
 	private Boolean obrigatorio;
 
+	@Column(name = "condicao")
+	@Max(100)
+	private String condicao;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "complexidade")
-	@NotNull
 	private EnumPrioridade complexidade;
 
 	public Long getId() {
@@ -115,6 +119,14 @@ public class Checklist implements Serializable {
 
 	public void setObrigatorio(Boolean obrigatorio) {
 		this.obrigatorio = obrigatorio;
+	}
+
+	public String getCondicao() {
+		return condicao;
+	}
+
+	public void setCondicao(String condicao) {
+		this.condicao = condicao;
 	}
 
 	public EnumPrioridade getComplexidade() {
