@@ -71,6 +71,10 @@ public class DocumentoRepositoryQueryImpl implements DocumentoRepositoryQuery {
 				clausulasWhere.add("UPPER(doc.nome) LIKE :nome");
 				parametros.put("nome", "%" + filter.getNome().toUpperCase() + "%");
 			}
+			if (filter.getTipo() != null) {
+				clausulasWhere.add("doc.tipo = :tipo");
+				parametros.put("tipo", filter.getTipo());
+			}
 			if (filter.getIdNucleo() != null) {
 				clausulasWhere.add("n.id = :idNucleo");
 				parametros.put("idNucleo", filter.getIdNucleo());

@@ -2,6 +2,7 @@ package br.gov.ba.pge.epa.api.repository.filter;
 
 public class TipoProcessoFilter {
 
+	private Long id;
 	private String nome;
 	private Long idNucleo;
 	private Long idTermoGeral;
@@ -9,6 +10,14 @@ public class TipoProcessoFilter {
 	private Long idDocumento;
 	private Long idMateria;
 	private Long idOrigem;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;

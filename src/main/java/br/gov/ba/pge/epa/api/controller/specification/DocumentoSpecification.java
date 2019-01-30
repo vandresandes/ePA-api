@@ -27,8 +27,14 @@ public class DocumentoSpecification extends BaseSpecification<Documento> {
 		List<Predicate> predicates = new ArrayList<>();
 		
 		if (filter != null) {
+			if (filter.getId() != null) {
+				predicates.add(cb.equal(root.get("id"), filter.getId()));
+			}
 			if (StringUtils.isNotBlank(filter.getNome())) {
 				predicates.add(cb.like(cb.lower(root.get("nome")), containsLowerCase(filter.getNome())));
+			}
+			if (filter.getTipo() != null) {
+				predicates.add(cb.equal(root.get("tipo"), filter.getTipo()));
 			}
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

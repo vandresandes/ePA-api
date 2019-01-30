@@ -48,29 +48,42 @@ public class ChecklistRepositoryQueryImpl implements ChecklistRepositoryQuery {
 		sql.append("INNER JOIN Materia AS m on m.id = n.materia ");
 
 		if (filter != null) {
-			if (filter.getIdNucleo() != null) {
-				clausulasWhere.add("n.id = :idNucleo");
-				parametros.put("idNucleo", filter.getIdNucleo());
+			if (filter.getNucleo() != null) {
+				if (filter.getNucleo().getId() != null) {
+					clausulasWhere.add("n.id = :idNucleo");
+					parametros.put("idNucleo", filter.getNucleo().getId());
+				}
+				
+				if (filter.getNucleo().getMateria() != null) {
+					if (filter.getNucleo().getMateria().getId() != null) {
+						clausulasWhere.add("m.id = :idMateria");
+						parametros.put("idMateria", filter.getNucleo().getMateria().getId());
+					}
+				}
 			}
-			if (filter.getIdTipoProcesso() != null) {
-				clausulasWhere.add("tp.id = :idTipoProcesso");
-				parametros.put("idTipoProcesso", filter.getIdTipoProcesso());
+			if (filter.getTipoProcesso() != null) {
+				if (filter.getTipoProcesso().getId() != null) {
+					clausulasWhere.add("tp.id = :idTipoProcesso");
+					parametros.put("idTipoProcesso", filter.getTipoProcesso().getId());
+				}
 			}
-			if (filter.getIdTermoGeral() != null) {
-				clausulasWhere.add("tg.id = :idTermoGeral");
-				parametros.put("idTermoGeral", filter.getIdTermoGeral());
+			if (filter.getTermoGeral() != null) {
+				if (filter.getTermoGeral().getId() != null) {
+					clausulasWhere.add("tg.id = :idTermoGeral");
+					parametros.put("idTermoGeral", filter.getTermoGeral().getId());
+				}
 			}
-			if (filter.getIdTermoEspecifico() != null) {
-				clausulasWhere.add("te.id = :idTermoEspecifico");
-				parametros.put("idTermoEspecifico", filter.getIdTermoEspecifico());
+			if (filter.getTermoEspecifico() != null) {
+				if (filter.getTermoEspecifico().getId() != null) {
+					clausulasWhere.add("te.id = :idTermoEspecifico");
+					parametros.put("idTermoEspecifico", filter.getTermoEspecifico().getId());
+				}
 			}
-			if (filter.getIdDocumento() != null) {
-				clausulasWhere.add("doc.id = :idDocumento");
-				parametros.put("idDocumento", filter.getIdDocumento());
-			}
-			if (filter.getIdMateria() != null) {
-				clausulasWhere.add("m.id = :idMateria");
-				parametros.put("idMateria", filter.getIdMateria());
+			if (filter.getDocumento() != null) {
+				if (filter.getDocumento().getId() != null) {
+					clausulasWhere.add("doc.id = :idDocumento");
+					parametros.put("idDocumento", filter.getDocumento().getId());
+				}
 			}
 		}
 

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.StringUtils;
@@ -55,6 +56,7 @@ public class Origem implements Serializable {
 		this.descricao = descricao;
 	}
 
+	@Transient
 	public String getNomeDescricao() {
 		return StringUtils.isNotBlank(nome) && StringUtils.isNotBlank(descricao) ? nome.concat(" - ").concat(descricao) : null;
 	}

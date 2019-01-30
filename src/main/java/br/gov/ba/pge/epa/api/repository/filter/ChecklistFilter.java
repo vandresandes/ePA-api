@@ -2,118 +2,24 @@ package br.gov.ba.pge.epa.api.repository.filter;
 
 public class ChecklistFilter {
 
-	private Long idNucleo;
-	private Long idTipoProcesso;
-	private Long idTermoGeral;
-	private Long idTermoEspecifico;
-	private Long idDocumento;
-	private Long idMateria;
-
-	private String nomeNucleo;
-	private String nomeTipoProcesso;
-	private String nomeTermoGeral;
-	private String nomeTermoEspecifico;
-	private String nomeDocumento;
-	private String nomeMateria;
-
+	private Long id;
 	private String obrigatorio;
 	private String condicao;
 	private String complexidade;
 
-	public Long getIdNucleo() {
-		return idNucleo;
+	// FK's
+	private NucleoFilter nucleo;
+	private TipoProcessoFilter tipoProcesso;
+	private TermoGeralFilter termoGeral;
+	private TermoEspecificoFilter termoEspecifico;
+	private DocumentoFilter documento;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdNucleo(Long idNucleo) {
-		this.idNucleo = idNucleo;
-	}
-
-	public Long getIdTipoProcesso() {
-		return idTipoProcesso;
-	}
-
-	public void setIdTipoProcesso(Long idTipoProcesso) {
-		this.idTipoProcesso = idTipoProcesso;
-	}
-
-	public Long getIdTermoGeral() {
-		return idTermoGeral;
-	}
-
-	public void setIdTermoGeral(Long idTermoGeral) {
-		this.idTermoGeral = idTermoGeral;
-	}
-
-	public Long getIdTermoEspecifico() {
-		return idTermoEspecifico;
-	}
-
-	public void setIdTermoEspecifico(Long idTermoEspecifico) {
-		this.idTermoEspecifico = idTermoEspecifico;
-	}
-
-	public Long getIdDocumento() {
-		return idDocumento;
-	}
-
-	public void setIdDocumento(Long idDocumento) {
-		this.idDocumento = idDocumento;
-	}
-
-	public Long getIdMateria() {
-		return idMateria;
-	}
-
-	public void setIdMateria(Long idMateria) {
-		this.idMateria = idMateria;
-	}
-
-	public String getNomeNucleo() {
-		return nomeNucleo;
-	}
-
-	public void setNomeNucleo(String nomeNucleo) {
-		this.nomeNucleo = nomeNucleo;
-	}
-
-	public String getNomeTipoProcesso() {
-		return nomeTipoProcesso;
-	}
-
-	public void setNomeTipoProcesso(String nomeTipoProcesso) {
-		this.nomeTipoProcesso = nomeTipoProcesso;
-	}
-
-	public String getNomeTermoGeral() {
-		return nomeTermoGeral;
-	}
-
-	public void setNomeTermoGeral(String nomeTermoGeral) {
-		this.nomeTermoGeral = nomeTermoGeral;
-	}
-
-	public String getNomeTermoEspecifico() {
-		return nomeTermoEspecifico;
-	}
-
-	public void setNomeTermoEspecifico(String nomeTermoEspecifico) {
-		this.nomeTermoEspecifico = nomeTermoEspecifico;
-	}
-
-	public String getNomeDocumento() {
-		return nomeDocumento;
-	}
-
-	public void setNomeDocumento(String nomeDocumento) {
-		this.nomeDocumento = nomeDocumento;
-	}
-
-	public String getNomeMateria() {
-		return nomeMateria;
-	}
-
-	public void setNomeMateria(String nomeMateria) {
-		this.nomeMateria = nomeMateria;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getObrigatorio() {
@@ -138,6 +44,46 @@ public class ChecklistFilter {
 
 	public void setComplexidade(String complexidade) {
 		this.complexidade = complexidade;
+	}
+
+	public NucleoFilter getNucleo() {
+		return nucleo;
+	}
+
+	public void setNucleo(NucleoFilter nucleo) {
+		this.nucleo = nucleo;
+	}
+
+	public TipoProcessoFilter getTipoProcesso() {
+		return tipoProcesso;
+	}
+
+	public void setTipoProcesso(TipoProcessoFilter tipoProcesso) {
+		this.tipoProcesso = tipoProcesso;
+	}
+
+	public TermoGeralFilter getTermoGeral() {
+		return termoGeral;
+	}
+
+	public void setTermoGeral(TermoGeralFilter termoGeral) {
+		this.termoGeral = termoGeral;
+	}
+
+	public TermoEspecificoFilter getTermoEspecifico() {
+		return termoEspecifico;
+	}
+
+	public void setTermoEspecifico(TermoEspecificoFilter termoEspecifico) {
+		this.termoEspecifico = termoEspecifico;
+	}
+
+	public DocumentoFilter getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(DocumentoFilter documento) {
+		this.documento = documento;
 	}
 
 }

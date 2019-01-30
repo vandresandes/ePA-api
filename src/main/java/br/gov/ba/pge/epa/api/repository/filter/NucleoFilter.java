@@ -2,13 +2,22 @@ package br.gov.ba.pge.epa.api.repository.filter;
 
 public class NucleoFilter {
 
+	private Long id;
 	private String nome;
-	private String nomeMateria;
-	private Long idTipoProcesso;
-	private Long idTermoGeral;
-	private Long idTermoEspecifico;
-	private Long idDocumento;
-	private Long idMateria;
+
+	private TipoProcessoFilter tipoProcesso;
+	private TermoGeralFilter termoGeral;
+	private TermoEspecificoFilter termoEspecifico;
+	private DocumentoFilter documento;
+	private MateriaFilter materia;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getNome() {
 		return nome;
@@ -18,52 +27,44 @@ public class NucleoFilter {
 		this.nome = nome;
 	}
 
-	public String getNomeMateria() {
-		return nomeMateria;
+	public TipoProcessoFilter getTipoProcesso() {
+		return tipoProcesso;
 	}
 
-	public void setNomeMateria(String nomeMateria) {
-		this.nomeMateria = nomeMateria;
+	public void setTipoProcesso(TipoProcessoFilter tipoProcesso) {
+		this.tipoProcesso = tipoProcesso;
 	}
 
-	public Long getIdTipoProcesso() {
-		return idTipoProcesso;
+	public TermoGeralFilter getTermoGeral() {
+		return termoGeral;
 	}
 
-	public void setIdTipoProcesso(Long idTipoProcesso) {
-		this.idTipoProcesso = idTipoProcesso;
+	public void setTermoGeral(TermoGeralFilter termoGeral) {
+		this.termoGeral = termoGeral;
 	}
 
-	public Long getIdTermoGeral() {
-		return idTermoGeral;
+	public TermoEspecificoFilter getTermoEspecifico() {
+		return termoEspecifico;
 	}
 
-	public void setIdTermoGeral(Long idTermoGeral) {
-		this.idTermoGeral = idTermoGeral;
+	public void setTermoEspecifico(TermoEspecificoFilter termoEspecifico) {
+		this.termoEspecifico = termoEspecifico;
 	}
 
-	public Long getIdTermoEspecifico() {
-		return idTermoEspecifico;
+	public DocumentoFilter getDocumento() {
+		return documento;
 	}
 
-	public void setIdTermoEspecifico(Long idTermoEspecifico) {
-		this.idTermoEspecifico = idTermoEspecifico;
+	public void setDocumento(DocumentoFilter documento) {
+		this.documento = documento;
 	}
 
-	public Long getIdDocumento() {
-		return idDocumento;
+	public MateriaFilter getMateria() {
+		return materia;
 	}
 
-	public void setIdDocumento(Long idDocumento) {
-		this.idDocumento = idDocumento;
-	}
-
-	public Long getIdMateria() {
-		return idMateria;
-	}
-
-	public void setIdMateria(Long idMateria) {
-		this.idMateria = idMateria;
+	public void setMateria(MateriaFilter materia) {
+		this.materia = materia;
 	}
 
 }

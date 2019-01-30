@@ -30,12 +30,21 @@ public class NucleoSpecification extends BaseSpecification<Nucleo> {
 		List<Predicate> predicates = new ArrayList<>();
 		
 		if (filter != null) {
+			if (filter.getId() != null) {
+				predicates.add(cb.equal(root.get("id"), filter.getId()));
+			}
 			if (StringUtils.isNotBlank(filter.getNome())) {
 				predicates.add(cb.like(cb.lower(root.get("nome")), containsLowerCase(filter.getNome())));
 			}
-			if (StringUtils.isNotBlank(filter.getNomeMateria())) {
-				Join<Nucleo, Materia> joinMateria = root.join("materia", JoinType.INNER);
-				predicates.add(cb.like(cb.lower(joinMateria.get("nome")), containsLowerCase(filter.getNomeMateria())));
+			if (filter.getMateria() != null) {
+				Join<Nucleo, Materia> materia = root.join("materia", JoinType.INNER);
+				
+				if (filter.getMateria().getId() != null) {
+					predicates.add(cb.equal(materia.get("id"), filter.getMateria().getId()));
+				}
+				if (StringUtils.isNotBlank(filter.getMateria().getNome())) {
+					predicates.add(cb.like(cb.lower(materia.get("nome")), containsLowerCase(filter.getMateria().getNome())));
+				}
 			}
 		}
 		return predicates.toArray(new Predicate[predicates.size()]);

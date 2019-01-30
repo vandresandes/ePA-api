@@ -27,6 +27,9 @@ public class TipoProcessoSpecification extends BaseSpecification<TipoProcesso> {
 		List<Predicate> predicates = new ArrayList<>();
 		
 		if (filter != null) {
+			if (filter.getId() != null) {
+				predicates.add(cb.equal(root.get("id"), filter.getId()));
+			}
 			if (StringUtils.isNotBlank(filter.getNome())) {
 				predicates.add(cb.like(cb.lower(root.get("nome")), containsLowerCase(filter.getNome())));
 			}
