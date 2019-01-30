@@ -28,7 +28,7 @@ public class TipoProcessoRepositoryQueryImpl implements TipoProcessoRepositoryQu
 	public List<TipoProcesso> filtrar(TipoProcessoFilter filter) {
 		List<String> clausulasWhere = new ArrayList<>();
 		Map<String, Object> parametros = new HashMap<>();
-		String sql = montarQueryFiltrar(clausulasWhere, parametros, filter);
+		String sql = montarQuery(clausulasWhere, parametros, filter, "tp");
 		
 		Query query = entityManager.createQuery(sql);
 
@@ -46,7 +46,7 @@ public class TipoProcessoRepositoryQueryImpl implements TipoProcessoRepositoryQu
 	public List<String> buscarNomes(TipoProcessoFilter filter) {
 		List<String> clausulasWhere = new ArrayList<>();
 		Map<String, Object> parametros = new HashMap<>();
-		String sql = montarQueryBuscarNomes(clausulasWhere, parametros, filter);
+		String sql = montarQuery(clausulasWhere, parametros, filter, "tp.nome");
 		
 		Query query = entityManager.createQuery(sql);
 
@@ -59,9 +59,9 @@ public class TipoProcessoRepositoryQueryImpl implements TipoProcessoRepositoryQu
 		return query.getResultList();
 	}
 
-	private String montarQueryFiltrar(List<String> clausulasWhere, Map<String, Object> parametros, TipoProcessoFilter filter) {
+	private String montarQuery(List<String> clausulasWhere, Map<String, Object> parametros, TipoProcessoFilter filter, String select) {
 		final StringBuffer sql = new StringBuffer();
-		sql.append("SELECT DISTINCT tp FROM TipoProcesso tp ");
+		sql.append("SELECT DISTINCT ").append(select).append(" FROM TipoProcesso tp ");
 		sql.append("INNER JOIN Checklist AS c on c.tipoProcesso = tp.id ");
 		sql.append("INNER JOIN Nucleo AS n on n.id = c.nucleo ");
 		sql.append("INNER JOIN TermoGeral AS tg on tg.id = c.termoGeral ");
@@ -77,34 +77,6 @@ public class TipoProcessoRepositoryQueryImpl implements TipoProcessoRepositoryQu
 			filtrarPorIdDocumento(clausulasWhere, parametros, filter.getIdDocumento());
 			filtrarPorIdMateria(clausulasWhere, parametros, filter.getIdMateria());
 			filtrarPorIdOrigem(clausulasWhere, parametros, filter);
-		}
-		
-		if (!clausulasWhere.isEmpty()) {
-			sql.append(" WHERE ");
-			sql.append(EPAUtil.adicionarSeparador(clausulasWhere, " AND "));
-		}
-		sql.append(" ORDER BY tp.nome ASC ");
-		
-		return sql.toString();
-	}
-
-	private String montarQueryBuscarNomes(List<String> clausulasWhere, Map<String, Object> parametros, TipoProcessoFilter filter) {
-		final StringBuffer sql = new StringBuffer();
-		sql.append("SELECT DISTINCT tp.nome FROM TipoProcesso tp ");
-		sql.append("INNER JOIN Checklist AS c on c.tipoProcesso = tp.id ");
-		sql.append("INNER JOIN Nucleo AS n on n.id = c.nucleo ");
-		sql.append("INNER JOIN TermoGeral AS tg on tg.id = c.termoGeral ");
-		sql.append("INNER JOIN TermoEspecifico AS te on te.id = c.termoEspecifico ");
-		sql.append("INNER JOIN Documento AS doc on doc.id = c.documento ");
-		sql.append("INNER JOIN Materia AS m on m.id = n.materia ");
-
-		if (filter != null) {
-			filtrarPorNome(clausulasWhere, parametros, filter.getNome());
-			filtrarPorIdNucleo(clausulasWhere, parametros, filter.getIdNucleo());
-			filtrarPorIdTermoGeral(clausulasWhere, parametros, filter.getIdTermoGeral());
-			filtrarPorIdTermoEspecifico(clausulasWhere, parametros, filter.getIdTermoEspecifico());
-			filtrarPorIdDocumento(clausulasWhere, parametros, filter.getIdDocumento());
-			filtrarPorIdMateria(clausulasWhere, parametros, filter.getIdMateria());
 		}
 		
 		if (!clausulasWhere.isEmpty()) {

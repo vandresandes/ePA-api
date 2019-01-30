@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -71,7 +72,7 @@ public class DocumentoController {
 	}
 
 	@GetMapping
-	public Page<Documento> buscarPaginado(DocumentoFilter filter, Pageable pageable) {
+	public Page<Documento> buscarPaginado(DocumentoFilter filter, @PageableDefault( sort= {"nome"}) Pageable pageable) {
 		Specification<Documento> specification = DocumentoSpecification.buscar(filter);
 	    return repository.findAll(specification, pageable);
 	}

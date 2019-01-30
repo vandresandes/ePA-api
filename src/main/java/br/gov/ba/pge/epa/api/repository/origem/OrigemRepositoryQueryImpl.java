@@ -25,7 +25,7 @@ public class OrigemRepositoryQueryImpl implements OrigemRepositoryQuery {
 	public List<Origem> filtrar(OrigemFilter filter) {
 		List<String> clausulasWhere = new ArrayList<>();
 		Map<String, Object> parametros = new HashMap<>();
-		String sql = montarQueryFiltrar(clausulasWhere, parametros, filter);
+		String sql = montarQuery(clausulasWhere, parametros, filter, "o");
 		
 		Query query = entityManager.createQuery(sql);
 
@@ -38,9 +38,9 @@ public class OrigemRepositoryQueryImpl implements OrigemRepositoryQuery {
 		return query.getResultList();
 	}
 
-	private String montarQueryFiltrar(List<String> clausulasWhere, Map<String, Object> parametros, OrigemFilter filter) {
+	private String montarQuery(List<String> clausulasWhere, Map<String, Object> parametros, OrigemFilter filter, String select) {
 		final StringBuffer sql = new StringBuffer();
-		sql.append("SELECT DISTINCT o FROM Origem o ");
+		sql.append("SELECT DISTINCT ").append(select).append(" FROM Origem o ");
 
 		if (filter != null) {
 			if (StringUtils.isNotBlank(filter.getNome())) {

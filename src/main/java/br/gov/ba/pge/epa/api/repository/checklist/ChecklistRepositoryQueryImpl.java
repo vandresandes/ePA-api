@@ -24,7 +24,7 @@ public class ChecklistRepositoryQueryImpl implements ChecklistRepositoryQuery {
 	public List<Checklist> filtrar(ChecklistFilter filter) {
 		List<String> clausulasWhere = new ArrayList<>();
 		Map<String, Object> parametros = new HashMap<>();
-		String sql = montarQueryFiltrar(clausulasWhere, parametros, filter);
+		String sql = montarQuery(clausulasWhere, parametros, filter, "c");
 
 		Query query = entityManager.createQuery(sql);
 
@@ -37,9 +37,9 @@ public class ChecklistRepositoryQueryImpl implements ChecklistRepositoryQuery {
 		return query.getResultList();
 	}
 
-	private String montarQueryFiltrar(List<String> clausulasWhere, Map<String, Object> parametros, ChecklistFilter filter) {
+	private String montarQuery(List<String> clausulasWhere, Map<String, Object> parametros, ChecklistFilter filter, String select) {
 		final StringBuffer sql = new StringBuffer();
-		sql.append("SELECT DISTINCT c FROM Checklist c ");
+		sql.append("SELECT DISTINCT ").append(select).append(" FROM Checklist c ");
 		sql.append("INNER JOIN Nucleo AS n on n.id = c.nucleo ");
 		sql.append("INNER JOIN TipoProcesso AS tp on tp.id = c.tipoProcesso ");
 		sql.append("INNER JOIN TermoGeral AS tg on tg.id = c.termoGeral ");
