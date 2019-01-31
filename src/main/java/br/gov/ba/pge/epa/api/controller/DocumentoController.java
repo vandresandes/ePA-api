@@ -28,6 +28,7 @@ import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.Documento;
 import br.gov.ba.pge.epa.api.repository.DocumentoRepository;
 import br.gov.ba.pge.epa.api.repository.filter.DocumentoFilter;
+import br.gov.ba.pge.epa.api.service.DocumentoService;
 
 @RestController
 @RequestMapping("/documento")
@@ -35,6 +36,8 @@ public class DocumentoController {
 
 	@Autowired
 	private DocumentoRepository repository;
+	@Autowired
+	private DocumentoService service;
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
@@ -47,7 +50,7 @@ public class DocumentoController {
 
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
-		repository.deleteById(id);
+		service.deleteById(id);
 	}
 
 	@GetMapping("/{id}")

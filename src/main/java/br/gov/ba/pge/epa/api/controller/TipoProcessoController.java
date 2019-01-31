@@ -28,6 +28,7 @@ import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.TipoProcesso;
 import br.gov.ba.pge.epa.api.repository.TipoProcessoRepository;
 import br.gov.ba.pge.epa.api.repository.filter.TipoProcessoFilter;
+import br.gov.ba.pge.epa.api.service.TipoProcessoService;
 
 @RestController
 @RequestMapping("/tipoprocesso")
@@ -35,6 +36,8 @@ public class TipoProcessoController {
 
 	@Autowired
 	private TipoProcessoRepository repository;
+	@Autowired
+	private TipoProcessoService service;
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
@@ -47,7 +50,7 @@ public class TipoProcessoController {
 
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
-		repository.deleteById(id);
+		service.deleteById(id);
 	}
 
 	@GetMapping("/{id}")

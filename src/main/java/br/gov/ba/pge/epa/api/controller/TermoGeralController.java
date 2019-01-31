@@ -28,6 +28,7 @@ import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.TermoGeral;
 import br.gov.ba.pge.epa.api.repository.TermoGeralRepository;
 import br.gov.ba.pge.epa.api.repository.filter.TermoGeralFilter;
+import br.gov.ba.pge.epa.api.service.TermoGeralService;
 
 @RestController
 @RequestMapping("/termogeral")
@@ -35,6 +36,8 @@ public class TermoGeralController {
 
 	@Autowired
 	private TermoGeralRepository repository;
+	@Autowired
+	private TermoGeralService service;
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
@@ -48,7 +51,7 @@ public class TermoGeralController {
 
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
-		repository.deleteById(id);
+		service.deleteById(id);
 	}
 
 	@GetMapping("/{id}")

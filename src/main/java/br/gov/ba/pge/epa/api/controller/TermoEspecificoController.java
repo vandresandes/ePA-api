@@ -28,6 +28,7 @@ import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.TermoEspecifico;
 import br.gov.ba.pge.epa.api.repository.TermoEspecificoRepository;
 import br.gov.ba.pge.epa.api.repository.filter.TermoEspecificoFilter;
+import br.gov.ba.pge.epa.api.service.TermoEspecificoService;
 
 @RestController
 @RequestMapping("/termoespecifico")
@@ -35,6 +36,8 @@ public class TermoEspecificoController {
 
 	@Autowired
 	private TermoEspecificoRepository repository;
+	@Autowired
+	private TermoEspecificoService service;
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
@@ -47,7 +50,7 @@ public class TermoEspecificoController {
 
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
-		repository.deleteById(id);
+		service.deleteById(id);
 	}
 
 	@GetMapping("/{id}")

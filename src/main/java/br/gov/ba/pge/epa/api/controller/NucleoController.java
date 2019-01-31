@@ -28,6 +28,7 @@ import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.Nucleo;
 import br.gov.ba.pge.epa.api.repository.NucleoRepository;
 import br.gov.ba.pge.epa.api.repository.filter.NucleoFilter;
+import br.gov.ba.pge.epa.api.service.NucleoService;
 
 @RestController
 @RequestMapping("/nucleo")
@@ -35,6 +36,8 @@ public class NucleoController {
 
 	@Autowired
 	private NucleoRepository repository;
+	@Autowired
+	private NucleoService service;
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
@@ -47,7 +50,7 @@ public class NucleoController {
 
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
-		// repository.deleteById(id);
+		service.deleteById(id);
 	}
 
 	@GetMapping("/{id}")

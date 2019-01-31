@@ -27,6 +27,7 @@ import br.gov.ba.pge.epa.api.event.RecursoCriadoEvent;
 import br.gov.ba.pge.epa.api.model.Checklist;
 import br.gov.ba.pge.epa.api.repository.ChecklistRepository;
 import br.gov.ba.pge.epa.api.repository.filter.ChecklistFilter;
+import br.gov.ba.pge.epa.api.service.ChecklistService;
 
 @RestController
 @RequestMapping("/checklist")
@@ -34,6 +35,8 @@ public class ChecklistController {
 
 	@Autowired
 	private ChecklistRepository repository;
+	@Autowired
+	private ChecklistService service;
 	@Autowired
 	private ApplicationEventPublisher publisher;
 
@@ -46,7 +49,7 @@ public class ChecklistController {
 
 	@DeleteMapping("/{id}")
 	public void deleteById(@PathVariable Long id) {
-		repository.deleteById(id);
+		service.deleteById(id);
 	}
 
 	@GetMapping("/{id}")
