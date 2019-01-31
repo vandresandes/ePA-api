@@ -8,7 +8,7 @@ import br.gov.ba.pge.epa.api.model.TermoEspecifico;
 import br.gov.ba.pge.epa.api.predicate.TermoEspecificoPredicate;
 import br.gov.ba.pge.epa.api.repository.filter.TermoEspecificoFilter;
 
-public class TermoEspecificoSpecification extends BaseSpecification<TermoEspecifico> {
+public class TermoEspecificoSpecification {
 
 	public static Specification<TermoEspecifico> buscar(TermoEspecificoFilter filter) {
 		return (root, cq, cb) -> {

@@ -8,7 +8,7 @@ import br.gov.ba.pge.epa.api.model.Checklist;
 import br.gov.ba.pge.epa.api.predicate.ChecklistPredicate;
 import br.gov.ba.pge.epa.api.repository.filter.ChecklistFilter;
 
-public class ChecklistSpecification extends BaseSpecification<Checklist> {
+public class ChecklistSpecification {
 
 	public static Specification<Checklist> filtrar(ChecklistFilter filter) {
 		return (root, cq, cb) -> {

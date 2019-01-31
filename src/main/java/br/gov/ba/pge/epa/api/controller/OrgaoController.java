@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.gov.ba.pge.epa.api.controller.specification.OrigemSpecification;
+import br.gov.ba.pge.epa.api.controller.specification.OrgaoSpecification;
 import br.gov.ba.pge.epa.api.model.Orgao;
 import br.gov.ba.pge.epa.api.repository.OrgaoRepository;
 import br.gov.ba.pge.epa.api.repository.filter.OrgaoFilter;
@@ -44,7 +44,7 @@ public class OrgaoController {
 
 	@GetMapping
 	public Page<Orgao> buscarPaginado(OrgaoFilter filter, Pageable pageable) {
-		Specification<Orgao> specification = OrigemSpecification.buscar(filter);
+		Specification<Orgao> specification = OrgaoSpecification.buscar(filter);
 	    return repository.findAll(specification, pageable);
 	}
 

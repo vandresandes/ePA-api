@@ -8,7 +8,7 @@ import br.gov.ba.pge.epa.api.model.TipoProcesso;
 import br.gov.ba.pge.epa.api.predicate.TipoProcessoPredicate;
 import br.gov.ba.pge.epa.api.repository.filter.TipoProcessoFilter;
 
-public class TipoProcessoSpecification extends BaseSpecification<TipoProcesso> {
+public class TipoProcessoSpecification {
 
 	public static Specification<TipoProcesso> buscar(TipoProcessoFilter filter) {
 		return (root, cq, cb) -> {

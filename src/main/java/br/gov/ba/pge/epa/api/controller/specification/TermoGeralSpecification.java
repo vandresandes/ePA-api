@@ -8,7 +8,7 @@ import br.gov.ba.pge.epa.api.model.TermoGeral;
 import br.gov.ba.pge.epa.api.predicate.TermoGeralPredicate;
 import br.gov.ba.pge.epa.api.repository.filter.TermoGeralFilter;
 
-public class TermoGeralSpecification extends BaseSpecification<TermoGeral> {
+public class TermoGeralSpecification {
 
 	public static Specification<TermoGeral> buscar(TermoGeralFilter filter) {
 		return (root, cq, cb) -> {

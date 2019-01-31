@@ -8,7 +8,7 @@ import br.gov.ba.pge.epa.api.model.Nucleo;
 import br.gov.ba.pge.epa.api.predicate.NucleoPredicate;
 import br.gov.ba.pge.epa.api.repository.filter.NucleoFilter;
 
-public class NucleoSpecification extends BaseSpecification<Nucleo> {
+public class NucleoSpecification {
 
 	public static Specification<Nucleo> buscar(NucleoFilter filter) {
 		return (root, cq, cb) -> {
