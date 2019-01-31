@@ -14,7 +14,7 @@ import br.gov.ba.pge.epa.api.model.MotivoSigiloSegredoJustica;
 import br.gov.ba.pge.epa.api.repository.MotivoSigiloSegredoJusticaRepository;
 
 @RestController
-@RequestMapping("/motivosigilosegredosusticacontroller")
+@RequestMapping("/motivosigilosegredojustica")
 public class MotivoSigiloSegredoJusticaController {
 
 	@Autowired

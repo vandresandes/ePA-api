@@ -1,33 +1,29 @@
 package br.gov.ba.pge.epa.api.controller;
 
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.gov.ba.pge.epa.api.model.PrioridadeTramitacao;
-import br.gov.ba.pge.epa.api.repository.PrioridadeTramitacaoRepository;
+import br.gov.ba.pge.epa.api.model.enums.EnumPrioridadeTramitacao;
+import br.gov.ba.pge.epa.api.model.enums.dto.EnumDto;
 
 @RestController
-@RequestMapping("/prioridadetramitacaocontroller")
+@RequestMapping("/prioridadetramitacao")
 public class PrioridadeTramitacaoController {
 
-	@Autowired
-	private PrioridadeTramitacaoRepository repository;
-
-	@GetMapping("/{id}")
-	public ResponseEntity<PrioridadeTramitacao> findById(@PathVariable Long id) {
-		Optional<PrioridadeTramitacao> optional = repository.findById(id);
-		return optional.isPresent() ? ResponseEntity.ok(optional.get()) : ResponseEntity.notFound().build();
+	@GetMapping("/{valor}")
+	public ResponseEntity<EnumDto> findById(@PathVariable String valor) {
+		EnumDto retorno = EnumPrioridadeTramitacao.buscarPorValor(valor);
+		return retorno != null ? ResponseEntity.ok(retorno) : ResponseEntity.notFound().build();
 	}
 
-	@GetMapping()
-	public List<PrioridadeTramitacao> findAll() {
-		return repository.findAll();
+	@GetMapping
+	public List<EnumDto> getValores() {
+		return EnumPrioridadeTramitacao.getValores();
 	}
+
 }

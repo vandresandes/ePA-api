@@ -9,8 +9,6 @@ DROP TABLE [dbo].[tb_termo_geral]
 DROP TABLE [dbo].[tb_documento]
 DROP TABLE [dbo].[tb_origem]
 DROP TABLE [dbo].[tb_materia]
-DROP TABLE [dbo].[tb_prioridade_tramitacao]
-DROP TABLE [dbo].[tb_sigilo_segredo_justica]
 DROP TABLE [dbo].[tb_motivo_sigilo_segredo_justica]
 
 
@@ -76,18 +74,6 @@ CREATE TABLE tb_origem (
 	nome VARCHAR(100) NOT NULL,
 	descricao VARCHAR(200),
 	CONSTRAINT PK__tb_origem PRIMARY KEY (id)
-);
-
-CREATE TABLE tb_prioridade_tramitacao (
-	id BIGINT IDENTITY(1,1) NOT NULL,
-	nome VARCHAR(100) NOT NULL,
-	CONSTRAINT PK__tb_prioridade_tramitacao PRIMARY KEY (id)
-);
-
-CREATE TABLE tb_sigilo_segredo_justica (
-	id BIGINT IDENTITY(1,1) NOT NULL,
-	nome VARCHAR(100) NOT NULL,
-	CONSTRAINT PK__tb_sigilo_segredo_justica PRIMARY KEY (id)
 );
 
 CREATE TABLE tb_motivo_sigilo_segredo_justica (

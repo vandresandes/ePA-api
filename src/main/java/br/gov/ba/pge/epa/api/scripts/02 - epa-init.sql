@@ -11167,22 +11167,6 @@ INSERT INTO tb_origem (id, nome, descricao) VALUES
 
 SET IDENTITY_INSERT tb_origem OFF
 
-
---################################################################################################
---	SIGILO SEGREDO DE JUSTIÇA
---################################################################################################
-
-SET IDENTITY_INSERT tb_sigilo_segredo_justica ON
-
-INSERT INTO tb_sigilo_segredo_justica (id, nome) VALUES 
-
-(1,'Sem sigilo'),
-(2,'Sigiloso'),
-(3,'Segredo de Justiça')
-
-SET IDENTITY_INSERT tb_sigilo_segredo_justica OFF
-
-
 --################################################################################################
 --	MOTIVO SIGILO SEGREDO DE JUSTIÇA
 --################################################################################################
@@ -11198,18 +11182,3 @@ INSERT INTO tb_motivo_sigilo_segredo_justica (id, nome) VALUES
 (5,'Pode comprometer atividades de inteligência, bem como de investigação ou fiscalização em andamento, relacionadas com a prevenção ou repressão de infrações')
 
 SET IDENTITY_INSERT tb_motivo_sigilo_segredo_justica OFF
-
-
---################################################################################################
---	PRIORIDADE TRAMITAÇÃO
---################################################################################################
-
-SET IDENTITY_INSERT tb_prioridade_tramitacao ON
-
-INSERT INTO tb_prioridade_tramitacao (id, nome) VALUES 
-
-(1,'Sem prioridade'),
-(2,'Pessoa com idade superior a 60 anos'),
-(3,'Pessoa com necessidades especiais ou doença grave')
-
-SET IDENTITY_INSERT tb_prioridade_tramitacao OFF
