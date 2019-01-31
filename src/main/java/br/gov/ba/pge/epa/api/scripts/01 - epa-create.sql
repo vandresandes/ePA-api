@@ -60,6 +60,7 @@ CREATE TABLE tb_checklist (
 	fk_id_documento BIGINT NOT NULL,
 	bo_obrigatorio BIT NOT NULL,
 	condicao VARCHAR(300),
+	bo_apresentar_justificativa_condicao BIT NOT NULL,
 	complexidade VARCHAR(10),
 	CONSTRAINT PK__tb_checklist PRIMARY KEY (id),
 	CONSTRAINT FK__tb_checklist_fk_id_nucleo FOREIGN KEY (fk_id_nucleo) REFERENCES tb_nucleo(id),

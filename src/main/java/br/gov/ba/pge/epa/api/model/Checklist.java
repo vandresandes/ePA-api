@@ -61,6 +61,10 @@ public class Checklist implements Serializable {
 	@Max(100)
 	private String condicao;
 
+	@Column(name = "bo_apresentar_justificativa_condicao")
+	@NotNull
+	private Boolean apresentarJustificativaCondicao;
+
 	@Enumerated(EnumType.STRING)
 	@Column(name = "complexidade")
 	private EnumPrioridade complexidade;
@@ -129,6 +133,14 @@ public class Checklist implements Serializable {
 		this.condicao = condicao;
 	}
 
+	public Boolean getApresentarJustificativaCondicao() {
+		return apresentarJustificativaCondicao;
+	}
+
+	public void setApresentarJustificativaCondicao(Boolean apresentarJustificativaCondicao) {
+		this.apresentarJustificativaCondicao = apresentarJustificativaCondicao;
+	}
+
 	public EnumPrioridade getComplexidade() {
 		return complexidade;
 	}
@@ -136,5 +148,5 @@ public class Checklist implements Serializable {
 	public void setComplexidade(EnumPrioridade complexidade) {
 		this.complexidade = complexidade;
 	}
-
+	
 }
