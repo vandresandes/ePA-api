@@ -15,36 +15,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.ba.pge.epa.api.controller.specification.OrigemSpecification;
-import br.gov.ba.pge.epa.api.model.Origem;
-import br.gov.ba.pge.epa.api.repository.OrigemRepository;
-import br.gov.ba.pge.epa.api.repository.filter.OrigemFilter;
+import br.gov.ba.pge.epa.api.model.Orgao;
+import br.gov.ba.pge.epa.api.repository.OrgaoRepository;
+import br.gov.ba.pge.epa.api.repository.filter.OrgaoFilter;
 
 @RestController
-@RequestMapping("/origem")
-public class OrigemController {
+@RequestMapping("/orgao")
+public class OrgaoController {
 
 	@Autowired
-	private OrigemRepository repository;
+	private OrgaoRepository repository;
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Origem> findById(@PathVariable Long id) {
-		Optional<Origem> optional = repository.findById(id);
+	public ResponseEntity<Orgao> findById(@PathVariable Long id) {
+		Optional<Orgao> optional = repository.findById(id);
 		return optional.isPresent() ? ResponseEntity.ok(optional.get()) : ResponseEntity.notFound().build();
 	}
 
 	@GetMapping("/all")
-	public List<Origem> findAll() {
+	public List<Orgao> findAll() {
 		return repository.findAll(Sort.by("nome"));
 	}
 
 	@GetMapping("/filtrar")
-	public List<Origem> filtrar(OrigemFilter filter) {
+	public List<Orgao> filtrar(OrgaoFilter filter) {
 		return repository.filtrar(filter);
 	}
 
 	@GetMapping
-	public Page<Origem> buscarPaginado(OrigemFilter filter, Pageable pageable) {
-		Specification<Origem> specification = OrigemSpecification.buscar(filter);
+	public Page<Orgao> buscarPaginado(OrgaoFilter filter, Pageable pageable) {
+		Specification<Orgao> specification = OrigemSpecification.buscar(filter);
 	    return repository.findAll(specification, pageable);
 	}
 

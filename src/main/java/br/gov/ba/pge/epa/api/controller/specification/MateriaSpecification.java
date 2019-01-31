@@ -11,10 +11,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import br.gov.ba.pge.epa.api.model.Materia;
-import br.gov.ba.pge.epa.api.model.Origem;
+import br.gov.ba.pge.epa.api.model.Orgao;
 import br.gov.ba.pge.epa.api.repository.filter.MateriaFilter;
 
-public class MateriaSpecification extends BaseSpecification<Origem> {
+public class MateriaSpecification extends BaseSpecification<Orgao> {
 	public static Specification<Materia> buscar(MateriaFilter filter) {
 		return (root, cq, cb) -> {
 			Predicate[] predicates = extractPredicates(cb, root, filter);

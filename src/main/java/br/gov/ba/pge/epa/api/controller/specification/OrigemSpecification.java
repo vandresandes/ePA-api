@@ -10,12 +10,12 @@ import javax.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
-import br.gov.ba.pge.epa.api.model.Origem;
-import br.gov.ba.pge.epa.api.repository.filter.OrigemFilter;
+import br.gov.ba.pge.epa.api.model.Orgao;
+import br.gov.ba.pge.epa.api.repository.filter.OrgaoFilter;
 
-public class OrigemSpecification extends BaseSpecification<Origem> {
+public class OrigemSpecification extends BaseSpecification<Orgao> {
 
-	public static Specification<Origem> buscar(OrigemFilter filter) {
+	public static Specification<Orgao> buscar(OrgaoFilter filter) {
 		return (root, cq, cb) -> {
 			Predicate[] predicates = extractPredicates(cb, root, filter);
 			cq.distinct(true);
@@ -23,7 +23,7 @@ public class OrigemSpecification extends BaseSpecification<Origem> {
 		};
 	}
 
-	private static Predicate[] extractPredicates(CriteriaBuilder cb, Root<?> root, OrigemFilter filter) {
+	private static Predicate[] extractPredicates(CriteriaBuilder cb, Root<?> root, OrgaoFilter filter) {
 		List<Predicate> predicates = new ArrayList<>();
 		
 		if (filter != null) {

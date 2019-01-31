@@ -1,6 +1,6 @@
-SET IDENTITY_INSERT tb_origem ON
+SET IDENTITY_INSERT tb_orgao ON
 
-INSERT INTO tb_origem (id, nome, descricao) VALUES 
+INSERT INTO tb_orgao (id, nome, descricao) VALUES 
 
 (1,'ADAB ','Agência Estadual de Defesa Agropecuária da Bahia'),
 (2,'AGERBA ','Agência Estadual de Regulação de Serviços Públicos de Energia, Transportes e Comunicações da Bahia'),
@@ -67,4 +67,4 @@ INSERT INTO tb_origem (id, nome, descricao) VALUES
 (63,'UESC ','Universidade Estadual de Santa Cruz'),
 (64,'UNEB ','Universidade do Estado da Bahia')
 
-SET IDENTITY_INSERT tb_origem OFF
+SET IDENTITY_INSERT tb_orgao OFF

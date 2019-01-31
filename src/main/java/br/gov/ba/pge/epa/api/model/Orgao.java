@@ -14,8 +14,8 @@ import javax.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;
 
 @Entity
-@Table(name = "tb_origem")
-public class Origem implements Serializable {
+@Table(name = "tb_orgao")
+public class Orgao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 

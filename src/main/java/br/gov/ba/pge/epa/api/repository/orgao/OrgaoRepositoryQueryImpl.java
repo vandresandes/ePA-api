@@ -1,4 +1,4 @@
-package br.gov.ba.pge.epa.api.repository.origem;
+package br.gov.ba.pge.epa.api.repository.orgao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,18 +11,18 @@ import javax.persistence.Query;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.gov.ba.pge.epa.api.model.Origem;
-import br.gov.ba.pge.epa.api.repository.filter.OrigemFilter;
+import br.gov.ba.pge.epa.api.model.Orgao;
+import br.gov.ba.pge.epa.api.repository.filter.OrgaoFilter;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
-public class OrigemRepositoryQueryImpl implements OrigemRepositoryQuery {
+public class OrgaoRepositoryQueryImpl implements OrgaoRepositoryQuery {
 	
 	@Autowired
 	private EntityManager entityManager;
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Origem> filtrar(OrigemFilter filter) {
+	public List<Orgao> filtrar(OrgaoFilter filter) {
 		List<String> clausulasWhere = new ArrayList<>();
 		Map<String, Object> parametros = new HashMap<>();
 		String sql = montarQuery(clausulasWhere, parametros, filter, "o");
@@ -38,7 +38,7 @@ public class OrigemRepositoryQueryImpl implements OrigemRepositoryQuery {
 		return query.getResultList();
 	}
 
-	private String montarQuery(List<String> clausulasWhere, Map<String, Object> parametros, OrigemFilter filter, String select) {
+	private String montarQuery(List<String> clausulasWhere, Map<String, Object> parametros, OrgaoFilter filter, String select) {
 		final StringBuffer sql = new StringBuffer();
 		sql.append("SELECT DISTINCT ").append(select).append(" FROM Origem o ");
 

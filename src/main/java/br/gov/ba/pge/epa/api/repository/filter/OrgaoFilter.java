@@ -1,6 +1,6 @@
 package br.gov.ba.pge.epa.api.repository.filter;
 
-public class OrigemFilter {
+public class OrgaoFilter {
 
 	private Long id;
 	private String nome;

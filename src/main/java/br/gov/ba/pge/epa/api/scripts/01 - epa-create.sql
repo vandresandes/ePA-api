@@ -69,11 +69,11 @@ CREATE TABLE tb_checklist (
 	CONSTRAINT FK__tb_checklist_fk_id_documento FOREIGN KEY (fk_id_documento) REFERENCES tb_documento(id)
 );
 
-CREATE TABLE tb_origem (
+CREATE TABLE tb_orgao (
 	id BIGINT IDENTITY(1,1) NOT NULL,
 	nome VARCHAR(100) NOT NULL,
 	descricao VARCHAR(200),
-	CONSTRAINT PK__tb_origem PRIMARY KEY (id)
+	CONSTRAINT PK__tb_orgao PRIMARY KEY (id)
 );
 
 CREATE TABLE tb_motivo_sigilo_segredo_justica (
