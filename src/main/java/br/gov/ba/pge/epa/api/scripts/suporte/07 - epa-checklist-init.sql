@@ -897,10 +897,10 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (893,1,54,139,135,607,0,'Foi realizada prova pericial durante o PAD?',0,'ALTA'),
 (894,1,54,139,135,585,0,'Foi realizada prova pericial durante o PAD?',0,'ALTA'),
 (895,1,54,141,227,101,0,'Foi realizada a intimação postal, uma vez que não foi possível a realização deste ato por meio eletrônico, pois a pessoa física não tem e-mail cadastrado perante a Administração?',0,'MEDIA'),
-(896,1,48,171,228,102,0,'Foi realizada a intimação postal, uma vez que não foi possível a realização deste ato por meio eletrônico, pois a pessoa jurídica não tem e-mail cadastrado perante a Administração?',1,'MEDIA'),
-(897,1,54,141,228,102,0,'Foi realizada a intimação postal, uma vez que não foi possível a realização deste ato por meio eletrônico, pois a pessoa jurídica não tem e-mail cadastrado perante a Administração?',1,'MEDIA'),
-(898,1,28,106,4,371,0,'Foi possível obter este documento de resposta da autoridade municipal/federal/distrital?',0,'BAIXA'),
-(899,1,48,171,4,372,0,'Foi possível obter este documento de resposta da autoridade municipal/federal/distrital?',0,'MEDIA'),
+(896,1,48,171,228,102,0,'Foi realizada a intimação postal, uma vez que não foi possível a realização deste ato por meio eletrônico, pois a pessoa jurídica não tem e-mail cadastrado perante a Administração?',0,'MEDIA'),
+(897,1,54,141,228,102,0,'Foi realizada a intimação postal, uma vez que não foi possível a realização deste ato por meio eletrônico, pois a pessoa jurídica não tem e-mail cadastrado perante a Administração?',0,'MEDIA'),
+(898,1,28,106,4,371,0,'Foi possível obter este documento de resposta da autoridade municipal/federal/distrital?',1,'BAIXA'),
+(899,1,48,171,4,372,0,'Foi possível obter este documento de resposta da autoridade municipal/federal/distrital?',1,'MEDIA'),
 (900,1,28,106,228,609,0,'É necessário colher esses depoimentos?',0,'MEDIA'),
 (901,1,28,106,228,595,0,'É necessário obter esclarecimentos do representante legal?',0,'MEDIA'),
 (902,1,21,101,227,522,0,'Há assinatura de convênio ou instrumento de parceria?',0,'MEDIA'),
@@ -1002,7 +1002,6 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (998,1,21,98,204,629,1,NULL,0,'ALTA'),
 (999,1,21,98,204,386,1,NULL,0,'ALTA'),
 (1000,1,21,98,204,500,1,NULL,0,'ALTA')
-
 
 INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio, condicao, bo_apresentar_justificativa_condicao, complexidade) VALUES
 
@@ -2007,7 +2006,6 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (1999,10,10,124,204,434,1,NULL,0,'ALTA'),
 (2000,10,10,124,204,686,1,NULL,0,'ALTA')
 
-
 INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio, condicao, bo_apresentar_justificativa_condicao, complexidade) VALUES
 
 (2001,10,10,124,204,716,1,NULL,0,'ALTA'),
@@ -3010,7 +3008,6 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (2998,2,30,54,191,568,1,NULL,0,'BAIXA'),
 (2999,2,30,54,191,723,1,NULL,0,'BAIXA'),
 (3000,2,30,54,191,829,1,NULL,0,'BAIXA')
-
 
 INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio, condicao, bo_apresentar_justificativa_condicao, complexidade) VALUES
 
@@ -4015,7 +4012,6 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (3999,8,30,54,144,860,1,NULL,0,'MEDIA'),
 (4000,8,30,54,145,696,1,NULL,0,'MEDIA')
 
-
 INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio, condicao, bo_apresentar_justificativa_condicao, complexidade) VALUES
 
 (4001,8,30,54,145,961,1,NULL,0,'MEDIA'),
@@ -5018,7 +5014,6 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (4998,8,30,131,28,52,1,NULL,0,'BAIXA'),
 (4999,8,30,131,28,65,1,NULL,0,'BAIXA'),
 (5000,8,30,131,28,968,1,NULL,0,'BAIXA')
-
 
 INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio, condicao, bo_apresentar_justificativa_condicao, complexidade) VALUES
 
@@ -6023,7 +6018,6 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (5999,7,30,54,146,963,1,NULL,0,'MEDIA'),
 (6000,7,30,54,146,548,1,NULL,0,'MEDIA')
 
-
 INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio, condicao, bo_apresentar_justificativa_condicao, complexidade) VALUES
 
 (6001,7,30,54,146,96,1,NULL,0,'MEDIA'),
@@ -7026,7 +7020,6 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (6998,7,30,131,284,923,1,NULL,0,'BAIXA'),
 (6999,7,30,131,288,749,1,NULL,0,'MEDIA'),
 (7000,7,30,131,288,916,1,NULL,0,'MEDIA')
-
 
 INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio, condicao, bo_apresentar_justificativa_condicao, complexidade) VALUES
 
@@ -8031,7 +8024,6 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (7999,9,30,54,148,250,1,NULL,0,'MEDIA'),
 (8000,9,30,54,148,180,1,NULL,0,'MEDIA')
 
-
 INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio, condicao, bo_apresentar_justificativa_condicao, complexidade) VALUES
 
 (8001,9,30,54,148,172,1,NULL,0,'MEDIA'),
@@ -9034,7 +9026,6 @@ INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_ger
 (8998,9,30,172,28,732,1,NULL,0,'BAIXA'),
 (8999,9,30,172,205,806,1,NULL,0,'MEDIA'),
 (9000,9,30,172,205,709,1,NULL,0,'MEDIA')
-
 
 INSERT INTO tb_checklist (id, fk_id_nucleo, fk_id_tipo_processo, fk_id_termo_geral, fk_id_termo_especifico, fk_id_documento, bo_obrigatorio, condicao, bo_apresentar_justificativa_condicao, complexidade) VALUES
 
