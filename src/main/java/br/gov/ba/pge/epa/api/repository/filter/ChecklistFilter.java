@@ -3,8 +3,9 @@ package br.gov.ba.pge.epa.api.repository.filter;
 public class ChecklistFilter {
 
 	private Long id;
-	private String obrigatorio;
+	private Boolean obrigatorio;
 	private String condicao;
+	private Boolean apresentarJustificativaCondicao;
 	private String complexidade;
 
 	// FK's
@@ -22,11 +23,11 @@ public class ChecklistFilter {
 		this.id = id;
 	}
 
-	public String getObrigatorio() {
+	public Boolean getObrigatorio() {
 		return obrigatorio;
 	}
 
-	public void setObrigatorio(String obrigatorio) {
+	public void setObrigatorio(Boolean obrigatorio) {
 		this.obrigatorio = obrigatorio;
 	}
 
@@ -36,6 +37,14 @@ public class ChecklistFilter {
 
 	public void setCondicao(String condicao) {
 		this.condicao = condicao;
+	}
+
+	public Boolean getApresentarJustificativaCondicao() {
+		return apresentarJustificativaCondicao;
+	}
+
+	public void setApresentarJustificativaCondicao(Boolean apresentarJustificativaCondicao) {
+		this.apresentarJustificativaCondicao = apresentarJustificativaCondicao;
 	}
 
 	public String getComplexidade() {

@@ -9,7 +9,6 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
-import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import br.gov.ba.pge.epa.api.model.Checklist;
@@ -30,11 +29,14 @@ public class ChecklistPredicate extends BasePredicate {
 			if (filter.getId() != null) {
 				predicates.add(cb.equal(root.get("id"), filter.getId()));
 			}
-			if (StringUtils.isNotBlank(filter.getObrigatorio())) {
-				predicates.add(cb.equal(root.get("obrigatorio"), BooleanUtils.toBoolean(filter.getObrigatorio())));
+			if (filter.getObrigatorio() != null) {
+				predicates.add(cb.equal(root.get("obrigatorio"), filter.getObrigatorio()));
 			}
 			if (StringUtils.isNotBlank(filter.getCondicao())) {
 				predicates.add(cb.like(cb.lower(root.get("condicao")), containsLowerCase(filter.getCondicao())));
+			}
+			if (filter.getApresentarJustificativaCondicao() != null) {
+				predicates.add(cb.equal(root.get("apresentarJustificativaCondicao"), filter.getApresentarJustificativaCondicao()));
 			}
 			if (StringUtils.isNotBlank(filter.getComplexidade())) {
 				predicates.add(cb.equal(root.get("complexidade"), filter.getComplexidade()));
