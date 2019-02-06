@@ -12,7 +12,13 @@ public class NucleoFilter {
 	private MateriaFilter materia;
 
 	public Long getId() {
-		return id;
+		if (id != null) {
+			return id;
+		}
+		if (getMateria() != null) {
+			return getMateria().obterIdNucleo();
+		}
+		return null;
 	}
 
 	public void setId(Long id) {

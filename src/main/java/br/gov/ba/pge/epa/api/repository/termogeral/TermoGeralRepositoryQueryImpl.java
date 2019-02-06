@@ -91,6 +91,13 @@ public class TermoGeralRepositoryQueryImpl implements TermoGeralRepositoryQuery 
 				clausulasWhere.add("m.id = :idMateria");
 				parametros.put("idMateria", filter.getIdMateria());
 			}
+			
+			if (filter.getNucleo() != null) {
+				if (filter.getNucleo().getId() != null) {
+					clausulasWhere.add("n.id = :idNucleo");
+					parametros.put("idNucleo", filter.getNucleo().getId());
+				}
+			}
 		}
 		
 		if (!clausulasWhere.isEmpty()) {

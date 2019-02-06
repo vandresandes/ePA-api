@@ -1,5 +1,11 @@
 package br.gov.ba.pge.epa.api.repository.filter;
 
+import javax.persistence.Transient;
+
+import br.gov.ba.pge.epa.api.model.enums.EnumMateria;
+import br.gov.ba.pge.epa.api.model.enums.EnumNucleo;
+import br.gov.ba.pge.epa.api.model.enums.EnumOrigem;
+
 public class MateriaFilter {
 
 	private Long id;
@@ -64,6 +70,34 @@ public class MateriaFilter {
 
 	public void setIdDocumento(Long idDocumento) {
 		this.idDocumento = idDocumento;
+	}
+
+	@Transient
+	public Long obterIdNucleo() {
+		if (getId() != null && EnumMateria.LICITACOES_E_CONTRATOS.getValor().equals(getId())) {
+			EnumOrigem origem = EnumOrigem.buscarPeloValor(getId());
+			switch (origem) {
+			case SESAB:
+				return EnumNucleo.NSESAB.getValor();
+			case SEC:
+				return EnumNucleo.NSAS.getValor();
+			case SEPROMI:
+				return EnumNucleo.NSAS.getValor();
+			case SJDHDS:
+				return EnumNucleo.NSAS.getValor();
+			case PMBA:
+				return EnumNucleo.NSSP.getValor();
+			case PCBA:
+				return EnumNucleo.NSSP.getValor();
+			case SSP:
+				return EnumNucleo.NSSP.getValor();
+			case CBMBA:
+				return EnumNucleo.NSSP.getValor();
+			default:
+				return EnumNucleo.NLC.getValor();
+			}
+		}
+		return null;
 	}
 
 }
