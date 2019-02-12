@@ -7,7 +7,7 @@ DROP TABLE [dbo].[tb_tipo_processo]
 DROP TABLE [dbo].[tb_termo_especifico]
 DROP TABLE [dbo].[tb_termo_geral]
 DROP TABLE [dbo].[tb_documento]
-DROP TABLE [dbo].[tb_origem]
+DROP TABLE [dbo].[tb_orgao]
 DROP TABLE [dbo].[tb_materia]
 DROP TABLE [dbo].[tb_motivo_sigilo_segredo_justica]
 
