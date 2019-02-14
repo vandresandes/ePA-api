@@ -8,6 +8,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.apache.http.HttpEntity;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.gov.ba.pge.epa.api.config.TokenAuthenticationService;
 import br.gov.ba.pge.epa.api.model.security.UsuarioRequest;
 
 @RestController
@@ -44,7 +46,7 @@ public class LoginController {
 	private String servico;
 
 	@PostMapping
-	public ResponseEntity<String> autenticar(@Valid @RequestBody UsuarioRequest usuarioRequest) {
+	public ResponseEntity<String> autenticar(@Valid @RequestBody UsuarioRequest usuarioRequest, HttpServletResponse responseLogin) {
 		String responseString = null;
 		int statusCode = 0;
 		SSLContextBuilder sslcontext = new SSLContextBuilder();
@@ -59,6 +61,11 @@ public class LoginController {
 			HttpEntity entity = response.getEntity();
 			responseString = EntityUtils.toString(entity, "UTF-8");
 			statusCode = response.getStatusLine().getStatusCode();
+			
+			if (isAutenticado(statusCode)) {
+				TokenAuthenticationService.addAuthentication(responseLogin, usuarioRequest.getUsuario());
+			}
+			
 			response.close();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -72,7 +79,7 @@ public class LoginController {
 			e.printStackTrace();
 		}
 		
-		return isAutenticado(statusCode) ? ResponseEntity.ok(responseString) : new ResponseEntity<String>(responseString, HttpStatus.UNAUTHORIZED);
+		return isAutenticado(statusCode) ? ResponseEntity.ok(responseString) : new ResponseEntity<String>(responseString, HttpStatus.valueOf(statusCode));
 	}
 
 	private HttpEntity getEntity(UsuarioRequest usuarioRequest) {

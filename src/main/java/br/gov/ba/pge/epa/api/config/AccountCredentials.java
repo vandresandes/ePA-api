@@ -1,14 +1,6 @@
-package br.gov.ba.pge.epa.api.model.security;
+package br.gov.ba.pge.epa.api.config;
 
-public class UsuarioRequest {
-
-	public UsuarioRequest() {
-	}
-	
-	public UsuarioRequest(String usuario, String senha) {
-		this.usuario = usuario;
-		this.senha = senha;
-	}
+public class AccountCredentials {
 
 	private String usuario;
 	private String senha;

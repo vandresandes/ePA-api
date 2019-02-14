@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -25,8 +26,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			authorizeRequests().
 			antMatchers("/login", "/login/**").permitAll().
 			anyRequest().authenticated().and().
-			httpBasic().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf().disable().
-			cors();
+			
+			// filtra requisições de login
+			// addFilterBefore(new JWTLoginFilter("/login", authenticationManager()), UsernamePasswordAuthenticationFilter.class).
+			
+			// filtra outras requisições para verificar a presença do JWT no header
+			addFilterBefore(new JWTAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class).
+			
+			cors().and().
+			sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().csrf().disable();
 	}
 
 	@Bean
