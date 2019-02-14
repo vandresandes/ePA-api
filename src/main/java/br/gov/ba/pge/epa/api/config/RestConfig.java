@@ -16,7 +16,6 @@ public class RestConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         
-        //access-control-expor-headers
         config.setExposedHeaders(Arrays.asList("Authorization"));
         config.addExposedHeader("Authorization");
         config.setAllowCredentials(true);
