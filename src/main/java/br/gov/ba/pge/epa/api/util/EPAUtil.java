@@ -24,4 +24,10 @@ public class EPAUtil {
 	public static Integer getValor(Optional<Integer> optional) {
 		return optional.isPresent() ? optional.get() : null;
 	}
+	
+	public static String removerCaracteresNaoNumericos(String valor) {
+		String resultado = valor.replaceAll("[^0123456789]", "");
+		return resultado;
+	}
+
 }
