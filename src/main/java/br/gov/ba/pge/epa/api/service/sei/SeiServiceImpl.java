@@ -19,6 +19,7 @@ public class SeiServiceImpl implements SeiService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SeiServiceImpl.class);
 	private static final String N = "N";
+	private static final String S = "S";
 	
 	private ISei sei = FabricaSei.getInstance().obterSei();
 
@@ -46,15 +47,15 @@ public class SeiServiceImpl implements SeiService {
                     EnumParametrosSistema.IDENTIFICACAO_SERVICO.getValor(),
                     EnumParametrosSistema.ID_UNIDADE.getValor(),
                     protocoloProcedimento,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null);
+                    S,
+                    S,
+                    S,
+                    S,
+                    S,
+                    S,
+                    S,
+                    S,
+                    S);
         } catch (RemoteException ex) {
         	LOGGER.debug(ex.getMessage());
         }
