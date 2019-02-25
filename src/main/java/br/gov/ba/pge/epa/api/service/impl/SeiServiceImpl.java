@@ -1,4 +1,4 @@
-package br.gov.ba.pge.epa.api.service.sei;
+package br.gov.ba.pge.epa.api.service.impl;
 
 import java.rmi.RemoteException;
 
@@ -11,6 +11,7 @@ import br.gov.ba.pge.client.servico.FabricaSei;
 import br.gov.ba.pge.client.vo.RetornoConsultaDocumentoVO;
 import br.gov.ba.pge.client.vo.RetornoConsultaProcedimentoVO;
 import br.gov.ba.pge.enums.EnumParametrosSistema;
+import br.gov.ba.pge.epa.api.service.SeiService;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 
@@ -33,10 +34,17 @@ public class SeiServiceImpl implements SeiService {
 	public boolean existeDocumento(String protocoloProcedimento, String protocoloDocumento) {
 		RetornoConsultaDocumentoVO consultarDocumento = consultarDocumento(protocoloDocumento);
 		if (consultarDocumento != null) {
-			String consultaNumeroProcedimento = EPAUtil.removerCaracteresNaoNumericos(consultarDocumento.getProcedimentoFormatado());
-			return protocoloProcedimento.equals(consultaNumeroProcedimento);
+			String responseNumeroProcedimento = EPAUtil.removerCaracteresNaoNumericos(consultarDocumento.getProcedimentoFormatado());
+			protocoloProcedimento = EPAUtil.removerCaracteresNaoNumericos(protocoloProcedimento);
+			return protocoloProcedimento.equals(responseNumeroProcedimento);
 		}
 		return false;
+	}
+
+	@Override
+	public int contarProcessoAbertoEmOutrasUnidades(String protocoloProcedimento) {
+		RetornoConsultaProcedimentoVO consultarProcedimento = this.consultarProtocolo(protocoloProcedimento);
+		return consultarProcedimento != null ? consultarProcedimento.getUnidadesProcedimentoAberto().length : 0;
 	}
 
 	@Override
@@ -76,6 +84,5 @@ public class SeiServiceImpl implements SeiService {
         }
         return null;
     }
-
 
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.gov.ba.pge.client.vo.RetornoConsultaDocumentoVO;
 import br.gov.ba.pge.client.vo.RetornoConsultaProcedimentoVO;
-import br.gov.ba.pge.epa.api.service.sei.SeiService;
+import br.gov.ba.pge.epa.api.service.SeiService;
 
 @RestController
 @RequestMapping("/sei")
@@ -25,6 +25,11 @@ public class SeiController {
 	@GetMapping("/existeProtocolo")
 	public ResponseEntity<Boolean> existeProtocolo(String protocoloProcedimento) {
 		return ResponseEntity.ok(seiService.existeProtocolo(protocoloProcedimento));
+	}
+
+	@GetMapping("/contarProcessoAbertoEmOutrasUnidades")
+	public ResponseEntity<Integer> contarProcessoAbertoEmOutrasUnidades(String protocoloProcedimento) {
+		return ResponseEntity.ok(seiService.contarProcessoAbertoEmOutrasUnidades(protocoloProcedimento));
 	}
 
 	@GetMapping("/consultarDocumento")
