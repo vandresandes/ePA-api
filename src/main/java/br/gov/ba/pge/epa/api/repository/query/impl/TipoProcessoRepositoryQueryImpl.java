@@ -1,4 +1,4 @@
-package br.gov.ba.pge.epa.api.repository.tipoProcesso;
+package br.gov.ba.pge.epa.api.repository.query.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +18,7 @@ import br.gov.ba.pge.epa.api.repository.filter.NucleoFilter;
 import br.gov.ba.pge.epa.api.repository.filter.TermoEspecificoFilter;
 import br.gov.ba.pge.epa.api.repository.filter.TermoGeralFilter;
 import br.gov.ba.pge.epa.api.repository.filter.TipoProcessoFilter;
+import br.gov.ba.pge.epa.api.repository.query.TipoProcessoRepositoryQuery;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 public class TipoProcessoRepositoryQueryImpl implements TipoProcessoRepositoryQuery {

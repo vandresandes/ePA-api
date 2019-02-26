@@ -1,4 +1,4 @@
-package br.gov.ba.pge.epa.api.repository.materia;
+package br.gov.ba.pge.epa.api.repository.query;
 
 import java.util.List;
 

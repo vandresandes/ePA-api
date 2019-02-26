@@ -1,4 +1,4 @@
-package br.gov.ba.pge.epa.api.repository.materia;
+package br.gov.ba.pge.epa.api.repository.query.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.gov.ba.pge.epa.api.model.Materia;
 import br.gov.ba.pge.epa.api.repository.filter.MateriaFilter;
+import br.gov.ba.pge.epa.api.repository.query.MateriaRepositoryQuery;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 public class MateriaRepositoryQueryImpl implements MateriaRepositoryQuery {

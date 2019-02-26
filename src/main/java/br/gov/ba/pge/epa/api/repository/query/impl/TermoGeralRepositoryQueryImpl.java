@@ -1,4 +1,4 @@
-package br.gov.ba.pge.epa.api.repository.termoEspecifico;
+package br.gov.ba.pge.epa.api.repository.query.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,21 +11,22 @@ import javax.persistence.Query;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.gov.ba.pge.epa.api.model.TermoEspecifico;
-import br.gov.ba.pge.epa.api.repository.filter.TermoEspecificoFilter;
+import br.gov.ba.pge.epa.api.model.TermoGeral;
+import br.gov.ba.pge.epa.api.repository.filter.TermoGeralFilter;
+import br.gov.ba.pge.epa.api.repository.query.TermoGeralRepositoryQuery;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
-public class TermoEspecificoRepositoryQueryImpl implements TermoEspecificoRepositoryQuery {
+public class TermoGeralRepositoryQueryImpl implements TermoGeralRepositoryQuery {
 
 	@Autowired
 	private EntityManager entityManager;
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<TermoEspecifico> filtrar(TermoEspecificoFilter filter) {
+	public List<TermoGeral> filtrar(TermoGeralFilter filter) {
 		List<String> clausulasWhere = new ArrayList<>();
 		Map<String, Object> parametros = new HashMap<>();
-		String sql = montarQuery(clausulasWhere, parametros, filter, "te");
+		String sql = montarQuery(clausulasWhere, parametros, filter, "tg");
 		
 		Query query = entityManager.createQuery(sql);
 
@@ -40,10 +41,10 @@ public class TermoEspecificoRepositoryQueryImpl implements TermoEspecificoReposi
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<String> buscarNomes(TermoEspecificoFilter filter) {
+	public List<String> buscarNomes(TermoGeralFilter filter) {
 		List<String> clausulasWhere = new ArrayList<>();
 		Map<String, Object> parametros = new HashMap<>();
-		String sql = montarQuery(clausulasWhere, parametros, filter, "te.nome");
+		String sql = montarQuery(clausulasWhere, parametros, filter, "tg.nome");
 		
 		Query query = entityManager.createQuery(sql);
 
@@ -56,19 +57,19 @@ public class TermoEspecificoRepositoryQueryImpl implements TermoEspecificoReposi
 		return query.getResultList();
 	}
 
-	private String montarQuery(List<String> clausulasWhere, Map<String, Object> parametros, TermoEspecificoFilter filter, String select) {
+	private String montarQuery(List<String> clausulasWhere, Map<String, Object> parametros, TermoGeralFilter filter, String select) {
 		final StringBuffer sql = new StringBuffer();
-		sql.append("SELECT DISTINCT ").append(select).append(" FROM TermoEspecifico te ");
-		sql.append("INNER JOIN Checklist AS c on c.termoEspecifico = te.id ");
+		sql.append("SELECT DISTINCT ").append(select).append(" FROM TermoGeral tg ");
+		sql.append("INNER JOIN Checklist AS c on c.termoGeral = tg.id ");
 		sql.append("INNER JOIN Nucleo AS n on n.id = c.nucleo ");
 		sql.append("INNER JOIN TipoProcesso AS tp on tp.id = c.tipoProcesso ");
-		sql.append("INNER JOIN TermoGeral AS tg on tg.id = c.termoGeral ");
+		sql.append("INNER JOIN TermoEspecifico AS te on te.id = c.termoEspecifico ");
 		sql.append("INNER JOIN Documento AS doc on doc.id = c.documento ");
 		sql.append("INNER JOIN Materia AS m on m.id = n.materia ");
 
 		if (filter != null) {
 			if (StringUtils.isNotBlank(filter.getNome())) {
-				clausulasWhere.add("UPPER(te.nome) LIKE :nome");
+				clausulasWhere.add("UPPER(tg.nome) LIKE :nome");
 				parametros.put("nome", "%" + filter.getNome().toUpperCase() + "%");
 			}
 			
@@ -86,10 +87,10 @@ public class TermoEspecificoRepositoryQueryImpl implements TermoEspecificoReposi
 				}
 			}
 			
-			if (filter.getTermoGeral() != null) {
-				if (filter.getTermoGeral().getId() != null) {
-					clausulasWhere.add("tg.id = :idTermoGeral");
-					parametros.put("idTermoGeral", filter.getTermoGeral().getId());
+			if (filter.getTermoEspecifico() != null) {
+				if (filter.getTermoEspecifico().getId() != null) {
+					clausulasWhere.add("te.id = :idTermoEspecifico");
+					parametros.put("idTermoEspecifico", filter.getTermoEspecifico().getId());
 				}
 			}
 			
@@ -98,6 +99,11 @@ public class TermoEspecificoRepositoryQueryImpl implements TermoEspecificoReposi
 					clausulasWhere.add("doc.id = :idDocumento");
 					parametros.put("idDocumento", filter.getDocumento().getId());
 				}
+			}
+			
+			if (filter.getIdMateria() != null) {
+				clausulasWhere.add("m.id = :idMateria");
+				parametros.put("idMateria", filter.getIdMateria());
 			}
 			
 			if (filter.getNucleo() != null) {
@@ -118,7 +124,7 @@ public class TermoEspecificoRepositoryQueryImpl implements TermoEspecificoReposi
 			sql.append(" WHERE ");
 			sql.append(EPAUtil.adicionarSeparador(clausulasWhere, " AND "));
 		}
-		sql.append(" ORDER BY te.nome ASC ");
+		sql.append(" ORDER BY tg.nome ASC ");
 		
 		return sql.toString();
 	}

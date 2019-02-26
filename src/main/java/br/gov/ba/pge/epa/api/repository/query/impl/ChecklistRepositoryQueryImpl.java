@@ -1,4 +1,4 @@
-package br.gov.ba.pge.epa.api.repository.checklist;
+package br.gov.ba.pge.epa.api.repository.query.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import br.gov.ba.pge.epa.api.model.Checklist;
 import br.gov.ba.pge.epa.api.repository.filter.ChecklistFilter;
+import br.gov.ba.pge.epa.api.repository.query.ChecklistRepositoryQuery;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
 public class ChecklistRepositoryQueryImpl implements ChecklistRepositoryQuery {
