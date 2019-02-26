@@ -71,29 +71,44 @@ public class DocumentoRepositoryQueryImpl implements DocumentoRepositoryQuery {
 				clausulasWhere.add("UPPER(doc.nome) LIKE :nome");
 				parametros.put("nome", "%" + filter.getNome().toUpperCase() + "%");
 			}
+			
 			if (filter.getTipo() != null) {
 				clausulasWhere.add("doc.tipo = :tipo");
 				parametros.put("tipo", filter.getTipo());
 			}
-			if (filter.getIdNucleo() != null) {
-				clausulasWhere.add("n.id = :idNucleo");
-				parametros.put("idNucleo", filter.getIdNucleo());
+			
+			if (filter.getTipoProcesso() != null) {
+				if (filter.getTipoProcesso().getId() != null) {
+					clausulasWhere.add("tp.id = :idTipoProcesso");
+					parametros.put("idTipoProcesso", filter.getTipoProcesso().getId());
+				}
 			}
-			if (filter.getIdTipoProcesso() != null) {
-				clausulasWhere.add("tp.id = :idTipoProcesso");
-				parametros.put("idTipoProcesso", filter.getIdTipoProcesso());
+			
+			if (filter.getTermoGeral() != null) {
+				if (filter.getTermoGeral().getId() != null) {
+					clausulasWhere.add("tg.id = :idTermoGeral");
+					parametros.put("idTermoGeral", filter.getTermoGeral().getId());
+				}
 			}
-			if (filter.getIdTermoGeral() != null) {
-				clausulasWhere.add("tg.id = :idTermoGeral");
-				parametros.put("idTermoGeral", filter.getIdTermoGeral());
+			
+			if (filter.getTermoEspecifico() != null) {
+				if (filter.getTermoEspecifico().getId() != null) {
+					clausulasWhere.add("te.id = :idTermoEspecifico");
+					parametros.put("idTermoEspecifico", filter.getTermoEspecifico().getId());
+				}
 			}
-			if (filter.getIdTermoEspecifico() != null) {
-				clausulasWhere.add("te.id = :idTermoEspecifico");
-				parametros.put("idTermoEspecifico", filter.getIdTermoEspecifico());
-			}
-			if (filter.getIdMateria() != null) {
-				clausulasWhere.add("m.id = :idMateria");
-				parametros.put("idMateria", filter.getIdMateria());
+			
+			if (filter.getNucleo() != null) {
+				if (filter.getNucleo().getId() != null) {
+					clausulasWhere.add("n.id = :idNucleo");
+					parametros.put("idNucleo", filter.getNucleo().getId());
+				}
+				if (filter.getNucleo().getMateria() != null) {
+					if (filter.getNucleo().getMateria().getId() != null) {
+						clausulasWhere.add("m.id = :idMateria");
+						parametros.put("idMateria", filter.getNucleo().getMateria().getId());
+					}
+				}
 			}
 		}
 

@@ -4,10 +4,6 @@ public class TermoGeralFilter {
 
 	private Long id;
 	private String nome;
-	private Long idNucleo;
-	private Long idTipoProcesso;
-	private Long idTermoEspecifico;
-	private Long idDocumento;
 	private Long idMateria;
 
 	private NucleoFilter nucleo;
@@ -30,38 +26,6 @@ public class TermoGeralFilter {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-
-	public Long getIdNucleo() {
-		return idNucleo;
-	}
-
-	public void setIdNucleo(Long idNucleo) {
-		this.idNucleo = idNucleo;
-	}
-
-	public Long getIdTipoProcesso() {
-		return idTipoProcesso;
-	}
-
-	public void setIdTipoProcesso(Long idTipoProcesso) {
-		this.idTipoProcesso = idTipoProcesso;
-	}
-
-	public Long getIdTermoEspecifico() {
-		return idTermoEspecifico;
-	}
-
-	public void setIdTermoEspecifico(Long idTermoEspecifico) {
-		this.idTermoEspecifico = idTermoEspecifico;
-	}
-
-	public Long getIdDocumento() {
-		return idDocumento;
-	}
-
-	public void setIdDocumento(Long idDocumento) {
-		this.idDocumento = idDocumento;
 	}
 
 	public Long getIdMateria() {

@@ -71,22 +71,35 @@ public class TermoGeralRepositoryQueryImpl implements TermoGeralRepositoryQuery 
 				clausulasWhere.add("UPPER(tg.nome) LIKE :nome");
 				parametros.put("nome", "%" + filter.getNome().toUpperCase() + "%");
 			}
-			if (filter.getIdNucleo() != null) {
-				clausulasWhere.add("n.id = :idNucleo");
-				parametros.put("idNucleo", filter.getIdNucleo());
+			
+			if (filter.getNucleo() != null) {
+				if (filter.getNucleo().getId() != null) {
+					clausulasWhere.add("n.id = :idNucleo");
+					parametros.put("idNucleo", filter.getNucleo().getId());
+				}
 			}
-			if (filter.getIdTipoProcesso() != null) {
-				clausulasWhere.add("tp.id = :idTipoProcesso");
-				parametros.put("idTipoProcesso", filter.getIdTipoProcesso());
+			
+			if (filter.getTipoProcesso() != null) {
+				if (filter.getTipoProcesso().getId() != null) {
+					clausulasWhere.add("tp.id = :idTipoProcesso");
+					parametros.put("idTipoProcesso", filter.getTipoProcesso().getId());
+				}
 			}
-			if (filter.getIdTermoEspecifico() != null) {
-				clausulasWhere.add("te.id = :idTermoEspecifico");
-				parametros.put("idTermoEspecifico", filter.getIdTermoEspecifico());
+			
+			if (filter.getTermoEspecifico() != null) {
+				if (filter.getTermoEspecifico().getId() != null) {
+					clausulasWhere.add("te.id = :idTermoEspecifico");
+					parametros.put("idTermoEspecifico", filter.getTermoEspecifico().getId());
+				}
 			}
-			if (filter.getIdDocumento() != null) {
-				clausulasWhere.add("doc.id = :idDocumento");
-				parametros.put("idDocumento", filter.getIdDocumento());
+			
+			if (filter.getDocumento() != null) {
+				if (filter.getDocumento().getId() != null) {
+					clausulasWhere.add("doc.id = :idDocumento");
+					parametros.put("idDocumento", filter.getDocumento().getId());
+				}
 			}
+			
 			if (filter.getIdMateria() != null) {
 				clausulasWhere.add("m.id = :idMateria");
 				parametros.put("idMateria", filter.getIdMateria());

@@ -4,75 +4,48 @@ public class TipoProcessoFilter {
 
 	private Long id;
 	private String nome;
-	private Long idNucleo;
-	private Long idTermoGeral;
-	private Long idTermoEspecifico;
-	private Long idDocumento;
-	private Long idMateria;
-	private Long idOrigem;
+	
+	private NucleoFilter nucleo;
+	private TermoGeralFilter termoGeral;
+	private TermoEspecificoFilter termoEspecifico;
+	private DocumentoFilter documento;
 
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getNome() {
 		return nome;
 	}
-
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public Long getIdNucleo() {
-		return idNucleo;
+	public NucleoFilter getNucleo() {
+		return nucleo;
+	}
+	public void setNucleo(NucleoFilter nucleo) {
+		this.nucleo = nucleo;
+	}
+	public TermoGeralFilter getTermoGeral() {
+		return termoGeral;
+	}
+	public void setTermoGeral(TermoGeralFilter termoGeral) {
+		this.termoGeral = termoGeral;
+	}
+	public TermoEspecificoFilter getTermoEspecifico() {
+		return termoEspecifico;
+	}
+	public void setTermoEspecifico(TermoEspecificoFilter termoEspecifico) {
+		this.termoEspecifico = termoEspecifico;
+	}
+	public DocumentoFilter getDocumento() {
+		return documento;
+	}
+	public void setDocumento(DocumentoFilter documento) {
+		this.documento = documento;
 	}
 
-	public void setIdNucleo(Long idNucleo) {
-		this.idNucleo = idNucleo;
-	}
-
-	public Long getIdTermoGeral() {
-		return idTermoGeral;
-	}
-
-	public void setIdTermoGeral(Long idTermoGeral) {
-		this.idTermoGeral = idTermoGeral;
-	}
-
-	public Long getIdTermoEspecifico() {
-		return idTermoEspecifico;
-	}
-
-	public void setIdTermoEspecifico(Long idTermoEspecifico) {
-		this.idTermoEspecifico = idTermoEspecifico;
-	}
-
-	public Long getIdDocumento() {
-		return idDocumento;
-	}
-
-	public void setIdDocumento(Long idDocumento) {
-		this.idDocumento = idDocumento;
-	}
-
-	public Long getIdMateria() {
-		return idMateria;
-	}
-
-	public void setIdMateria(Long idMateria) {
-		this.idMateria = idMateria;
-	}
-
-	public Long getIdOrigem() {
-		return idOrigem;
-	}
-
-	public void setIdOrigem(Long idOrigem) {
-		this.idOrigem = idOrigem;
-	}
-
+	
 }
