@@ -1,7 +1,5 @@
 package br.gov.ba.pge.epa.api.repository.filter;
 
-import br.gov.ba.pge.epa.api.model.Orgao;
-
 public class ChecklistFilter {
 
 	private Long id;
@@ -16,7 +14,7 @@ public class ChecklistFilter {
 	private TermoGeralFilter termoGeral;
 	private TermoEspecificoFilter termoEspecifico;
 	private DocumentoFilter documento;
-	private Orgao origem;
+	private OrgaoFilter origem;
 
 	public Long getId() {
 		return id;
@@ -98,11 +96,11 @@ public class ChecklistFilter {
 		this.documento = documento;
 	}
 
-	public Orgao getOrigem() {
+	public OrgaoFilter getOrigem() {
 		return origem;
 	}
 
-	public void setOrigem(Orgao origem) {
+	public void setOrigem(OrgaoFilter origem) {
 		this.origem = origem;
 	}
 

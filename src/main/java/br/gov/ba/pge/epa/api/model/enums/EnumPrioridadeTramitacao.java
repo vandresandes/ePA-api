@@ -11,6 +11,7 @@ public enum EnumPrioridadeTramitacao {
 	
 	SEM_PRIORIDADE("SEM_PRIORIDADE", "Sem prioridade"), 
 	PESSOA_COM_IDADE_SUPERIOR_A_60_ANOS("PESSOA_COM_IDADE_SUPERIOR_A_60_ANOS", "Pessoa com idade superior a 60 anos"),
+	PESSOA_COM_IDADE_SUPERIOR_A_80_ANOS("PESSOA_COM_IDADE_SUPERIOR_A_80_ANOS", "Pessoa com idade superior a 80 anos"),
 	PESSOA_COM_NECESSIDADES_ESPECIAIS_OU_DOENCA_GRAVE("PESSOA_COM_NECESSIDADES_ESPECIAIS_OU_DOENCA_GRAVE", "Pessoa com necessidades especiais ou doença grave");
 
 	String valor;

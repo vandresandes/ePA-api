@@ -15,6 +15,7 @@ public class MateriaFilter {
 	private Long idTermoGeral;
 	private Long idTermoEspecifico;
 	private Long idDocumento;
+	private OrgaoFilter origem;
 
 	public Long getId() {
 		return id;
@@ -72,10 +73,18 @@ public class MateriaFilter {
 		this.idDocumento = idDocumento;
 	}
 
+	public OrgaoFilter getOrigem() {
+		return origem;
+	}
+
+	public void setOrigem(OrgaoFilter origem) {
+		this.origem = origem;
+	}
+
 	@Transient
 	public Long obterIdNucleo() {
-		if (getId() != null && EnumMateria.LICITACOES_E_CONTRATOS.getValor().equals(getId())) {
-			EnumOrigem origem = EnumOrigem.buscarPeloValor(getId());
+		if (getId() != null && EnumMateria.LICITACOES_E_CONTRATOS.getValor().equals(getId()) && (getOrigem() != null && getOrigem().getId() != null)) {
+			EnumOrigem origem = EnumOrigem.buscarPeloValor(getOrigem().getId());
 			switch (origem) {
 			case SESAB:
 				return EnumNucleo.NSESAB.getValor();
