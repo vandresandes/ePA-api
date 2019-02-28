@@ -10,7 +10,7 @@ import br.gov.ba.pge.client.facade.ISei;
 import br.gov.ba.pge.client.servico.FabricaSei;
 import br.gov.ba.pge.client.vo.RetornoConsultaDocumentoVO;
 import br.gov.ba.pge.client.vo.RetornoConsultaProcedimentoVO;
-import br.gov.ba.pge.enums.EnumParametrosSistema;
+import br.gov.ba.pge.epa.api.model.enums.EnumParametrosSistema;
 import br.gov.ba.pge.epa.api.service.SeiService;
 import br.gov.ba.pge.epa.api.util.EPAUtil;
 
