@@ -1,4 +1,4 @@
-package br.gov.ba.pge.epa.api.controller;
+package br.gov.ba.pge.epa.api.service.impl;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -7,9 +7,6 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -25,28 +22,22 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
-import br.gov.ba.pge.epa.api.config.TokenAuthenticationService;
-import br.gov.ba.pge.epa.api.model.security.UsuarioRequest;
+import br.gov.ba.pge.epa.api.model.security.LoginResponse;
+import br.gov.ba.pge.epa.api.service.LoginService;
 
-@RestController
-@RequestMapping("/login")
-public class LoginController {
-
+@Service
+public class LoginServiceImpl implements LoginService {
+	
 	@Value("${url.autenticacao.office.365}")
 	private String url;
 	@Value("${servico.autenticacao.office.365}")
 	private String servico;
 
-	@PostMapping
-	public ResponseEntity<String> autenticar(@Valid @RequestBody UsuarioRequest usuarioRequest, HttpServletResponse responseLogin) {
+	@Override
+	public LoginResponse autenticar(String username, String password) {
 		String responseString = null;
 		int statusCode = 0;
 		SSLContextBuilder sslcontext = new SSLContextBuilder();
@@ -55,17 +46,12 @@ public class LoginController {
 			CloseableHttpClient httpClient = HttpClients.custom().setSSLContext(sslcontext.build()).setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE).build();
 			HttpPost httpPost = new HttpPost(getURI());
 			httpPost.setHeader("content-type", MediaType.APPLICATION_FORM_URLENCODED_VALUE);
-			httpPost.setEntity(getEntity(usuarioRequest));
+			httpPost.setEntity(getEntity(username, password));
 			CloseableHttpResponse response = httpClient.execute(httpPost);
 
 			HttpEntity entity = response.getEntity();
 			responseString = EntityUtils.toString(entity, "UTF-8");
 			statusCode = response.getStatusLine().getStatusCode();
-			
-			if (isAutenticado(statusCode)) {
-				TokenAuthenticationService.addAuthentication(responseLogin, usuarioRequest.getUsuario());
-			}
-			
 			response.close();
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
@@ -78,32 +64,28 @@ public class LoginController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		return isAutenticado(statusCode) ? ResponseEntity.ok(responseString) : new ResponseEntity<String>(responseString, HttpStatus.valueOf(statusCode));
+
+		return new LoginResponse(responseString, statusCode);
 	}
 
-	private HttpEntity getEntity(UsuarioRequest usuarioRequest) {
+	private HttpEntity getEntity(String username, String password) {
 		try {
-			return new UrlEncodedFormEntity(getParametros(usuarioRequest));
+			return new UrlEncodedFormEntity(getParametros(username, password));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	private List<NameValuePair> getParametros(UsuarioRequest usuarioRequest) {
+	private List<NameValuePair> getParametros(String username, String password) {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("usuario", usuarioRequest.getUsuario()));
-		params.add(new BasicNameValuePair("senha", usuarioRequest.getSenha()));
+		params.add(new BasicNameValuePair("usuario", username));
+		params.add(new BasicNameValuePair("senha", password));
 		return params;
 	}
 
 	private String getURI() {
 		return url.concat("/").concat(servico);
-	}
-
-	private boolean isAutenticado(int statusCode) {
-		return statusCode == HttpStatus.OK.value();
 	}
 
 }
