@@ -26,7 +26,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	@Value("${resource.id:epa-ui}")
     private String resourceId;
-    @Value("${access_token.validity_period:3600}")
+    @Value("${access_token.validity_period:86400}")
     int accessTokenValiditySeconds;
 
     @Autowired
